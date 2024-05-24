@@ -1,3 +1,4 @@
+import json
 from enum import Enum
 
 def dataclass_to_dict(obj):
@@ -12,3 +13,8 @@ def dataclass_to_dict(obj):
         return obj.value
     else:
         return obj
+
+
+def read_from_json(file_path):
+    with open(file_path, "r") as file:
+        return json.load(file)

@@ -1,6 +1,7 @@
 from models.athlete import Athlete
 from fastapi import APIRouter, HTTPException
 
+from utils.data_utils import read_from_json
 
 # In-memory data store for simplicity
 data_store = {
@@ -9,6 +10,10 @@ data_store = {
 
 router = APIRouter()
 
+#TODO: update response model when actual data flows
+@router.get("/get/all", response_model=list[dict])
+def get_all_athletes():
+    return read_from_json("dataset/athletes.json")
 
 @router.get("/get/{name}", response_model=Athlete)
 def get_athlete(name: str):

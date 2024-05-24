@@ -18,6 +18,7 @@ class Athlete(BaseModel):
     gender: Gender
     country: Country
     sports: List[Sport]
+    events: List[str] = []
 
 # Example usage:
 if __name__ == "__main__":
