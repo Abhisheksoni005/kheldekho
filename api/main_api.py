@@ -23,13 +23,12 @@ app.include_router(country_router, prefix="/country")
 app.include_router(athlete_router, prefix="/athlete")
 app.include_router(schedule_router, prefix="/schedule")
 
-allowed_origins = ["http://localhost",
-                   "http://localhost:3000",
-                   "http://localhost:8000",
-                   "http://192.168.0.113:3000",
+allowed_origins = ["http://localhost:3000",
                    "http://www.kheldekho.in",
                    "http://www.kheldekho.in:3000",
-                   "http://kheldekho.in:3000"]
+                   "http://www.kheldekho.in:3000/",
+                   "http://kheldekho.in:3000/",
+                   "http://20.197.9.130"]
 
 app.add_middleware(
     CORSMiddleware,
