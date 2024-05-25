@@ -1,14 +1,15 @@
 import uvicorn
 from fastapi import FastAPI
-from user_api import router as user_router
-from sport_api import router as sport_router
-from event_api import router as event_router
-from match_api import router as match_router
-from squad_api import router as squad_router
-from country_api import router as country_router
-from athlete_api import router as athlete_router
-from schedule_api import router as schedule_router
 from fastapi.middleware.cors import CORSMiddleware
+
+from api.user_api import router as user_router
+from api.sport_api import router as sport_router
+from api.event_api import router as event_router
+from api.match_api import router as match_router
+from api.squad_api import router as squad_router
+from api.country_api import router as country_router
+from api.athlete_api import router as athlete_router
+from api.schedule_api import router as schedule_router
 
 
 app = FastAPI()
