@@ -68,11 +68,13 @@ app.add_middleware(
 #     pem_file_name = pem_file.name
 #     pem_file.write(pem_file_content.encode())
 
+ssl_certfile = r".cert/kheldekho_in_cert.crt"
+ssl_keyfile = r".cert/key_final.key"
 
 if __name__ == "__main__":
     uvicorn.run(app,
                 host="0.0.0.0",
                 port=8000,
-                ssl_keyfile="cert/ssl_key.key",
-                ssl_certfile="cert/kheldekho_in_cert.crt",
+                ssl_keyfile=ssl_keyfile,
+                ssl_certfile=ssl_certfile,
                 )
