@@ -28,6 +28,7 @@ allowed_origins = ["http://localhost:3000",
                    "http://www.kheldekho.in:3000",
                    "http://www.kheldekho.in:3000/",
                    "http://kheldekho.in:3000/",
+                   "http://kheldekho.in:3000"
                    "http://20.197.9.130"]
 
 app.add_middleware(
@@ -37,9 +38,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+ssl_certfile = r"C:\Users\dream\IdeaProjects\kheldekho\cert\ssl_cert.crt"
+ssl_keyfile =  r"C:\Users\dream\IdeaProjects\kheldekho\cert\ssl_key.key"
+
 # Run the app with Uvicorn
 if __name__ == "__main__":
     uvicorn.run(app,
                 host="0.0.0.0",
                 port=8000,
+                ssl_keyfile=ssl_keyfile,
+                ssl_certfile=ssl_certfile,
                 )
