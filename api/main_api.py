@@ -46,27 +46,27 @@ app.add_middleware(
 
 # ssl_certfile = r"cert\ssl_cert.crt"
 # ssl_keyfile =  r"cert\ssl_key.key"
-
-os.environ['AZURE_CLIENT_ID'] = '<your-client-id>'
-os.environ['AZURE_TENANT_ID'] = '<your-tenant-id>'
-os.environ['AZURE_CLIENT_SECRET'] = '<your-client-secret>'
-
-PEM_FILE_SECRET_NAME = "kheldekho-cert-file"
-# Replace with your Azure Key Vault URL
-KEY_VAULT_URL = "https://kheldekho-vault.vault.azure.net/"
-
-
-# Authenticate to Azure Key Vault
-credential = DefaultAzureCredential()
-client = SecretClient(vault_url=KEY_VAULT_URL, credential=credential)
-
-# Retrieve the SSL key and certificate from Key Vault
-pem_file_content = client.get_secret(PEM_FILE_SECRET_NAME).value
-
-# Create temporary files in memory to hold the SSL key and certificate
-with tempfile.NamedTemporaryFile(delete=False) as pem_file:
-    pem_file_name = pem_file.name
-    pem_file.write(pem_file_content.encode())
+#
+# os.environ['AZURE_CLIENT_ID'] = '<your-client-id>'
+# os.environ['AZURE_TENANT_ID'] = '0eb1c8a3-60e7-40d2-bb0b-e9bdff4526dd'
+# os.environ['AZURE_CLIENT_SECRET'] = '<your-client-secret>'
+#
+# PEM_FILE_SECRET_NAME = "kheldekho-cert-file"
+# # Replace with your Azure Key Vault URL
+# KEY_VAULT_URL = "https://kheldekho-vault.vault.azure.net/"
+#
+#
+# # Authenticate to Azure Key Vault
+# credential = DefaultAzureCredential()
+# client = SecretClient(vault_url=KEY_VAULT_URL, credential=credential)
+#
+# # Retrieve the SSL key and certificate from Key Vault
+# pem_file_content = client.get_secret(PEM_FILE_SECRET_NAME).value
+#
+# # Create temporary files in memory to hold the SSL key and certificate
+# with tempfile.NamedTemporaryFile(delete=False) as pem_file:
+#     pem_file_name = pem_file.name
+#     pem_file.write(pem_file_content.encode())
 
 
 if __name__ == "__main__":
