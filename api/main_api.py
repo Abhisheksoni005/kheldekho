@@ -1,9 +1,4 @@
-import os
-
 import uvicorn
-import tempfile
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
@@ -35,9 +30,17 @@ allowed_origins = ["http://localhost:3000",
                    "https://kheldekho.in:3000",
                    "http://20.197.9.130"]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 ssl_certfile = r"/home/elixir/cert/kheldekho_in.crt"
 ssl_keyfile = r"/home/elixir/cert/key_final.key"
+
 
 if __name__ == "__main__":
     uvicorn.run(app,
