@@ -5,7 +5,7 @@ import tempfile
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 
 from api.user_api import router as user_router
 from api.sport_api import router as sport_router
@@ -29,47 +29,15 @@ app.include_router(athlete_router, prefix="/athlete")
 app.include_router(schedule_router, prefix="/schedule")
 
 allowed_origins = ["http://localhost:3000",
-                   "http://www.kheldekho.in",
-                   "http://www.kheldekho.in:3000",
-                   "http://www.kheldekho.in:3000/",
-                   "http://kheldekho.in:3000/",
-                   "http://kheldekho.in:3000"
+                   "http://kheldekho.in",
+                   "http://kheldekho.in:3000",
+                   "https://kheldekho.in",
+                   "https://kheldekho.in:3000",
                    "http://20.197.9.130"]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-# ssl_certfile = r"cert\ssl_cert.crt"
-# ssl_keyfile =  r"cert\ssl_key.key"
-#
-# os.environ['AZURE_CLIENT_ID'] = '<your-client-id>'
-# os.environ['AZURE_TENANT_ID'] = '0eb1c8a3-60e7-40d2-bb0b-e9bdff4526dd'
-# os.environ['AZURE_CLIENT_SECRET'] = '<your-client-secret>'
-#
-# PEM_FILE_SECRET_NAME = "kheldekho-cert-file"
-# # Replace with your Azure Key Vault URL
-# KEY_VAULT_URL = "https://kheldekho-vault.vault.azure.net/"
-#
-#
-# # Authenticate to Azure Key Vault
-# credential = DefaultAzureCredential()
-# client = SecretClient(vault_url=KEY_VAULT_URL, credential=credential)
-#
-# # Retrieve the SSL key and certificate from Key Vault
-# pem_file_content = client.get_secret(PEM_FILE_SECRET_NAME).value
-#
-# # Create temporary files in memory to hold the SSL key and certificate
-# with tempfile.NamedTemporaryFile(delete=False) as pem_file:
-#     pem_file_name = pem_file.name
-#     pem_file.write(pem_file_content.encode())
-
-ssl_certfile = r".cert/kheldekho_in_cert.crt"
-ssl_keyfile = r".cert/key_final.key"
+ssl_certfile = r"/home/elixir/cert/kheldekho_in.crt"
+ssl_keyfile = r"/home/elixir/cert/key_final.key"
 
 if __name__ == "__main__":
     uvicorn.run(app,
