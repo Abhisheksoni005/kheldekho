@@ -24,6 +24,7 @@ app.include_router(athlete_router, prefix="/athlete")
 app.include_router(schedule_router, prefix="/schedule")
 
 allowed_origins = ["http://localhost:3000",
+                   "https://localhost:3000",
                    "http://kheldekho.in",
                    "http://kheldekho.in:3000",
                    "https://kheldekho.in",
