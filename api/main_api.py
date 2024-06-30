@@ -39,8 +39,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-ssl_certfile = r"/home/elixir/cert/kheldekho_in.crt"
-ssl_keyfile = r"/home/elixir/cert/key_final.key"
+ssl_certfile = r"/home/ec2-user/cert/kheldekho_in.crt"
+ssl_keyfile = r"/home/ec2-user/cert/key_final.key"
 
 
 if __name__ == "__main__":
