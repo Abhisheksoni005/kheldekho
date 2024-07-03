@@ -1,5 +1,7 @@
 import json
 from enum import Enum
+from datetime import datetime
+
 
 def dataclass_to_dict(obj):
     if isinstance(obj, list):
@@ -18,3 +20,15 @@ def dataclass_to_dict(obj):
 def read_from_json(file_path):
     with open(file_path, "r") as file:
         return json.load(file)
+
+
+def get_datetime_parsed(date_str, time_str):
+    # Assuming current year
+    current_year = datetime.now().year
+
+    # Combining the date and time strings
+    datetime_str = f"{date_str}-{current_year} {time_str}"
+
+    # Converting to datetime object
+    datetime_object = datetime.strptime(datetime_str, "%d-%B-%Y %H:%M")
+    return datetime_object

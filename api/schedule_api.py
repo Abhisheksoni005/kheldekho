@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 from utils.data_utils import read_from_json
 
 data_store = {
@@ -8,6 +9,8 @@ data_store = {
 router = APIRouter()
 
 
-@router.get("/get", response_model=dict)
+@router.get("/get")
 def get_schedule():
-    return read_from_json("dataset/schedule.json")
+    return JSONResponse(headers={"Content-Type":"application/json",
+                             "Access-Control-Allow-Origin":"*"},
+                    content=read_from_json("dataset/schedule.json"))

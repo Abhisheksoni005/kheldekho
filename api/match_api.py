@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException
 
 from models.match_multi import MatchMulti
 from models.match_single import MatchSingle
+from service.data_parser import process_match
 
 # In-memory data store for simplicity
 data_store = {
@@ -11,9 +12,12 @@ data_store = {
 
 router = APIRouter()
 
-@router.get("/all_matches", response_model=Union[MatchSingle, MatchMulti])
+
+@router.get("/all_matches")
 def get_all_matches():
-    return data_store["matches"]
+    match_schedule = process_match("dataset/date_schedule.json")
+    return match_schedule
+
 
 @router.get("/matches/{event_name}", response_model=Union[MatchSingle, MatchMulti])
 def get_match(event_name: str):

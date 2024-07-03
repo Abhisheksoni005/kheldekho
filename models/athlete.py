@@ -22,7 +22,8 @@ class Athlete(BaseModel):
 
 # Example usage:
 if __name__ == "__main__":
-    country = Country(name="USA", code="US")
+    example_flag = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10...'
+    country = Country(name="USA", flag=example_flag, gold_medals=30, silver_medals=25, bronze_medals=20)
     example_icon = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10...'
     sport = Sport(name="Basketball", icon=example_icon)
     athlete = Athlete(

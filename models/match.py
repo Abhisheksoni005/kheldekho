@@ -14,12 +14,16 @@ class Stage(Enum):
     SEMI_FINALS = "SEMI_FINALS"
     FINAL = "FINAL"
 
+
 class Match(BaseModel):
+    sport: Sport
     event: Event
     timestamp: datetime
     is_live: bool
     stage: Stage
     notification: bool
+    match_done: bool
+    venue: str
 
 
 # Example usage:

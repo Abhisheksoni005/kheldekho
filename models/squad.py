@@ -7,8 +7,8 @@ from models.athlete import Athlete
 
 class Squad(BaseModel):
     name: str
-    size: int
-    athletes: List[Athlete]
+    size: int = 0
+    athletes: List[Athlete] = []
 
 # Example usage:
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class Sport(BaseModel):
     name: str
-    icon: bytes
+    icon: bytes = None  # Use bytes to represent Blob in Python
 
 # Example usage:
 if __name__ == "__main__":

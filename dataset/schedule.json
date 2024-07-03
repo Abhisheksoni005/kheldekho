@@ -31,13 +31,32 @@
     "regular": [],
     "medal": ["9Aug", "10Aug"]
   },
-  "Canoeing/Kayaking": {
-    "regular": ["27Jul", "30Jul", "2Aug", "3Aug", "4Aug","6Aug", "7Aug"],
-    "medal": ["28Jul", "29Jul", "31Jul",  "1Aug", "5Aug", "8Aug", "9Aug", "10Aug"]
+  "Canoe Slalom": {
+    "regular": ["27Jul", "30Jul", "2Aug", "3Aug", "4Aug"],
+    "medal": ["28Jul", "29Jul", "31Jul",  "1Aug", "5Aug"]
   },
-  "Cycling": {
-    "regular": ["30Jul", "1Aug"],
-    "medal": ["27Jul", "28Jul", "29Jul", "31Jul", "2Aug", "3Aug", "4Aug", "5Aug", "6Aug", "7Aug", "8Aug", "9Aug", "10Aug", "11Aug"]
+  "Canoe Sprint": {
+    "regular": ["6Aug", "7Aug"],
+    "medal": ["8Aug", "9Aug", "10Aug"]
+  },
+  "Cycling BMX Freestyle": {
+    "regular": ["30Jul"],
+    "medal": ["31Jul"]
+  },
+  "Cycling BMX Racing": {
+    "regular": ["1Aug"],
+    "medal": ["2Aug"]
+  },
+  "Cycling Mountain Bike": {
+    "regular": ["28Jul", "29Jul"],
+    "medal": []
+  },
+  "Cycling Road": {
+    "regular": ["27Jul", "3Aug", "4Aug"],
+    "medal": []
+  },"Cycling Track": {
+    "regular": ["5Aug", "6Aug", "7Aug", "8Aug", "9Aug", "10Aug", "11Aug"],
+    "medal": []
   },
   "Diving": {
     "regular": ["5Aug", "7Aug"],
@@ -63,13 +82,17 @@
     "regular": ["1Aug", "2Aug", "3Aug", "7Aug", "8Aug", "9Aug"],
     "medal": ["4Aug", "10Aug"]
   },
-  "Gymnastics - Artistic": {
+  "Artistic Gymnastics": {
     "regular": ["27Jul", "28Jul"],
     "medal": ["29Jul", "30Jul", "31Jul", "1Aug", "3Aug", "4Aug", "5Aug"]
   },
-  "Gymnastics - Rhythmic": {
+  "Rhythmic Gymnastics": {
     "regular": ["8Aug"],
     "medal": ["9Aug", "10Aug"]
+  },
+  "Trampoline": {
+    "regular": ["2Aug"],
+    "medal": []
   },
   "Handball": {
     "regular": ["25Jul", "27Jul", "28Jul", "29Jul", "30Jul","31Jul", "1Aug","2Aug", "3Aug", "4Aug", "6Aug", "7Aug", "8Aug", "9Aug"],
@@ -119,13 +142,9 @@
     "regular": [],
     "medal": ["27Jul", "28Jul", "29Jul", "30Jul", "31Jul", "1Aug", "2Aug", "3Aug", "4Aug"]
   },
-  "Swimming - Artistic": {
+  "Artistic Swimming": {
     "regular": ["5Aug", "6Aug", "9Aug"],
     "medal": ["7Aug", "10Aug"]
-  },
-  "Swimming - Marathon": {
-    "regular": [],
-    "medal": ["8Aug", "9Aug"]
   },
   "Table Tennis": {
     "regular": ["27Jul", "28Jul", "29Jul", "31Jul", "1Aug", "2Aug", "5Aug", "6Aug", "7Aug", "8Aug"],
@@ -143,11 +162,11 @@
     "regular": [],
     "medal": ["30Jul", "31Jul", "5Aug"]
   },
-  "Volleyball - Beach": {
+  "Beach Volleyball": {
     "regular": ["27Jul", "28Jul", "29Jul", "30Jul", "31Jul", "1Aug", "2Aug", "3Aug", "4Aug", "5Aug", "6Aug", "7Aug", "8Aug"],
     "medal": ["9Aug", "10Aug"]
   },
-  "Volleyball - Indoor": {
+  "Volleyball": {
     "regular": ["27Jul", "28Jul", "29Jul", "30Jul", "31Jul", "1Aug", "2Aug", "3Aug", "4Aug", "5Aug", "6Aug", "7Aug", "8Aug"],
     "medal": ["9Aug", "10Aug", "11Aug"]
   },
