@@ -1,3 +1,4 @@
+import json
 from typing import Union
 from fastapi import APIRouter, HTTPException
 
@@ -16,7 +17,7 @@ router = APIRouter()
 @router.get("/all_matches")
 def get_all_matches():
     match_schedule = process_match("dataset/date_schedule.json")
-    return match_schedule
+    return json.dumps(match_schedule)
 
 
 @router.get("/matches/{event_name}", response_model=Union[MatchSingle, MatchMulti])

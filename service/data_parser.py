@@ -12,7 +12,7 @@ def process_match(path):
     match_schedule = read_from_json(path)
 
     for date in match_schedule:
-        for event in match_schedule[date]:
+        for event_id, event in enumerate(match_schedule[date]):
             sport_name = event["Sport"]
             sport = Sport(name=sport_name)
 
@@ -32,8 +32,9 @@ def process_match(path):
 
             try:
                 if team_a:
-                    match_single = MatchSingle(sport=sport,
-                                               event=event_obj,
+                    match_single = MatchSingle(id=date + "_" + str(event_id),
+                                               sport=sport.name,
+                                               event=event_obj.name,
                                                timestamp=get_datetime_parsed(date, time),
                                                is_live=False,
                                                notification=False,
@@ -41,17 +42,20 @@ def process_match(path):
                                                team_a=squad_a,
                                                team_b=squad_b,
                                                venue=venue)
-                    response.append(match_single)
+                    response.append(match_single.to_json())
 
                 else:
-                    match_multi = MatchMulti(sport=sport,
-                                             event=event_obj,
+                    match_multi = MatchMulti(id=date + "_" + str(event_id),
+                                             sport=sport.name,
+                                             event=event_obj.name,
                                              timestamp=get_datetime_parsed(date, time),
                                              is_live=False,
                                              notification=False,
                                              match_done=False,
                                              venue=venue)
-                    response.append(match_multi)
+
+                    response.append(match_multi.to_json())
+
             except Exception as e:
                 print(f"Error processing event: {e}")
                 raise e

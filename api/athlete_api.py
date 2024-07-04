@@ -36,6 +36,6 @@ def update_athlete(name: str, athlete: Athlete):
         existing_athlete.date_of_birth = athlete.date_of_birth
         existing_athlete.gender = athlete.gender
         existing_athlete.country = athlete.country
-        existing_athlete.sports = athlete.sports
+        existing_athlete.sports = athlete.sport
         return existing_athlete
     raise HTTPException(status_code=404, detail="Athlete not found")

@@ -1,4 +1,3 @@
-from dataclasses import field
 from datetime import datetime
 from typing import List, Dict
 
@@ -11,8 +10,10 @@ from models.athlete import Athlete, Gender
 
 
 class MatchMulti(Match):
-    sport: Sport = None
-    event: Event = None
+    id: str = None
+    type: str = "2"
+    sport: str = None
+    event: str = None
     timestamp: datetime = None
     is_live: bool = False
     stage: Stage = None
@@ -25,6 +26,25 @@ class MatchMulti(Match):
 
     def display_logic(self):
         return self
+
+    def to_json(self):
+        return {
+            "type": self.type,
+            "sport": self.sport,
+            "event": self.event,
+            "timestamp": str(self.timestamp),
+            "is_live": self.is_live,
+            "stage": self.stage,
+            "notification": self.notification,
+            "match_done": self.match_done,
+            "venue": self.venue,
+            "number_of_squads": self.number_of_squads,
+            "squads": [squad.to_json() for squad in self.squads],
+            "ranking": self.ranking
+        }
+
+    def __str__(self):
+        return f"MatchMulti({self.to_json()})"
 
 
 # Example usage:
