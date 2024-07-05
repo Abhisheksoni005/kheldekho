@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class Sport(BaseModel):
+    id: str = None
     name: str
     icon: bytes = None  # Use bytes to represent Blob in Python
 

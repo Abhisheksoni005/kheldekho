@@ -6,7 +6,7 @@
     "bronze": 33,
     "total": 113,
     "rank": 1,
-    "flag": ""
+    "flag": "US"
   },
   {
     "name": "People's Republic of China",
@@ -15,7 +15,7 @@
     "bronze": 19,
     "total": 89,
     "rank": 2,
-    "flag": ""
+    "flag": "CN"
   },
   {
     "name": "ROC",
@@ -24,7 +24,7 @@
     "bronze": 23,
     "total": 71,
     "rank": 3,
-    "flag": ""
+    "flag": "ROC"
   },
   {
     "name": "Great Britain",
@@ -33,7 +33,7 @@
     "bronze": 22,
     "total": 64,
     "rank": 4,
-    "flag": ""
+    "flag": "GB"
   },
   {
     "name": "Japan",
@@ -42,7 +42,7 @@
     "bronze": 17,
     "total": 58,
     "rank": 5,
-    "flag": ""
+    "flag": "JP"
   },
   {
     "name": "Australia",
@@ -51,7 +51,7 @@
     "bronze": 22,
     "total": 46,
     "rank": 6,
-    "flag": ""
+    "flag": "AU"
   },
   {
     "name": "Italy",
@@ -60,7 +60,7 @@
     "bronze": 20,
     "total": 40,
     "rank": 7,
-    "flag": ""
+    "flag": "IT"
   },
   {
     "name": "Germany",
@@ -69,7 +69,7 @@
     "bronze": 16,
     "total": 37,
     "rank": 8,
-    "flag": ""
+    "flag": "DE"
   },
   {
     "name": "Netherlands",
@@ -78,7 +78,7 @@
     "bronze": 14,
     "total": 36,
     "rank": 9,
-    "flag": ""
+    "flag": "NL"
   },
   {
     "name": "France",
@@ -87,7 +87,7 @@
     "bronze": 11,
     "total": 33,
     "rank": 10,
-    "flag": ""
+    "flag": "FR"
   },
   {
     "name": "Canada",
@@ -96,7 +96,7 @@
     "bronze": 10,
     "total": 24,
     "rank": 11,
-    "flag": ""
+    "flag": "CA"
   },
   {
     "name": "Brazil",
@@ -105,7 +105,7 @@
     "bronze": 8,
     "total": 21,
     "rank": 12,
-    "flag": ""
+    "flag": "BR"
   },
   {
     "name": "New Zealand",
@@ -114,7 +114,7 @@
     "bronze": 7,
     "total": 20,
     "rank": 13,
-    "flag": ""
+    "flag": "NZ"
   },
   {
     "name": "Hungary",
@@ -123,7 +123,7 @@
     "bronze": 7,
     "total": 20,
     "rank": 14,
-    "flag": ""
+    "flag": "HU"
   },
   {
     "name": "Republic of Korea",
@@ -132,7 +132,7 @@
     "bronze": 10,
     "total": 20,
     "rank": 15,
-    "flag": ""
+    "flag": "KR"
   },
   {
     "name": "Ukraine",
@@ -141,7 +141,7 @@
     "bronze": 12,
     "total": 19,
     "rank": 16,
-    "flag": ""
+    "flag": "UA"
   },
   {
     "name": "Spain",
@@ -150,7 +150,7 @@
     "bronze": 6,
     "total": 17,
     "rank": 17,
-    "flag": ""
+    "flag": "ES"
   },
   {
     "name": "Cuba",
@@ -159,7 +159,7 @@
     "bronze": 5,
     "total": 15,
     "rank": 18,
-    "flag": ""
+    "flag": "CU"
   },
   {
     "name": "Poland",
@@ -168,7 +168,7 @@
     "bronze": 5,
     "total": 14,
     "rank": 19,
-    "flag": ""
+    "flag": "PL"
   },
   {
     "name": "Switzerland",
@@ -177,7 +177,7 @@
     "bronze": 6,
     "total": 13,
     "rank": 20,
-    "flag": ""
+    "flag": "CH"
   },
   {
     "name": "Türkiye",
@@ -186,7 +186,7 @@
     "bronze": 9,
     "total": 13,
     "rank": 21,
-    "flag": ""
+    "flag": "TR"
   },
   {
     "name": "Chinese Taipei",
@@ -195,7 +195,7 @@
     "bronze": 6,
     "total": 12,
     "rank": 22,
-    "flag": ""
+    "flag": "TW"
   },
   {
     "name": "Czechia",
@@ -204,7 +204,7 @@
     "bronze": 3,
     "total": 11,
     "rank": 23,
-    "flag": ""
+    "flag": "CZ"
   },
   {
     "name": "Denmark",
@@ -213,7 +213,7 @@
     "bronze": 4,
     "total": 11,
     "rank": 24,
-    "flag": ""
+    "flag": "DK"
   },
   {
     "name": "Kenya",
@@ -222,7 +222,7 @@
     "bronze": 2,
     "total": 10,
     "rank": 25,
-    "flag": ""
+    "flag": "KE"
   },
   {
     "name": "Jamaica",
@@ -231,7 +231,7 @@
     "bronze": 4,
     "total": 9,
     "rank": 26,
-    "flag": ""
+    "flag": "JM"
   },
   {
     "name": "Sweden",
@@ -240,7 +240,7 @@
     "bronze": 0,
     "total": 9,
     "rank": 27,
-    "flag": ""
+    "flag": "SE"
   },
   {
     "name": "Serbia",
@@ -249,7 +249,7 @@
     "bronze": 5,
     "total": 9,
     "rank": 28,
-    "flag": ""
+    "flag": "RS"
   },
   {
     "name": "Norway",
@@ -258,7 +258,7 @@
     "bronze": 2,
     "total": 8,
     "rank": 29,
-    "flag": ""
+    "flag": "NO"
   },
   {
     "name": "Croatia",
@@ -267,7 +267,7 @@
     "bronze": 2,
     "total": 8,
     "rank": 30,
-    "flag": ""
+    "flag": "HR"
   },
   {
     "name": "Georgia",
@@ -276,7 +276,7 @@
     "bronze": 1,
     "total": 8,
     "rank": 31,
-    "flag": ""
+    "flag": "GE"
   },
   {
     "name": "Kazakhstan",
@@ -285,7 +285,7 @@
     "bronze": 0,
     "total": 8,
     "rank": 32,
-    "flag": ""
+    "flag": "KZ"
   },
   {
     "name": "Islamic Republic of Iran",
@@ -294,7 +294,7 @@
     "bronze": 2,
     "total": 7,
     "rank": 33,
-    "flag": ""
+    "flag": "IR"
   },
   {
     "name": "Belgium",
@@ -303,7 +303,7 @@
     "bronze": 3,
     "total": 7,
     "rank": 34,
-    "flag": ""
+    "flag": "BE"
   },
   {
     "name": "Belarus",
@@ -312,7 +312,7 @@
     "bronze": 3,
     "total": 7,
     "rank": 35,
-    "flag": ""
+    "flag": "BY"
   },
   {
     "name": "India",
@@ -321,7 +321,7 @@
     "bronze": 4,
     "total": 7,
     "rank": 36,
-    "flag": ""
+    "flag": "IN"
   },
   {
     "name": "Austria",
@@ -329,8 +329,10 @@
     "silver": 1,
     "bronze": 5,
     "total": 7,
-    "rank": 37,
-    "flag": ""
+    "rank": 37
+
+,
+    "flag": "AT"
   },
   {
     "name": "Azerbaijan",
@@ -339,7 +341,7 @@
     "bronze": 4,
     "total": 7,
     "rank": 38,
-    "flag": ""
+    "flag": "AZ"
   },
   {
     "name": "Bulgaria",
@@ -348,7 +350,7 @@
     "bronze": 2,
     "total": 6,
     "rank": 39,
-    "flag": ""
+    "flag": "BG"
   },
   {
     "name": "Hong Kong, China",
@@ -357,7 +359,7 @@
     "bronze": 3,
     "total": 6,
     "rank": 40,
-    "flag": ""
+    "flag": "HK"
   },
   {
     "name": "Egypt",
@@ -366,7 +368,7 @@
     "bronze": 4,
     "total": 6,
     "rank": 41,
-    "flag": ""
+    "flag": "EG"
   },
   {
     "name": "Slovenia",
@@ -375,7 +377,7 @@
     "bronze": 1,
     "total": 5,
     "rank": 42,
-    "flag": ""
+    "flag": "SI"
   },
   {
     "name": "Uzbekistan",
@@ -384,7 +386,7 @@
     "bronze": 2,
     "total": 5,
     "rank": 43,
-    "flag": ""
+    "flag": "UZ"
   },
   {
     "name": "Indonesia",
@@ -393,7 +395,7 @@
     "bronze": 3,
     "total": 5,
     "rank": 44,
-    "flag": ""
+    "flag": "ID"
   },
   {
     "name": "Colombia",
@@ -402,7 +404,7 @@
     "bronze": 1,
     "total": 5,
     "rank": 45,
-    "flag": ""
+    "flag": "CO"
   },
   {
     "name": "Dominican Republic",
@@ -411,7 +413,7 @@
     "bronze": 2,
     "total": 5,
     "rank": 46,
-    "flag": ""
+    "flag": "DO"
   },
   {
     "name": "Greece",
@@ -420,7 +422,7 @@
     "bronze": 1,
     "total": 4,
     "rank": 47,
-    "flag": ""
+    "flag": "GR"
   },
   {
     "name": "Uganda",
@@ -429,7 +431,7 @@
     "bronze": 1,
     "total": 4,
     "rank": 48,
-    "flag": ""
+    "flag": "UG"
   },
   {
     "name": "Ireland",
@@ -438,7 +440,7 @@
     "bronze": 2,
     "total": 4,
     "rank": 49,
-    "flag": ""
+    "flag": "IE"
   },
   {
     "name": "Israel",
@@ -447,7 +449,7 @@
     "bronze": 2,
     "total": 4,
     "rank": 50,
-    "flag": ""
+    "flag": "IL"
   },
   {
     "name": "Romania",
@@ -456,7 +458,7 @@
     "bronze": 0,
     "total": 4,
     "rank": 51,
-    "flag": ""
+    "flag": "RO"
   },
   {
     "name": "Venezuela",
@@ -465,7 +467,7 @@
     "bronze": 0,
     "total": 4,
     "rank": 52,
-    "flag": ""
+    "flag": "VE"
   },
   {
     "name": "Philippines",
@@ -474,7 +476,7 @@
     "bronze": 1,
     "total": 4,
     "rank": 53,
-    "flag": ""
+    "flag": "PH"
   },
   {
     "name": "Slovakia",
@@ -483,7 +485,7 @@
     "bronze": 1,
     "total": 4,
     "rank": 54,
-    "flag": ""
+    "flag": "SK"
   },
   {
     "name": "Portugal",
@@ -492,7 +494,7 @@
     "bronze": 2,
     "total": 4,
     "rank": 55,
-    "flag": ""
+    "flag": "PT"
   },
   {
     "name": "Ethiopia",
@@ -501,7 +503,7 @@
     "bronze": 2,
     "total": 4,
     "rank": 56,
-    "flag": ""
+    "flag": "ET"
   },
   {
     "name": "Armenia",
@@ -510,7 +512,7 @@
     "bronze": 2,
     "total": 4,
     "rank": 57,
-    "flag": ""
+    "flag": "AM"
   },
   {
     "name": "Mongolia",
@@ -519,7 +521,7 @@
     "bronze": 3,
     "total": 4,
     "rank": 58,
-    "flag": ""
+    "flag": "MN"
   },
   {
     "name": "Mexico",
@@ -528,7 +530,7 @@
     "bronze": 0,
     "total": 4,
     "rank": 59,
-    "flag": ""
+    "flag": "MX"
   },
   {
     "name": "Ecuador",
@@ -537,7 +539,7 @@
     "bronze": 0,
     "total": 3,
     "rank": 60,
-    "flag": ""
+    "flag": "EC"
   },
   {
     "name": "Qatar",
@@ -546,7 +548,7 @@
     "bronze": 1,
     "total": 3,
     "rank": 61,
-    "flag": ""
+    "flag": "QA"
   },
   {
     "name": "South Africa",
@@ -555,7 +557,7 @@
     "bronze": 0,
     "total": 3,
     "rank": 62,
-    "flag": ""
+    "flag": "ZA"
   },
   {
     "name": "Kyrgyzstan",
@@ -564,7 +566,7 @@
     "bronze": 1,
     "total": 3,
     "rank": 63,
-    "flag": ""
+    "flag": "KG"
   },
   {
     "name": "San Marino",
@@ -573,7 +575,7 @@
     "bronze": 2,
     "total": 3,
     "rank": 64,
-    "flag": ""
+    "flag": "SM"
   },
   {
     "name": "Argentina",
@@ -582,7 +584,7 @@
     "bronze": 2,
     "total": 3,
     "rank": 65,
-    "flag": ""
+    "flag": "AR"
   },
   {
     "name": "Kosovo",
@@ -591,7 +593,7 @@
     "bronze": 0,
     "total": 2,
     "rank": 66,
-    "flag": ""
+    "flag": "XK"
   },
   {
     "name": "Bahamas",
@@ -600,7 +602,7 @@
     "bronze": 0,
     "total": 2,
     "rank": 67,
-    "flag": ""
+    "flag": "BS"
   },
   {
     "name": "Tunisia",
@@ -609,7 +611,7 @@
     "bronze": 0,
     "total": 2,
     "rank": 68,
-    "flag": ""
+    "flag": "TN"
   },
   {
     "name": "Thailand",
@@ -618,7 +620,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 69,
-    "flag": ""
+    "flag": "TH"
   },
   {
     "name": "Latvia",
@@ -627,7 +629,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 70,
-    "flag": ""
+    "flag": "LV"
   },
   {
     "name": "Fiji",
@@ -636,7 +638,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 71,
-    "flag": ""
+    "flag": "FJ"
   },
   {
     "name": "Estonia",
@@ -645,7 +647,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 72,
-    "flag": ""
+    "flag": "EE"
   },
   {
     "name": "Malaysia",
@@ -654,7 +656,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 73,
-    "flag": ""
+    "flag": "MY"
   },
   {
     "name": "Nigeria",
@@ -663,7 +665,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 74,
-    "flag": ""
+    "flag": "NG"
   },
   {
     "name": "Jordan",
@@ -672,7 +674,7 @@
     "bronze": 1,
     "total": 2,
     "rank": 75,
-    "flag": ""
+    "flag": "JO"
   },
   {
     "name": "Finland",
@@ -681,7 +683,7 @@
     "bronze": 0,
     "total": 2,
     "rank": 76,
-    "flag": ""
+    "flag": "FI"
   },
   {
     "name": "Bermuda",
@@ -690,7 +692,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 77,
-    "flag": ""
+    "flag": "BM"
   },
   {
     "name": "Puerto Rico",
@@ -699,7 +701,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 78,
-    "flag": ""
+    "flag": "PR"
   },
   {
     "name": "Morocco",
@@ -708,7 +710,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 79,
-    "flag": ""
+    "flag": "MA"
   },
   {
     "name": "Turkmenistan",
@@ -717,7 +719,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 80,
-    "flag": ""
+    "flag": "TM"
   },
   {
     "name": "Saudi Arabia",
@@ -726,7 +728,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 81,
-    "flag": ""
+    "flag": "SA"
   },
   {
     "name": "North Macedonia",
@@ -735,7 +737,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 82,
-    "flag": ""
+    "flag": "MK"
   },
   {
     "name": "Bahrain",
@@ -744,7 +746,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 83,
-    "flag": ""
+    "flag": "BH"
   },
   {
     "name": "Namibia",
@@ -753,7 +755,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 84,
-    "flag": ""
+    "flag": "NA"
   },
   {
     "name": "Lithuania",
@@ -762,7 +764,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 85,
-    "flag": ""
+    "flag": "LT"
   },
   {
     "name": "Ghana",
@@ -771,7 +773,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 86,
-    "flag": ""
+    "flag": "GH"
   },
   {
     "name": "Syrian Arab Republic",
@@ -780,7 +782,7 @@
     "bronze": 0,
     "total": 1,
     "rank": 87,
-    "flag": ""
+    "flag": "SY"
   },
   {
     "name": "Botswana",
@@ -789,7 +791,7 @@
     "bronze": 1,
     "total": 1,
     "rank": 88,
-    "flag": ""
+    "flag": "BW"
   },
   {
     "name": "Burkina Faso",
@@ -798,7 +800,7 @@
     "bronze": 1,
     "total": 1,
     "rank": 89,
-    "flag": ""
+    "flag": "BF"
   },
   {
     "name": "Grenada",
@@ -807,7 +809,7 @@
     "bronze": 1,
     "total": 1,
     "rank": 90,
-    "flag": ""
+    "flag": "GD"
   },
   {
     "name": "Republic of Moldova",
@@ -816,7 +818,7 @@
     "bronze": 1,
     "total": 1,
     "rank": 91,
-    "flag": ""
+    "flag": "MD"
   },
   {
     "name": "Côte d'Ivoire",
@@ -825,6 +827,6 @@
     "bronze": 1,
     "total": 1,
     "rank": 92,
-    "flag": ""
+    "flag": "CI"
   }
 ]

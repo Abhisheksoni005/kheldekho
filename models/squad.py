@@ -7,6 +7,7 @@ from models.sport import Sport
 
 
 class Squad(BaseModel):
+    id: str = None
     name: str
     flag: str = None
     size: int = 0

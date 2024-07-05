@@ -14,14 +14,14 @@ from api.schedule_api import router as schedule_router
 
 app = FastAPI()
 
-app.include_router(user_router, prefix="/user")
-app.include_router(event_router, prefix="/event")
-app.include_router(sport_router, prefix="/sport")
-app.include_router(match_router, prefix="/match")
-app.include_router(squad_router, prefix="/squad")
-app.include_router(country_router, prefix="/country")
-app.include_router(athlete_router, prefix="/athlete")
-app.include_router(schedule_router, prefix="/schedule")
+app.include_router(user_router, prefix="", tags=["user"])
+app.include_router(event_router, prefix="", tags=["event"])
+app.include_router(sport_router, prefix="", tags=["sport"])
+app.include_router(match_router, prefix="", tags=["match"])
+app.include_router(squad_router, prefix="", tags=["squad"])
+app.include_router(country_router, prefix="", tags=["country"])
+app.include_router(athlete_router, prefix="", tags=["athlete"])
+app.include_router(schedule_router, prefix="", tags=["schedule"])
 
 allowed_origins = ["http://localhost:3000",
                    "https://localhost:3000",

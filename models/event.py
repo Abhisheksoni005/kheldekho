@@ -3,8 +3,9 @@ from models.sport import Sport
 
 
 class Event(BaseModel):
-    parent_sport: Sport
+    id: str = None
     name: str
+    parent_sport: Sport
 
 # Example usage:
 if __name__ == "__main__":
