@@ -9,7 +9,7 @@ data_store = {
 router = APIRouter()
 
 
-@router.get("/get")
+@router.get("/schedule/get")
 def get_schedule():
     return JSONResponse(headers={"Content-Type":"application/json",
                              "Access-Control-Allow-Origin":"*"},
