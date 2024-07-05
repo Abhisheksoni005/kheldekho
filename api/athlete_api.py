@@ -11,7 +11,7 @@ data_store = {
 router = APIRouter()
 
 #TODO: update response model when actual data flows
-@router.get("/get/all", response_model=list[dict])
+@router.get("/athlete/all", response_model=list[dict])
 def get_all_athletes():
     return read_from_json("dataset/athletes.json")
 
@@ -39,3 +39,6 @@ def update_athlete(name: str, athlete: Athlete):
         existing_athlete.sports = athlete.sport
         return existing_athlete
     raise HTTPException(status_code=404, detail="Athlete not found")
+
+# @router.get("/athlete_detail/{id}"):
+
