@@ -29,7 +29,9 @@ allowed_origins = ["http://localhost:3000",
                    "http://kheldekho.in:3000",
                    "https://kheldekho.in",
                    "https://kheldekho.in:3000",
-                   "http://20.197.9.130"]
+                   "http://20.197.9.130",
+                   "http://localhost:8081",
+                   "127.0.0.1"]
 
 app.add_middleware(
     CORSMiddleware,
