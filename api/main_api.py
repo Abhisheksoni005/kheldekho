@@ -41,7 +41,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-ssl_certfile = r"/home/ec2-user/cert/kheldekho_in.crt"
+ssl_certfile = r"/home/ec2-user/cert/combined_cert.crt"
 ssl_keyfile = r"/home/ec2-user/cert/key_final.key"
 
 
