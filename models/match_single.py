@@ -38,10 +38,12 @@ class MatchSingle(Match):
     venue: str = ""
     team_a: Squad = None
     team_b: Squad = None
+    winner: str = None
     score: Score = Score.default_score()
 
     def to_json(self):
         return {
+            "id": self.id,
             "type": self.type,
             "sport": self.sport,
             "event": self.event,
@@ -53,7 +55,8 @@ class MatchSingle(Match):
             "venue": self.venue,
             "team_a": self.team_a.to_json(),
             "team_b": self.team_b.to_json(),
-            "score": self.score.to_json()
+            "score": self.score.to_json(),
+            "winner": self.winner
         }
 
     def __str__(self):

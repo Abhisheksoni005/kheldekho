@@ -29,6 +29,7 @@ class MatchMulti(Match):
 
     def to_json(self):
         return {
+            "id": self.id,
             "type": self.type,
             "sport": self.sport,
             "event": self.event,
