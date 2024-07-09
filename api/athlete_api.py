@@ -1,7 +1,10 @@
+import json
+
 from models.athlete import Athlete
 from fastapi import APIRouter, HTTPException
 
 from utils.data_utils import read_from_json
+from models.athlete_detail import AthleteDetail, Story, SocialMedia
 
 # In-memory data store for simplicity
 data_store = {
@@ -40,5 +43,31 @@ def update_athlete(name: str, athlete: Athlete):
         return existing_athlete
     raise HTTPException(status_code=404, detail="Athlete not found")
 
-# @router.get("/athlete_detail/{id}"):
 
+def get_athlete_detail_path(id):
+    return f"dataset/athlete_detail/{id}/story.json"
+
+@router.get("/athlete_detail/{id}")
+def get_athlete_detail(player_id: int):
+    path = get_athlete_detail_path(player_id)
+    try:
+        story_json = read_from_json(path)
+        story = Story.dict_to_story(story_json)
+    except Exception as e:
+        story = Story(social_media=SocialMedia())
+
+    athletes_json = read_from_json("dataset/athletes.json")
+    athlete = next((a for a in athletes_json if a["id"] == player_id), None)
+
+    response = AthleteDetail(
+        id=player_id,
+        deeplink_to_share="",
+        country=athlete["flag"],
+        flag=athlete["flag"],
+        sport=athlete["sport"],
+        profile_image_url=athlete["profile_image_url"],
+        story=story,
+        news=[]
+    )
+
+    return response.to_json()
