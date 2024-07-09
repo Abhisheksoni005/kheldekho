@@ -6,10 +6,15 @@ from models.match_single import MatchSingle
 from utils.data_utils import read_from_json, get_datetime_parsed
 
 
-def process_match(path):
+def process_match(path, date=None):
 
     response = []
     match_schedule = read_from_json(path)
+
+    if date:
+        if date not in match_schedule:
+            return response
+        match_schedule = {date: match_schedule[date]}
 
     for date in match_schedule:
         for event_id, event in enumerate(match_schedule[date]):

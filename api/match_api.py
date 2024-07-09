@@ -20,6 +20,12 @@ def get_all_matches():
     return json.dumps(match_schedule)
 
 
+@router.get("/matches/{date}/")
+def get_matches_by_date(date: str):
+    match_schedule = process_match("dataset/date_schedule.json", date=date)
+    return json.dumps(match_schedule)
+
+
 @router.get("/matches/{event_name}", response_model=Union[MatchSingle, MatchMulti])
 def get_match(event_name: str):
     match = next((m for m in data_store["matches"] if m.event.name == event_name), None)
