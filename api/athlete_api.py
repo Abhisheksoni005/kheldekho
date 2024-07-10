@@ -47,7 +47,7 @@ def update_athlete(name: str, athlete: Athlete):
 def get_athlete_detail_path(id):
     return f"dataset/athlete_detail/{id}/story.json"
 
-@router.get("/athlete_detail/{id}")
+@router.get("/athlete_detail")
 def get_athlete_detail(player_id: int):
     path = get_athlete_detail_path(player_id)
     try:
