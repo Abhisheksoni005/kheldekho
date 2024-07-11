@@ -1,4 +1,6 @@
 from models.country import Country
+from utils.data_utils import read_from_json
+from starlette.responses import JSONResponse
 from fastapi import HTTPException, APIRouter
 
 data_store = {
@@ -32,3 +34,9 @@ async def update_country(name: str, country: Country):
         existing_country.bronze_medals = country.bronze_medals
         return existing_country
     raise HTTPException(status_code=404, detail="Country not found")
+
+
+@router.get("/medals-tokyo")
+async def get_medals_tokyo():
+    medal_tally = read_from_json("dataset/medal_tokyo.json")
+    return JSONResponse(content=medal_tally)
