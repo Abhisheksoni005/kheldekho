@@ -7,10 +7,10 @@ from api.sport_api import router as sport_router
 from api.event_api import router as event_router
 from api.match_api import router as match_router
 from api.squad_api import router as squad_router
+from api.content_api import router as content_router
 from api.country_api import router as country_router
 from api.athlete_api import router as athlete_router
 from api.schedule_api import router as schedule_router
-
 
 app = FastAPI()
 
@@ -21,6 +21,7 @@ app.include_router(match_router, prefix="", tags=["match"])
 app.include_router(squad_router, prefix="", tags=["squad"])
 app.include_router(country_router, prefix="", tags=["country"])
 app.include_router(athlete_router, prefix="", tags=["athlete"])
+app.include_router(content_router, prefix="", tags=["content"])
 app.include_router(schedule_router, prefix="", tags=["schedule"])
 
 allowed_origins = ["http://localhost:3000",
