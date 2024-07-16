@@ -1,0 +1,103 @@
+sudo yum install git
+sudo yum install pip
+sudo yum install tmux
+sudo yum install npm
+
+git clone https://github.com/Abhisheksoni005/kheldekho.git
+git clone https://github.com/Abhisheksoni005/kheldekho-website.git
+
+tmux
+cd kheldekho
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python3 -m api.main_api
+exit
+
+tmux
+cd kheldekho-website
+sudo yum install npm
+npm install
+
+
+****************************************
+
+PORT=443 HTTPS=true set SSL_CRT_FILE=cert/kheldekho_in.crt SSLKEY_FILE=cert/key_final.key react-scripts start
+
+****************************************
+
+
+Hosting a website on an AWS spot instance while maintaining a fixed IP address involves a few key steps. AWS spot instances are cost-effective but can be terminated by AWS at any time if the spot price exceeds your bid. Therefore, it's important to decouple your website's IP address from the instance itself. Here’s a step-by-step guide:
+
+    Launch an AWS Spot Instance:
+        Go to the AWS Management Console.
+        Navigate to the EC2 Dashboard and click on "Spot Requests".
+        Click on "Request Spot Instances" and configure your instance as needed.
+        Ensure your instance is part of an Auto Scaling Group to handle potential interruptions.
+
+    Allocate an Elastic IP:
+        Go to the EC2 Dashboard.
+        Click on "Elastic IPs" in the left-hand menu.
+        Click on "Allocate Elastic IP address".
+        Allocate a new address.
+
+    Associate the Elastic IP with Your Instance:
+        Once the Elastic IP is allocated, select it and click on "Actions" -> "Associate Elastic IP address".
+        Choose your spot instance from the list and associate the Elastic IP.
+
+    Configure Auto Scaling Group:
+        Create an Auto Scaling Group (ASG) to manage your spot instances.
+        Go to the Auto Scaling Groups in the EC2 Dashboard.
+        Create a new ASG and configure it to use your spot instance.
+        Set the ASG to automatically replace terminated instances.
+
+    Elastic IP Reassociation Script:
+        Create a script that will reassociate the Elastic IP to any new instance that gets launched by the Auto Scaling Group.
+        Use AWS Lambda or a similar service to trigger this script whenever a new instance is launched.
+        The script should use AWS CLI commands to:
+            Identify the new instance.
+            Reassociate the Elastic IP to the new instance.
+
+Here is an example of a script that can be used in AWS Lambda to re-associate an Elastic IP:
+
+python
+
+import boto3
+
+def lambda_handler(event, context):
+    ec2 = boto3.client('ec2')
+    asg = boto3.client('autoscaling')
+
+    # Your Elastic IP allocation ID
+    elastic_ip_allocation_id = 'eipalloc-xxxxxxxxxxxxxxxxx'
+
+    # Get the list of instances in the Auto Scaling Group
+    response = asg.describe_auto_scaling_instances()
+    instances = response['AutoScalingInstances']
+
+    if instances:
+        # Get the instance ID of the newly launched instance
+        instance_id = instances[0]['InstanceId']
+
+        # Associate the Elastic IP with the new instance
+        ec2.associate_address(
+            InstanceId=instance_id,
+            AllocationId=elastic_ip_allocation_id,
+            AllowReassociation=True
+        )
+
+    return {
+        'statusCode': 200,
+        'body': 'Elastic IP reassociated successfully'
+    }
+
+    Set Up Your Website:
+        SSH into your spot instance.
+        Install and configure your web server (e.g., Apache, Nginx).
+        Deploy your website code to the instance.
+
+    Update DNS Settings:
+        Go to your domain registrar or DNS management service.
+        Update the A record to point to the Elastic IP address.
+
+By following these steps, your website will remain accessible at a fixed IP address, even if the spot instance is terminated and replaced by a new one. The Elastic IP ensures that the IP address remains the same, providing stability and reliability for your website.

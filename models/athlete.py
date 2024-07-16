@@ -8,18 +8,20 @@ from models.country import Country
 
 
 class Gender(Enum):
-    MALE = "MALE"
-    FEMALE = "FEMALE"
+    MALE = "male"
+    FEMALE = "female"
 
 
 class Athlete(BaseModel):
     id: str = None
     name: str
-    date_of_birth: datetime
-    gender: Gender
-    country: str
-    sport: Sport
+    date_of_birth: datetime = None
+    gender: Gender = None
+    country: str = None
+    sport: Sport = None
     profile_image_url: str = None
+    position: str = None
+    shirt_number: int = None
 
     def to_json(self):
         return {
@@ -29,7 +31,9 @@ class Athlete(BaseModel):
             "gender": self.gender,
             "country": self.country,
             "sports": sport.to_json(),
-            "profile_image_url": self.profile_image_url
+            "profile_image_url": self.profile_image_url,
+            "position": self.position,
+            "shirt_number": self.shirtnumber
         }
 
 

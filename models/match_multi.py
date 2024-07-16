@@ -1,11 +1,11 @@
 from datetime import datetime
-from typing import List, Dict
+from typing import List, Dict, Any
 
 from models.event import Event
 from models.sport import Sport
 from models.squad import Squad
+from models.match import Match
 from models.country import Country
-from models.match import Match, Stage
 from models.athlete import Athlete, Gender
 
 
@@ -14,15 +14,19 @@ class MatchMulti(Match):
     type: str = "2"
     sport: str = None
     event: str = None
+    gender: str = ""
+    event_id: str = None
     timestamp: datetime = None
     is_live: bool = False
-    stage: Stage = None
+    stage: str = None
     notification: bool = False
     match_done: bool = False
     venue: str = ""
+    result_url: str = ""
+    medal_round: str = "no"
     number_of_squads: int = 0
     squads: List[Squad] = []
-    ranking: Dict[str, int] = dict()
+    ranking: Dict[str, Any] = dict()
 
     def display_logic(self):
         return self
@@ -33,12 +37,16 @@ class MatchMulti(Match):
             "type": self.type,
             "sport": self.sport,
             "event": self.event,
+            "gender": self.gender,
+            "event_id": self.event_id,
             "timestamp": str(self.timestamp),
             "is_live": self.is_live,
             "stage": self.stage,
             "notification": self.notification,
             "match_done": self.match_done,
             "venue": self.venue,
+            "result_url": self.result_url,
+            "medal_round": self.medal_round,
             "number_of_squads": self.number_of_squads,
             "squads": [squad.to_json() for squad in self.squads],
             "ranking": self.ranking

@@ -6,26 +6,21 @@ from models.event import Event
 from models.sport import Sport
 
 
-class Stage(Enum):
-    QUALIFIER = "QUALIFIER"
-    GROUP_STAGE = "GROUP_STAGE"
-    RO16 = "RO16"
-    QUARTER_FINALS = "QUARTER_FINALS"
-    SEMI_FINALS = "SEMI_FINALS"
-    FINAL = "FINAL"
-
-
 class Match(BaseModel):
     id: str = None
     type: str = "0"
     sport: str
     event: str
+    event_id: str = None
     timestamp: datetime
     is_live: bool
-    stage: Stage
+    stage: str
     notification: bool
-    match_done: bool  = False
+    match_done: bool = False
+    medal_round: str = "no"
     venue: str = ""
+    result_url: str = ""
+    gender: str = ""
 
 
 # Example usage:
@@ -37,7 +32,7 @@ if __name__ == "__main__":
         event=event,
         timestamp=datetime.now(),
         is_live=True,
-        stage=Stage.FINAL,
+        stage="FINAL",
         notification=True
     )
     print(match)
