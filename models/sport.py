@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class Sport(BaseModel):
     id: str = None
     name: str
+    type: str = None
     icon: bytes = None  # Use bytes to represent Blob in Python
 
     def to_json(self):

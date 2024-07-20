@@ -1,12 +1,12 @@
+import traceback
+
 import requests
 from requests.auth import HTTPBasicAuth
 
-from models.athlete import Athlete
+from dsg_feed.event_parser.field_hockey import get_doubles_squads, get_single_squads, get_team_squads
 from models.match_multi import MatchMulti
 from models.match_single import MatchSingle
-from models.squad import Squad
-from utils.data_utils import dict_to_object, get_datetime_str, read_from_json, get_team_squads, get_single_squads, \
-    get_doubles_squads
+from utils.data_utils import dict_to_object, get_datetime_str, read_from_json
 
 BASE_API_URL = "https://dsg-api.com/clients/"
 PARIS_ID = 72
@@ -36,16 +36,29 @@ def get_event_name(gender, event):
         return event
 
 
-def get_schedule_matches(day: str = "2024-07-24"):
-    calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={TOKYO_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
-    # calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&day={day}&ftype=json"
+def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = TOKYO_ID):
+    calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
+
+    if day:
+        calendar_api += f"&day={day}"
+    if sport_name:
+        calendar_api += f"&sport={sport_name}"
+        if discipline_id:
+            calendar_api += f"&discipline_id={discipline_id}"
+
+    print(calendar_api)
+
     schedule_response = requests.get(calendar_api, auth=HTTPBasicAuth(username, password))
 
     schedule_response_json = schedule_response.json()
     schedule_obj = dict_to_object(schedule_response_json)
 
-    matches_list = schedule_obj.datasportsgroup.multisport_event.multisport_event_season.day
-    area_id_map = {}
+    season = schedule_obj.datasportsgroup.multisport_event.multisport_event_season
+    if not hasattr(season, "day"):
+        print("Day attribute not found")
+        return []
+
+    matches_list = season.day
 
     date = matches_list.date
     rounds = matches_list.rounds
@@ -116,7 +129,7 @@ def get_schedule_matches(day: str = "2024-07-24"):
                                                        result_url=result_url
                                                        )
 
-                            response.append(match_single)
+                            response.append(match_single.to_json())
 
                     # Scheduled matches (Players not decided)
                     else:
@@ -135,7 +148,7 @@ def get_schedule_matches(day: str = "2024-07-24"):
                                                    match_done=check_match_done(status),
                                                    medal_round=medal_round)
 
-                        response.append(match_single)
+                        response.append(match_single.to_json())
 
                 # Signifies MatchMulti
                 else:
@@ -168,10 +181,11 @@ def get_schedule_matches(day: str = "2024-07-24"):
                                              result_url=result_url,
                                              ranking=ranking_dict)
 
-                    response.append(match_multi)
+                    response.append(match_multi.to_json())
 
             except Exception as e:
                 print(e)
+                print(traceback.format_exc())
                 print(sport_round_index, sport_name)
                 print("Error processing event")
 

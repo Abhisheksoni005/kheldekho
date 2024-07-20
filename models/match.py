@@ -1,9 +1,5 @@
-from enum import Enum
 from datetime import datetime
 from pydantic import BaseModel
-
-from models.event import Event
-from models.sport import Sport
 
 
 class Match(BaseModel):

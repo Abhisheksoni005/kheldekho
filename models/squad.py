@@ -8,7 +8,7 @@ from models.sport import Sport
 
 class Squad(BaseModel):
     id: str = None
-    name: str
+    name: str = None
     flag: str = None
     size: int = 0
     athletes: List[Athlete] = []

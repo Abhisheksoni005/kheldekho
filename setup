@@ -16,13 +16,12 @@ exit
 
 tmux
 cd kheldekho-website
-sudo yum install npm
 npm install
-
+npm start
 
 ****************************************
 
-PORT=443 HTTPS=true set SSL_CRT_FILE=cert/kheldekho_in.crt SSLKEY_FILE=cert/key_final.key react-scripts start
+PORT=443 HTTPS=true SSL_CRT_FILE=/home/ec2-user/cert/combined_cert.crt SSL_KEY_FILE=/home/ec2-user/cert/key_final.key react-scripts start
 
 ****************************************
 

@@ -1,32 +1,10 @@
-from models.event import Event
-from fastapi import HTTPException, APIRouter
-
-data_store = {
-    "events": []
-}
+from fastapi import APIRouter
+from starlette.responses import JSONResponse
+from dsg_feed.sport_parser import get_events_for_sport_list
 
 router = APIRouter()
 
 
-@router.get("/events/{name}", response_model=Event)
-def get_event(name: str):
-    event = next((e for e in data_store["events"] if e.name == name), None)
-    if event:
-        return event
-    raise HTTPException(status_code=404, detail="Event not found")
-
-
-@router.post("/events", response_model=Event)
-def create_event(event: Event):
-    data_store["events"].append(event)
-    return event
-
-
-@router.put("/events/{name}", response_model=Event)
-def update_event(name: str, event: Event):
-    existing_event = next((e for e in data_store["events"] if e.name == name), None)
-    if existing_event:
-        existing_event.parent_sport = event.parent_sport
-        existing_event.name = event.name
-        return existing_event
-    raise HTTPException(status_code=404, detail="Event not found")
+@router.get("/events")
+def get_event_by_sport_name(sport_name: str):
+    return JSONResponse(content=get_events_for_sport_list(sport_name))

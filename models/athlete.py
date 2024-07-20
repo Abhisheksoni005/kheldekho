@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import List
 from datetime import datetime
 from pydantic import BaseModel
 
@@ -30,10 +29,10 @@ class Athlete(BaseModel):
             "date_of_birth": str(self.date_of_birth),
             "gender": self.gender,
             "country": self.country,
-            "sports": sport.to_json(),
+            "sports": self.sport.to_json() if self.sport else None,
             "profile_image_url": self.profile_image_url,
             "position": self.position,
-            "shirt_number": self.shirtnumber
+            "shirt_number": self.shirt_number
         }
 
 

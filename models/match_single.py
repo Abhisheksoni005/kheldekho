@@ -62,8 +62,8 @@ class MatchSingle(Match):
             "venue": self.venue,
             "result_url": self.result_url,
             "medal_round": self.medal_round,
-            "team_a": self.team_a.to_json(),
-            "team_b": self.team_b.to_json(),
+            "team_a": self.team_a.to_json() if self.team_a else None,
+            "team_b": self.team_b.to_json() if self.team_b else None,
             "score": self.score.to_json(),
             "winner": self.winner
         }
@@ -109,7 +109,7 @@ if __name__ == "__main__":
         event=event.name,
         timestamp=datetime.now(),
         is_live=True,
-        stage=Stage.FINAL,
+        stage="FINAL",
         notification=True,
         team_a=squad_a,
         team_b=squad_b,

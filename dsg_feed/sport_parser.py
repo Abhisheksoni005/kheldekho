@@ -1,4 +1,8 @@
 import requests
+
+from models.event import Event
+from models.sport import Sport
+from collections import defaultdict
 from requests.auth import HTTPBasicAuth
 from utils.data_utils import dict_to_object
 
@@ -11,31 +15,65 @@ password = "SdW!eH7x6&"
 AUTH_KEY = "VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh"
 
 
-athlete_api = BASE_API_URL + f"{username}/multisport/get_contestants?&id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&type=sport&type_id=athletics&ftype=json"
+# Get list of all sports with disciplines
+def get_all_sports_list():
+    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
-athlete_response = requests.get(athlete_api,
-                                 auth=HTTPBasicAuth(username, password)
-                                 )
+    sport_response = requests.get(sport_api,
+                                  auth=HTTPBasicAuth(username, password)
+                                  )
 
-response_json = athlete_response.json()
-athletes = dict_to_object(response_json)
+    response_json = sport_response.json()
+    sports = dict_to_object(response_json)
 
-events_list = athletes.datasportsgroup.multisport_event.multisport_event_season.sport
+    sports_list = sports.datasportsgroup.sport
 
-sport_name = events_list.name
-events = events_list.discipline
+    sport_response = defaultdict(list)
+    for sport_obj in sports_list:
+        sport = sport_obj.sport
 
-for event in events:
-    event_id = event.id
-    event_name = event.name
+        obj_discipline = sport_obj.discipline
+        if not isinstance(obj_discipline, list):
+            print("Discipline is not a list, casting it to list")
+            obj_discipline = [obj_discipline]
 
-    for contest in event.gender:
-        gender = contest.value
+        for discipline in obj_discipline:
+            sport_obj = Sport(id=discipline.discipline_id,
+                              name=discipline.name,
+                              type=discipline.type)
 
-        for athlete in contest.contestant:
-            athlete_id = athlete.people_id
-            athlete_name = athlete.first_name + " " + athlete.last_name
-            country = athlete.nationality_area_name
-            country_id = athlete.nationality_area_id
+            sport_response[sport].append(sport_obj)
 
+    return sport_response
+
+
+# TODO: check gender here - api is not returning gender for these disciplines
+def get_events_for_sport_list(sport_name):
+    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
+
+    sport_response = requests.get(sport_api,
+                                  auth=HTTPBasicAuth(username, password)
+                                  )
+
+    response_json = sport_response.json()
+    sports = dict_to_object(response_json)
+
+    sports_list = sports.datasportsgroup.sport
+
+    for sport_obj in sports_list:
+        if sport_obj.sport != sport_name:
+            continue
+
+        obj_discipline = sport_obj.discipline
+        if not isinstance(obj_discipline, list):
+            print("Discipline is not a list, casting it to list")
+            obj_discipline = [obj_discipline]
+
+        for discipline in obj_discipline:
+            event_obj = Event(id=discipline.discipline_id,
+                              name=discipline.name,
+                              type=discipline.type,
+                              parent_sport=sport_name)
+
+            return event_obj
 
