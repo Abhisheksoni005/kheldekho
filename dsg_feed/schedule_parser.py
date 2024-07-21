@@ -3,7 +3,7 @@ import traceback
 import requests
 from requests.auth import HTTPBasicAuth
 
-from dsg_feed.event_parser.field_hockey import get_doubles_squads, get_single_squads, get_team_squads
+from dsg_feed.event_parser.common_parser import get_doubles_squads, get_single_squads, get_team_squads
 from models.match_multi import MatchMulti
 from models.match_single import MatchSingle
 from utils.data_utils import dict_to_object, get_datetime_str, read_from_json
@@ -15,8 +15,6 @@ TOKYO_ID = 1
 username = "samarth"
 password = "SdW!eH7x6&"
 AUTH_KEY = "VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh"
-
-area_id_map = read_from_json("dataset/country_id_map.json")
 
 
 def check_is_live(match_status: str):
@@ -102,15 +100,15 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
 
                             # Doubles Type match
                             if hasattr(match, "contestant_a1_common_name"):
-                                squad_a, squad_b = get_doubles_squads(match, area_id_map)
+                                squad_a, squad_b = get_doubles_squads(match)
 
                             # Singles Type match
                             elif hasattr(match, "contestant_a_common_name"):
-                                squad_a, squad_b = get_single_squads(match, area_id_map)
+                                squad_a, squad_b = get_single_squads(match)
 
                             # Team A vs Team B Type match
                             elif hasattr(match, "team_a_name"):
-                                squad_a, squad_b = get_team_squads(match, area_id_map)
+                                squad_a, squad_b = get_team_squads(match)
 
                             # Call match object
                             match_single = MatchSingle(id=match_id,

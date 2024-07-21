@@ -1,5 +1,94 @@
+from typing import List
 from pydantic import BaseModel
 from models.squad import Squad
+
+
+class Goals(BaseModel):
+    goal_type: str = None
+    time: str = None
+    extra_time: str = None
+    athlete_name: str = None
+    athlete_id: str = None
+    score_a: str = None
+    score_b: str = None
+    period: int = None
+
+    def to_json(self):
+        return {
+            "goal_type": self.goal_type,
+            "time": self.time,
+            "extra_time": self.extra_time,
+            "athlete_name": self.athlete_name,
+            "athlete_id": self.athlete_id,
+            "score_a": self.score_a,
+            "score_b": self.score_b,
+            "period": self.period
+        }
+
+
+class Cards(BaseModel):
+    card_type: str = None
+    time: str = None
+    extra_time: str = None
+
+    athlete_name: str = None
+    athlete_id: str = None
+    country: str = None
+    country_id: str = None
+    period: int = None
+
+    def to_json(self):
+        return {
+            "card_type": self.card_type,
+            "time": self.time,
+            "extra_time": self.extra_time,
+            "athlete_name": self.athlete_name,
+            "athlete_id": self.athlete_id,
+            "country": self.country,
+            "country_id": self.country,
+            "period": self.period
+        }
+
+
+class Timeline(BaseModel):
+    period_name: str = None
+    goals: List[Goals]
+    cards: List[Cards]
+
+    def to_json(self):
+        return {
+            "period_name": self.period_name,
+            "goals": [goal.to_json() for goal in self.goals] if self.goals else None,
+            "cards": [card.to_json() for card in self.cards] if self.cards else None
+        }
+
+
+class SetScore(BaseModel):
+    set_num: int = "0"
+    match_score_a: str = "0"
+    match_score_b: str = "0"
+
+    def to_json(self):
+        return {
+            "set_num": self.set_num,
+            "match_score_a": self.match_score_a,
+            "match_score_b": self.match_score_b
+        }
+
+
+class ScoreDetails(BaseModel):
+    score_a: str = 0
+    score_b: str = 0
+    game_time: str = None
+    sets: List[SetScore] = None
+
+    def to_json(self):
+        return {
+            "score_a": self.score_a,
+            "score_b": self.score_b,
+            "game_time": self.game_time,
+            "sets": [set_score.to_json() for set_score in self.sets] if self.sets else None
+        }
 
 
 class TeamEvent(BaseModel):
@@ -7,12 +96,14 @@ class TeamEvent(BaseModel):
     event: str = None
     event_id: str = None
     gender: str = None
+    stage: str = None
 
     match_id: str = None
-    stage: str = None
     group_name: str = None
     time_utc: str = None
     venue: str = None
+    winner: str = None
+    status: str = None
 
     team_a_id: str = None
     team_a_name: str = None
@@ -29,43 +120,42 @@ class TeamEvent(BaseModel):
     substitute_a: Squad = None
     substitute_b: Squad = None
 
-    score_a: int = 0
-    score_b: int = 0
-    status: str = None
-    winner: str = None
+    score_details: ScoreDetails = None
+    timeline: List[Timeline] = None
 
-    def to_json_full(self):
+    def to_json(self):
         return {
             "sport": self.sport,
             "event": self.event,
             "event_id": self.event,
             "gender": self.gender,
-            "match_id": self.match_id,
             "stage": self.stage,
+            "match_id": self.match_id,
+
             "group_name": self.group_name,
             "time_utc": self.time_utc,
             "venue": self.venue,
+            "winner": self.winner,
+            "status": self.status,
+
             "team_a_id": self.team_a_id,
             "team_a_name": self.team_a_name,
             "team_a_country": self.team_a_country,
             "team_b_id": self.team_b_id,
             "team_b_name": self.team_b_name,
             "team_b_country": self.team_b_country,
+
             "squad_a": self.squad_a.to_json() if self.squad_a else None,
             "squad_b": self.squad_b.to_json() if self.squad_b else None,
             "coach_a": self.coach_a.to_json() if self.coach_a else None,
             "coach_b": self.coach_b.to_json() if self.coach_b else None,
             "substitute_a": self.substitute_a.to_json() if self.substitute_a else None,
             "substitute_b": self.substitute_b.to_json() if self.substitute_b else None,
-            "score_a": self.score_a,
-            "score_b": self.score_b,
-            "status": self.status,
-            "winner": self.winner
+
+            "score_details": self.score_details.to_json() if self.score_details else None,
+            "timeline": [timeline.to_json() for timeline in self.timeline] if self.timeline else None
         }
 
-    # remove null keys from json
-    def to_json(self):
-        return {k: v for k, v in self.to_json().items() if v is not None}
 
 
 
