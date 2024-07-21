@@ -19,8 +19,8 @@ class Athlete(BaseModel):
     country: str = None
     sport: Sport = None
     profile_image_url: str = None
-    position: str = None
-    shirt_number: int = None
+    position: str | None = None
+    shirt_number: str | None = None
 
     def to_json(self):
         return {
