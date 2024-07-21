@@ -44,6 +44,24 @@ def update_squads(match, event_obj):
         event_obj.substitute_b = substitute_b
 
 
+def update_team_details(match, event_obj):
+    if hasattr(match, "contestant_a1_common_name"):
+        event_obj.team_a_id = match.contestant_a1_nationality_area_id
+        event_obj.team_a_name = match.contestant_a1_nationality_area_name
+        event_obj.team_a_country = match.contestant_a1_nationality_area_code
+        event_obj.team_b_id = match.contestant_b1_nationality_area_id
+        event_obj.team_b_name = match.contestant_b1_nationality_area_name
+        event_obj.team_b_country = match.contestant_b1_nationality_area_code
+
+    elif hasattr(match, "contestant_a_common_name"):
+        event_obj.team_a_id = match.contestant_a_nationality_area_id
+        event_obj.team_a_name = match.contestant_a_nationality_area_name
+        event_obj.team_a_country = match.contestant_a_nationality_area_code
+        event_obj.team_b_id = match.contestant_b_nationality_area_id
+        event_obj.team_b_name = match.contestant_b_nationality_area_name
+        event_obj.team_b_country = match.contestant_b_nationality_area_code
+    
+
 def get_single_squads(match):
     contestant_a_id = match.contestant_a_id
     contestant_a_name = match.contestant_a_common_name

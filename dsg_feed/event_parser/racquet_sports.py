@@ -1,4 +1,4 @@
-from dsg_feed.event_parser.common_parser import update_squads, SetScore
+from dsg_feed.event_parser.common_parser import update_squads, SetScore, update_team_details
 from models.sport_models.RacquetSport import RacquetEvent, ScoreDetails
 from utils.data_utils import get_datetime_str
 
@@ -58,9 +58,11 @@ def update_score(match):
 
 
 def get_racquet_sport_details(sport, event):
-    match = event.gender.round.list.match
     badminton = get_event_details(sport, event)
-    update_squads(event, badminton)
+
+    match = event.gender.round.list.match
+    update_squads(match, badminton)
+    update_team_details(match, badminton)
     badminton.score_details = update_score(match)
 
     return badminton.to_json()

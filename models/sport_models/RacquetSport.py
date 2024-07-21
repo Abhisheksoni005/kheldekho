@@ -35,6 +35,13 @@ class RacquetEvent(BaseModel):
     squad_a: Squad = None
     squad_b: Squad = None
 
+    team_a_id: str = None
+    team_a_name: str = None
+    team_a_country: str = None
+    team_b_id: str = None
+    team_b_name: str = None
+    team_b_country: str = None
+
     score_details: ScoreDetails = None
 
     def to_json(self):
@@ -52,7 +59,14 @@ class RacquetEvent(BaseModel):
             "winner": self.winner,
             "status": self.status,
 
-            "squad_a": self.squad_a,
-            "squad_b": self.squad_b,
+            "team_a_id": self.team_a_id,
+            "team_a_name": self.team_a_name,
+            "team_a_country": self.team_a_country,
+            "team_b_id": self.team_b_id,
+            "team_b_name": self.team_b_name,
+            "team_b_country": self.team_b_country,
+
+            "squad_a": self.squad_a.to_json(),
+            "squad_b": self.squad_b.to_json(),
             "score_details": self.score_details.to_json() if self.score_details else None
         }
