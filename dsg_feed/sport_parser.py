@@ -42,7 +42,7 @@ def get_all_sports_list():
                               name=discipline.name,
                               type=discipline.type)
 
-            sport_response[sport].append(sport_obj)
+            sport_response[sport].append(sport_obj.to_json())
 
     return sport_response
 

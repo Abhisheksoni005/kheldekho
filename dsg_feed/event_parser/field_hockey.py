@@ -1,4 +1,4 @@
-from dsg_feed.event_parser.common_parser import get_lineup_squad, get_doubles_squads, get_single_squads
+from dsg_feed.event_parser.common_parser import get_lineup_squad, get_doubles_squads, get_single_squads, update_squads
 from models.sport_models.field_sports import TeamEvent, SetScore, ScoreDetails, Goals, Cards, Timeline
 from utils.data_utils import extract_number_from_string, get_datetime_str
 
@@ -195,33 +195,6 @@ def get_field_match_details(sport, event):
                           team_b_id=team_b_id,
                           team_b_name=team_b_area_name,
                           team_b_country=team_b_area_code)
-
-    return teams_obj
-
-
-def update_squads(match, teams_obj):
-    if hasattr(match, "contestant_a1_common_name"):
-        squad_a, squad_b = get_doubles_squads(match)
-        teams_obj.squad_a = squad_a
-        teams_obj.squad_b = squad_b
-
-    # Valid for badminton, tennis, beach volleyball
-    elif hasattr(match, "contestant_a_common_name"):
-        squad_a, squad_b = get_single_squads(match)
-        teams_obj.squad_a = squad_a
-        teams_obj.squad_b = squad_b
-
-    # Valid for team events - hockey, football
-    elif hasattr(match, "events"):
-        squad_a, squad_b = get_lineup_squad(match.events.lineups.event, match.team_a_id, match.team_b_id)
-        coach_a, coach_b = get_lineup_squad(match.events.coaches.event, match.team_a_id, match.team_b_id)
-        substitute_a, substitute_b = get_lineup_squad(match.events.subs_on_bench.event, match.team_a_id, match.team_b_id)
-        teams_obj.squad_a = squad_a
-        teams_obj.squad_b = squad_b
-        teams_obj.coach_a = coach_a
-        teams_obj.coach_b = coach_b
-        teams_obj.substitute_a = substitute_a
-        teams_obj.substitute_b = substitute_b
 
     return teams_obj
 

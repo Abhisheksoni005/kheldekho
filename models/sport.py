@@ -5,16 +5,10 @@ class Sport(BaseModel):
     id: str = None
     name: str
     type: str = None
-    icon: bytes = None  # Use bytes to represent Blob in Python
 
     def to_json(self):
         return {
+            "id": self.id,
             "name": self.name,
-            "icon": self.icon
+            "type": self.type
         }
-
-# Example usage:
-if __name__ == "__main__":
-    example_icon = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10...'
-    sport = Sport(name="Basketball", icon=example_icon)
-    print(sport)

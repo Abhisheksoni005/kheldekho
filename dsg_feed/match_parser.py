@@ -1,9 +1,10 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
-from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details
-from dsg_feed.event_parser.field_hockey import get_hockey_details
 from utils.data_utils import dict_to_object, read_from_json
+from dsg_feed.event_parser.field_hockey import get_hockey_details
+from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
+from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details
 
 BASE_API_URL = "https://dsg-api.com/clients/"
 PARIS_ID = 72
@@ -32,7 +33,7 @@ f_type = "json"
 url_dict = {
 # "volleyball_url" : "https://dsg-api.com/clients/samarth/volleyball/get_matches?id=1875029&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "beach_volleyball_url" : "https://dsg-api.com/clients/samarth/volleyball/get_matches?id=2531294&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
-# "badminton_singles_url" : "https://dsg-api.com/clients/samarth/badminton/get_matches?id=2522582&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
+"badminton_singles_url" : "https://dsg-api.com/clients/samarth/badminton/get_matches?id=2522582&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "tennis_doubles_url" : "https://dsg-api.com/clients/samarth/tennis/get_matches?id=2600874&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "tennis_doubles_url1" : "https://dsg-api.com/clients/samarth/tennis/get_matches?id=3397334&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "marathon_api" : "https://dsg-api.com/clients/samarth/athletics/get_results?id=54448&type=round&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth",
@@ -43,7 +44,7 @@ url_dict = {
 # "hurdle_110m" : "https://dsg-api.com/clients/samarth/athletics/get_results?id=55493&type=round&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth",
 # "pole_vault" : "https://dsg-api.com/clients/samarth/athletics/get_results?id=55400&type=round&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth",
 # "triple_jump" : "https://dsg-api.com/clients/samarth/athletics/get_results?id=54396&type=round&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth",
-"field_hockey" : "https://dsg-api.com/clients/samarth/field_hockey/get_matches?id=2352005&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
+# "field_hockey" : "https://dsg-api.com/clients/samarth/field_hockey/get_matches?id=2352005&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "soccer" : "https://dsg-api.com/clients/samarth/soccer/get_matches?id=2365900&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes"
 }
 
@@ -54,6 +55,9 @@ field_event_list = ["High Jump",
                     "Triple Jump",
                     "Pole Vault"]
 
+racquet_sport_list = ["badminton",
+                      "tennis",
+                      "table_tennis"]
 
 def parse_match(sport, event_name, event):
     details = None
@@ -69,6 +73,9 @@ def parse_match(sport, event_name, event):
 
     if sport == "field_hockey":
         details = get_hockey_details(sport, event)
+
+    if sport in racquet_sport_list:
+        details = get_racquet_sport_details(sport, event)
 
     return details
 

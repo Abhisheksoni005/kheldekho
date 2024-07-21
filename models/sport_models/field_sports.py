@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import List
 from pydantic import BaseModel
+
+from dsg_feed.event_parser.common_parser import SetScore
 from models.squad import Squad
 
 
@@ -65,19 +67,6 @@ class Timeline(BaseModel):
             "period_name": self.period_name,
             "goals": [goal.to_json() for goal in self.goals] if self.goals else None,
             "cards": [card.to_json() for card in self.cards] if self.cards else None
-        }
-
-
-class SetScore(BaseModel):
-    set_num: int = "0"
-    match_score_a: str = "0"
-    match_score_b: str = "0"
-
-    def to_json(self):
-        return {
-            "set_num": self.set_num,
-            "match_score_a": self.match_score_a,
-            "match_score_b": self.match_score_b
         }
 
 

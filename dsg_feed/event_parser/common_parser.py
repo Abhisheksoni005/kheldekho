@@ -1,8 +1,47 @@
-from models.athlete import Athlete
+from pydantic import BaseModel
 from models.squad import Squad
+from models.athlete import Athlete
 from utils.data_utils import read_from_json
 
 area_id_map = read_from_json("dataset/country_id_map.json")
+
+
+class SetScore(BaseModel):
+    set_num: int = "0"
+    match_score_a: str = "0"
+    match_score_b: str = "0"
+
+    def to_json(self):
+        return {
+            "set_num": self.set_num,
+            "match_score_a": self.match_score_a,
+            "match_score_b": self.match_score_b
+        }
+
+
+def update_squads(match, event_obj):
+    if hasattr(match, "contestant_a1_common_name"):
+        squad_a, squad_b = get_doubles_squads(match)
+        event_obj.squad_a = squad_a
+        event_obj.squad_b = squad_b
+
+    # Valid for badminton, tennis, beach volleyball
+    elif hasattr(match, "contestant_a_common_name"):
+        squad_a, squad_b = get_single_squads(match)
+        event_obj.squad_a = squad_a
+        event_obj.squad_b = squad_b
+
+    # Valid for team events - hockey, football
+    elif hasattr(match, "events"):
+        squad_a, squad_b = get_lineup_squad(match.events.lineups.event, match.team_a_id, match.team_b_id)
+        coach_a, coach_b = get_lineup_squad(match.events.coaches.event, match.team_a_id, match.team_b_id)
+        substitute_a, substitute_b = get_lineup_squad(match.events.subs_on_bench.event, match.team_a_id, match.team_b_id)
+        event_obj.squad_a = squad_a
+        event_obj.squad_b = squad_b
+        event_obj.coach_a = coach_a
+        event_obj.coach_b = coach_b
+        event_obj.substitute_a = substitute_a
+        event_obj.substitute_b = substitute_b
 
 
 def get_single_squads(match):
