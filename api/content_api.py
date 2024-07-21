@@ -8,7 +8,10 @@ router = APIRouter()
 @router.get("/trivia")
 def get_trivia(date: str, sport: str):
     trivia = read_from_json("dataset/trivia.json")
-    return JSONResponse(content=trivia[date][sport])
+    if date in trivia:
+        if sport in trivia[date]:
+            return JSONResponse(content=trivia[date][sport])
+    return JSONResponse(content={})
 
 
 @router.get("/news/home")
