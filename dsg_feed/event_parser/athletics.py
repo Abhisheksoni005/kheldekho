@@ -1,12 +1,14 @@
+import traceback
+
 from models.sport_models.athletics import Contestant, AthleticsEvent, AthleticsTeam, Team
 
 
 def get_athletics_event_details(sport, event):
     match_round = event.gender.round
     stage = match_round.name
-    time_utc = match_round.time_utc
+    time_utc = match_round.start_time_utc
 
-    group_name = match_round.list.name
+    group_name = match_round.name
     event_id = event.discipline_id
     gender = event.gender.value
     event_name = event.name
@@ -116,21 +118,24 @@ def get_athletics_team_details(team):
 # DOCME:
 
 def get_field_event_details(sport, event):
-    event_details = get_athletics_event_details(sport, event)
-    contestants_list = event.gender.round.list.contestants
+    try:
+        event_details = get_athletics_event_details(sport, event)
+        contestants_list = event.gender.round.list.contestants
 
-    for contestant in contestants_list:
-        contestant_obj = get_athletics_contestant_details(contestant)
-        attempt_keys = [key for key in dir(contestant) if key.startswith("attempt_")]
+        for contestant in contestants_list.contestant:
+            contestant_obj = get_athletics_contestant_details(contestant)
+            attempt_keys = [key for key in dir(contestant) if key.startswith("attempt_")]
 
-        for key in attempt_keys:
-            attempt = contestant.key
-            if attempt != '':
-                contestant_obj.attempt[key] = attempt
+            for key in attempt_keys:
+                attempt = getattr(contestant, key)
+                if attempt != '':
+                    contestant_obj.attempt[key] = attempt
 
-        event_details.contestant.append(contestant_obj)
+            event_details.contestant.append(contestant_obj)
+        return event_details.to_json()
 
-    return event_details
+    except:
+        print(traceback.print_exc())
 
 
 def get_marathon_details(sport, event):

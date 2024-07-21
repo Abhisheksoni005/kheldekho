@@ -50,7 +50,7 @@ url_dict = {
 
 field_event_list = ["High Jump",
                     "Javelin Throw",
-                    "Discuss Throw",
+                    "Discus Throw",
                     "Triple Jump",
                     "Pole Vault"]
 
