@@ -1,6 +1,6 @@
 from dsg_feed.event_parser.common_parser import get_lineup_squad, get_doubles_squads, get_single_squads
 from models.sport_models.field_sports import TeamEvent, SetScore, ScoreDetails, Goals, Cards, Timeline
-from utils.data_utils import extract_number_from_string
+from utils.data_utils import extract_number_from_string, get_datetime_str
 
 
 # TODO
@@ -59,10 +59,13 @@ def update_timeline(sport, match, team_a_id, team_b_id):
         if not period:
             period = -1
 
+        team = ""
         if goal.team_id == team_a_id:
             score_a += 1
+            team = "team_a"
         elif goal.team_id == team_b_id:
             score_b += 1
+            team = "team_b"
 
         new_goal = Goals(goal_type=goal_type,
                          time=time,
@@ -71,7 +74,8 @@ def update_timeline(sport, match, team_a_id, team_b_id):
                          athlete_id=athlete_id,
                          score_a=str(score_a),
                          score_b=str(score_b),
-                         period=period)
+                         period=period,
+                         team=team)
 
         all_goals.append(new_goal)
 
@@ -88,6 +92,12 @@ def update_timeline(sport, match, team_a_id, team_b_id):
         if not period:
             period = -1
 
+        team = ""
+        if goal.team_id == team_a_id:
+            team = "team_a"
+        elif goal.team_id == team_b_id:
+            team = "team_b"
+
         new_card = Cards(card_type=card_type,
                          time=time,
                          extra_time=extra_time,
@@ -95,13 +105,16 @@ def update_timeline(sport, match, team_a_id, team_b_id):
                          athlete_id=athlete_id,
                          country=country,
                          country_id=country_id,
-                         period=period)
+                         period=period,
+                         team=team)
 
         all_cards.append(new_card)
 
+    # TODO : add empty period if no event in the period
     timeline_list = []
 
-    for goal in all_goals:
+    reversed_goals = all_goals[::-1]
+    for goal in reversed_goals:
         period_name = period_name_dict.get(goal.period)
         timeline_exists = False
 
@@ -116,8 +129,9 @@ def update_timeline(sport, match, team_a_id, team_b_id):
                                 goals=[goal],
                                 cards=[])
             timeline_list.append(timeline)
-    
-    for card in all_cards:
+
+    reversed_goals = all_cards[::-1]
+    for card in reversed_goals:
         period_name = period_name_dict.get(card.period)
         timeline_exists = False
 
@@ -148,6 +162,7 @@ def get_field_match_details(sport, event):
     match = match_round.list.match
     match_id = match.match_id
     time_utc = match.time_utc
+    date = match.date_utc
     venue = match.match_extra.venue.venue_name
 
     team_a_id = match.team_a_id
@@ -169,7 +184,7 @@ def get_field_match_details(sport, event):
                           match_id=match_id,
                           stage=stage,
                           group_name=group_name,
-                          time_utc=time_utc,
+                          time_utc=get_datetime_str(date, time_utc),
                           venue=venue,
                           winner=winner,
                           status=status,

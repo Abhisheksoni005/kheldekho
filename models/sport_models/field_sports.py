@@ -12,6 +12,7 @@ class Goals(BaseModel):
     score_a: str = None
     score_b: str = None
     period: int = None
+    team: str = None
 
     def to_json(self):
         return {
@@ -22,7 +23,8 @@ class Goals(BaseModel):
             "athlete_id": self.athlete_id,
             "score_a": self.score_a,
             "score_b": self.score_b,
-            "period": self.period
+            "period": self.period,
+            "team": self.team
         }
 
 
@@ -36,6 +38,7 @@ class Cards(BaseModel):
     country: str = None
     country_id: str = None
     period: int = None
+    team: str = None
 
     def to_json(self):
         return {
@@ -46,7 +49,8 @@ class Cards(BaseModel):
             "athlete_id": self.athlete_id,
             "country": self.country,
             "country_id": self.country,
-            "period": self.period
+            "period": self.period,
+            "team": self.team
         }
 
 
