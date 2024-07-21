@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 from pydantic import BaseModel
 
@@ -41,7 +42,7 @@ class AthleticsEvent(BaseModel):
     stage: str = None
     gender: str = None
     group_name: str = None
-    time_utc: str = None
+    time_utc: datetime = None
     status: str = None
     contestant: List[Contestant] = None
 
@@ -54,7 +55,7 @@ class AthleticsEvent(BaseModel):
             "stage": self.stage,
             "gender": self.gender,
             "group_name": self.group_name,
-            "time_utc": self.time_utc,
+            "time_utc": str(self.time_utc),
             "status": self.status,
             "contestant": [contestant.to_json() for contestant in self.contestant]
         }
@@ -97,7 +98,7 @@ class AthleticsTeamEvent(BaseModel):
     stage: str
     gender: str = None
     group_name: str = None
-    time_utc: str = None
+    time_utc: datetime = None
     status: str = None
     teams: List[Team] = None
 
@@ -110,7 +111,7 @@ class AthleticsTeamEvent(BaseModel):
             "stage": self.stage,
             "gender": self.gender,
             "group_name": self.group_name,
-            "time_utc": self.time_utc,
+            "time_utc": str(self.time_utc),
             "status": self.status,
             "teams": [team.to_json() for team in self.teams]
         }
