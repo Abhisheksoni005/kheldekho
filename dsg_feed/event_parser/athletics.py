@@ -1,6 +1,6 @@
 import traceback
-
-from models.sport_models.athletics import Contestant, AthleticsEvent, AthleticsTeam, Team
+from utils.data_utils import extract_number_from_string
+from models.sport_models.athletics import Contestant, AthleticsEvent, AthleticsTeamEvent, Team
 
 
 def get_athletics_event_details(sport, event):
@@ -35,14 +35,14 @@ def get_athletics_team_event_details(sport, event):
     gender = event.gender.value
     event_name = event.name
 
-    team_obj = AthleticsTeam(sport=sport,
-                             event=event_name,
-                             event_id=event_id,
-                             stage=stage,
-                             gender=gender,
-                             group_name=group_name,
-                             time_utc=time_utc,
-                             teams=[])
+    team_obj = AthleticsTeamEvent(sport=sport,
+                                  event=event_name,
+                                  event_id=event_id,
+                                  stage=stage,
+                                  gender=gender,
+                                  group_name=group_name,
+                                  time_utc=time_utc,
+                                  teams=[])
 
     return team_obj
 
@@ -117,6 +117,20 @@ def get_athletics_team_details(team):
 # TODO: check what is length and wind here - in triple jump
 # DOCME:
 
+
+def get_attempt_list(contestant, attempt_keys):
+    attempt_list = 20 * [None]
+    for key in attempt_keys:
+        attempt = getattr(contestant, key)
+        attempt_number = extract_number_from_string(key)
+        attempt_list[attempt_number - 1] = attempt
+
+    # drop none values from the end
+    while attempt_list[-1] is None:
+        attempt_list.pop()
+    return attempt_list
+
+
 def get_field_event_details(sport, event):
     try:
         event_details = get_athletics_event_details(sport, event)
@@ -126,10 +140,8 @@ def get_field_event_details(sport, event):
             contestant_obj = get_athletics_contestant_details(contestant)
             attempt_keys = [key for key in dir(contestant) if key.startswith("attempt_")]
 
-            for key in attempt_keys:
-                attempt = getattr(contestant, key)
-                if attempt != '':
-                    contestant_obj.attempt[key] = attempt
+            attempt_list = get_attempt_list(contestant, attempt_keys)
+            contestant_obj.attempt_list = attempt_list
 
             event_details.contestant.append(contestant_obj)
         return event_details.to_json()
@@ -147,9 +159,9 @@ def get_marathon_details(sport, event):
         attempt_keys = [key for key in dir(contestant) if key.startswith("split_")]
 
         for key in attempt_keys:
-            attempt = contestant.key
+            attempt = getattr(contestant, key)
             if attempt != '':
-                contestant_obj.attempt[key] = attempt
+                contestant_obj.attempt_metadata[key] = attempt
 
         marathon.contestant.append(contestant_obj)
 
@@ -162,10 +174,10 @@ def get_hurdle_details(sport, event):
     for contestant in contestants_list:
         contestant_obj = get_athletics_contestant_details(contestant)
 
-        contestant_obj.attempt["fail_start"] = contestant.fail_start
-        contestant_obj.attempt["lane"] = contestant.lane
-        contestant_obj.attempt["reaction_time"] = contestant.reaction_time
-        contestant_obj.attempt["yellow_card"] = contestant.yellow_card
+        contestant_obj.attempt_metadata["fail_start"] = contestant.fail_start
+        contestant_obj.attempt_metadata["lane"] = contestant.lane
+        contestant_obj.attempt_metadata["reaction_time"] = contestant.reaction_time
+        contestant_obj.attempt_metadata["yellow_card"] = contestant.yellow_card
 
         hurdle.contestant.append(contestant_obj)
 
@@ -181,9 +193,9 @@ def get_relay4x400_details(sport, event):
         attempt_keys = [key for key in dir(team) if key.startswith("split_")]
 
         for key in attempt_keys:
-            attempt = team.key
+            attempt = getattr(team, key)
             if attempt != '':
-                team_obj.attempt[key] = attempt
+                team_obj.attempt_metadata[key] = attempt
 
         relay4x400.teams.append(team_obj)
 

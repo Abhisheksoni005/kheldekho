@@ -1,3 +1,4 @@
+import re
 import json
 from enum import Enum
 from typing import Any
@@ -53,3 +54,11 @@ def get_datetime_str(date_str, time_str):
     datetime_str = f"{date_str} {time_str}"
     datetime_format = "%Y-%m-%d %H:%M:%S"
     return datetime.strptime(datetime_str, datetime_format)
+
+
+def extract_number_from_string(input_string):
+    numbers = re.findall(r'\d+', input_string)
+    if numbers:
+        return int(numbers[0])
+    else:
+        return None
