@@ -1,11 +1,12 @@
 import traceback
-from utils.data_utils import extract_number_from_string
+from utils.data_utils import extract_number_from_string, get_datetime_str
 from models.sport_models.athletics import Contestant, AthleticsEvent, AthleticsTeamEvent, Team
 
 
 def get_athletics_event_details(sport, event):
     match_round = event.gender.round
     stage = match_round.name
+    date = match_round.start_date_utc
     time_utc = match_round.start_time_utc
 
     group_name = match_round.name
@@ -19,7 +20,7 @@ def get_athletics_event_details(sport, event):
                                stage=stage,
                                gender=gender,
                                group_name=group_name,
-                               time_utc=time_utc,
+                               time_utc=get_datetime_str(date, time_utc),
                                contestant=[])
 
     return high_jump
@@ -28,6 +29,7 @@ def get_athletics_event_details(sport, event):
 def get_athletics_team_event_details(sport, event):
     match_round = event.gender.round
     stage = match_round.name
+    date = match_round.start_date_utc
     time_utc = match_round.time_utc
 
     group_name = match_round.list.name
@@ -41,7 +43,7 @@ def get_athletics_team_event_details(sport, event):
                                   stage=stage,
                                   gender=gender,
                                   group_name=group_name,
-                                  time_utc=time_utc,
+                                  time_utc=get_datetime_str(date, time_utc),
                                   teams=[])
 
     return team_obj

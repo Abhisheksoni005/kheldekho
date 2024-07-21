@@ -98,6 +98,7 @@ class AthleticsTeamEvent(BaseModel):
     gender: str = None
     group_name: str = None
     time_utc: str = None
+    status: str = None
     teams: List[Team] = None
 
     def to_json(self):
@@ -110,6 +111,7 @@ class AthleticsTeamEvent(BaseModel):
             "gender": self.gender,
             "group_name": self.group_name,
             "time_utc": self.time_utc,
+            "status": self.status,
             "teams": [team.to_json() for team in self.teams]
         }
 
