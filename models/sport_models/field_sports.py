@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 from pydantic import BaseModel
 from models.squad import Squad
@@ -104,7 +105,7 @@ class TeamEvent(BaseModel):
 
     match_id: str = None
     group_name: str = None
-    time_utc: str = None
+    time_utc: datetime = None
     venue: str = None
     winner: str = None
     status: str = None
@@ -137,7 +138,7 @@ class TeamEvent(BaseModel):
             "match_id": self.match_id,
 
             "group_name": self.group_name,
-            "time_utc": self.time_utc,
+            "time_utc": str(self.time_utc),
             "venue": self.venue,
             "winner": self.winner,
             "status": self.status,
