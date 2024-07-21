@@ -14,5 +14,5 @@ def get_matches(date: str = None, sport: str = None, event_id: str = None, olymp
 
 
 @router.get("/match/detail")
-def get_match_results(sport: str, result_ur: str):
-    return JSONResponse(content=get_match_details(sport, result_ur))
+def get_match_results(sport: str, result_url: str):
+    return JSONResponse(content=get_match_details(sport, result_url))
