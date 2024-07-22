@@ -13,8 +13,8 @@ AUTH_KEY = "VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh"
 
 
 def parse_knockouts(sport_name, event_name, rounds, gender):
-    groups = {}
-    knockouts = {}
+    groups = []
+    knockouts = []
 
     for match_round in rounds:
         round_name = match_round.name
@@ -68,7 +68,9 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
 
                     group_matches_list.append(match_single.to_json())
 
-                groups[group_name] = group_matches_list
+                group_match = {"name": group_name,
+                               "matches": group_matches_list}
+                groups.append(group_match)
 
         else:
             knockout_matches_list = []
@@ -119,7 +121,9 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
 
                 knockout_matches_list.append(match_single.to_json())
 
-            knockouts[round_name] = knockout_matches_list
+            knockout_round = {"name": round_name,
+                              "matches": knockout_matches_list}
+            knockouts.append(knockout_round)
 
     return {"groups": groups, "knockouts": knockouts}
 
