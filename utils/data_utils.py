@@ -51,6 +51,12 @@ def get_datetime_parsed(date_str, time_str):
 
 
 def get_datetime_str(date_str, time_str):
+    if not date_str:
+        # Use the current date when date_str is None
+        current_date_str = datetime.now().strftime("%Y-%m-%d")
+        datetime_str = f"{current_date_str} {time_str}"
+        return datetime_str
+
     datetime_str = f"{date_str} {time_str}"
     datetime_format = "%Y-%m-%d %H:%M:%S"
     return datetime.strptime(datetime_str, datetime_format)

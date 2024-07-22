@@ -71,13 +71,19 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
         print("Day attribute not found")
         return []
 
-    matches_list = season.day
-
-    date = matches_list.date
-    rounds = matches_list.rounds
+    rounds = []
+    if day is None:
+        date = None
+        for day in season.day:
+            matches_list = day
+            rounds += matches_list.rounds
+    else:
+        matches_list = season.day
+        date = matches_list.date
+        rounds = matches_list.rounds
 
     if not isinstance(rounds, list):
-        print(date)
+        print("Date: ", date)
         print("Rounds is not a list, casting it to list")
         rounds = [rounds]
 
