@@ -194,11 +194,13 @@ def get_doubles_squads(match):
     squad_a = Squad(id=contestant_a1_nationality_id,
                     name=contestant_a1_nationality,
                     size=2,
+                    flag=get_country_code(contestant_a1_nationality_id),
                     athletes=[athlete_a1, athlete_a2])
 
     squad_b = Squad(id=contestant_b1_nationality_id,
                     name=contestant_b1_nationality,
                     size=2,
+                    flag=get_country_code(contestant_b1_nationality_id),
                     athletes=[athlete_b1, athlete_b2])
 
     return squad_a, squad_b
@@ -208,12 +210,12 @@ def get_team_squads(match):
     team_a_id = match.team_a_id
     team_a_name = match.team_a_area_name
     team_a_country_id = match.team_a_area_id
-    team_a_country_code = match.team_a_area_code
+    team_a_country_code = get_country_code(match.team_a_area_id)
 
     team_b_id = match.team_b_area_id
     team_b_name = match.team_b_area_name
     team_b_country_id = match.team_b_area_id
-    team_b_country_code = match.team_b_area_code
+    team_b_country_code = get_country_code(match.team_a_area_id)
 
     if team_a_name not in area_id_map:
         area_id_map[team_a_name] = team_a_country_id
@@ -228,10 +230,12 @@ def get_team_squads(match):
             print("Mismatch in nationality id")
 
     squad_a = Squad(id=team_a_country_id,
-                    name=team_a_name)
+                    name=team_a_name,
+                    flag=team_a_country_code)
 
     squad_b = Squad(id=team_b_country_id,
-                    name=team_b_name)
+                    name=team_b_name,
+                    flag=team_b_country_code)
 
     return squad_a, squad_b
 
