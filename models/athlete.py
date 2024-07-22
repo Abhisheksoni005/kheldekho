@@ -17,7 +17,9 @@ class Athlete(BaseModel):
     date_of_birth: datetime = None
     gender: Gender = None
     country: str = None
-    sport: Sport = None
+    country_code: str = None
+    sport: str = None
+    event: str = None
     profile_image_url: str = None
     position: str = None
     shirt_number: str = None
@@ -29,7 +31,9 @@ class Athlete(BaseModel):
             "date_of_birth": str(self.date_of_birth),
             "gender": self.gender,
             "country": self.country,
-            "sports": self.sport.to_json() if self.sport else None,
+            "country_code": self.country_code,
+            "sports": self.sport,
+            "event": self.event,
             "profile_image_url": self.profile_image_url,
             "position": self.position,
             "shirt_number": self.shirt_number
@@ -48,7 +52,7 @@ if __name__ == "__main__":
         date_of_birth=datetime(1990, 1, 1),
         gender=Gender.MALE,
         country=country.name,
-        sport=sport,
+        sport=sport.name,
         profile_image_url="https://example.com/profile.jpg"
     )
     print(athlete)
