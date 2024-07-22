@@ -1,4 +1,4 @@
-from dsg_feed.event_parser.common_parser import get_lineup_squad, get_doubles_squads, get_single_squads, update_squads
+from dsg_feed.event_parser.common_parser import update_squads
 from models.sport_models.field_sports import TeamEvent, SetScore, ScoreDetails, Goals, Cards, Timeline
 from utils.data_utils import extract_number_from_string, get_datetime_str
 

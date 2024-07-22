@@ -6,6 +6,12 @@ from utils.data_utils import read_from_json
 area_id_map = read_from_json("dataset/country_id_map.json")
 
 
+def get_country_code(winner_nationality_id):
+    if winner_nationality_id in area_id_map:
+        return area_id_map[winner_nationality_id].code
+    return None
+
+
 class SetScore(BaseModel):
     set_num: int = "0"
     match_score_a: str = "0"
@@ -73,16 +79,18 @@ def get_single_squads(match):
     contestant_b_nationality = match.contestant_b_nationality_area_name
     contestant_b_nationality_id = match.contestant_b_nationality_area_id
 
-    if contestant_a_nationality not in area_id_map:
-        area_id_map[contestant_a_nationality] = contestant_a_nationality_id
+    if contestant_a_nationality_id not in area_id_map:
+        print(contestant_a_nationality_id, contestant_a_nationality)
+        raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_a_nationality] != contestant_a_nationality_id:
+        if area_id_map[contestant_a_nationality_id].name != contestant_a_nationality:
             print("Mismatch in nationality id")
 
     if contestant_b_nationality not in area_id_map:
-        area_id_map[contestant_b_nationality] = contestant_b_nationality_id
+        print(contestant_b_nationality_id, contestant_b_nationality)
+        raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_b_nationality] != contestant_b_nationality_id:
+        if area_id_map[contestant_b_nationality_id].name != contestant_b_nationality:
             print("Mismatch in nationality id")
 
     athlete_a = Athlete(id=contestant_a_id, name=contestant_a_name)
@@ -142,30 +150,34 @@ def get_doubles_squads(match):
         print("Error in Doubles Type Match")
 
     if contestant_a1_nationality not in area_id_map:
-        area_id_map[contestant_a1_nationality] = contestant_a1_nationality_id
+        print(contestant_a1_nationality_id, contestant_a1_nationality)
+        raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_a1_nationality] != contestant_a1_nationality_id:
+        if area_id_map[contestant_a1_nationality_id].name != contestant_a1_nationality:
             print("Mismatch in nationality id")
 
     if contestant_a2_nationality not in area_id_map:
-        area_id_map[contestant_a2_nationality] = contestant_a2_nationality_id
+        print(contestant_a2_nationality_id, contestant_a2_nationality)
+        raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_a2_nationality] != contestant_a2_nationality_id:
+        if area_id_map[contestant_a2_nationality_id].name != contestant_a2_nationality_id:
             print("Mismatch in nationality id")
 
     if contestant_b1_nationality_id != contestant_b2_nationality_id:
         print("Error in Doubles Type Match")
 
     if contestant_b1_nationality not in area_id_map:
-        area_id_map[contestant_b1_nationality] = contestant_b1_nationality_id
+        print(contestant_b1_nationality_id, contestant_b1_nationality)
+        raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_b1_nationality] != contestant_b1_nationality_id:
+        if area_id_map[contestant_b1_nationality_id].name != contestant_b1_nationality:
             print("Mismatch in nationality id")
 
     if contestant_b2_nationality not in area_id_map:
-        area_id_map[contestant_b2_nationality] = contestant_b2_nationality_id
+        print(contestant_b2_nationality_id, contestant_b2_nationality)
+        raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_b2_nationality] != contestant_b2_nationality_id:
+        if area_id_map[contestant_b2_nationality_id].name != contestant_b2_nationality:
             print("Mismatch in nationality id")
 
     athlete_a1 = Athlete(id=contestant_a1_id, name=contestant_a1_name)

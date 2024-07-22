@@ -3,7 +3,7 @@ import traceback
 import requests
 from requests.auth import HTTPBasicAuth
 
-from dsg_feed.event_parser.common_parser import get_doubles_squads, get_single_squads, get_team_squads
+from dsg_feed.event_parser.common_parser import get_doubles_squads, get_single_squads, get_team_squads, get_country_code
 from models.match_multi import MatchMulti
 from models.match_single import MatchSingle
 from utils.data_utils import dict_to_object, get_datetime_str, read_from_json
@@ -32,6 +32,9 @@ def get_event_name(gender, event):
         return f"Women's {event}"
     else:
         return event
+
+
+
 
 
 def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = TOKYO_ID):
@@ -163,7 +166,8 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                         "1" : {
                             "winner": winner_name,
                             "winner_country": winner_nationality,
-                            "winner_country_id": winner_nationality_id
+                            "winner_country_id": winner_nationality_id,
+                            "winner_country_code": get_country_code(winner_nationality_id)
                         }
                     }
 

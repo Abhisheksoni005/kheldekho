@@ -1,7 +1,6 @@
 import requests
 from requests.auth import HTTPBasicAuth
-
-from utils.data_utils import dict_to_object, read_from_json
+from utils.data_utils import dict_to_object
 from dsg_feed.event_parser.field_hockey import get_hockey_details
 from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
 from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details
@@ -13,8 +12,6 @@ TOKYO_ID = 1
 username = "samarth"
 password = "SdW!eH7x6&"
 AUTH_KEY = "VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh"
-
-area_id_map = read_from_json("dataset/country_id_map.json")
 
 
 sport_list = ['archery', 'artistic_swimming', 'athletics', 'badminton', 'baseball', 'basketball',
