@@ -31,6 +31,9 @@ def update_score(match):
 
 def update_timeline(sport, match, team_a_id, team_b_id):
 
+    if sport == "volleyball":
+        return []
+
     if sport == "field_hockey":
         period_name_dict = {1 : "1st Quarter",
                             2 : "2nd Quarter",
@@ -199,13 +202,13 @@ def get_field_match_details(sport, event):
     return teams_obj
 
 
-def get_hockey_details(sport, event):
-    hockey = get_field_match_details(sport, event)
+def get_team_match_details(sport, event):
+    team_match = get_field_match_details(sport, event)
 
     match = event.gender.round.list.match
 
-    update_squads(match, hockey)
-    hockey.score_details = update_score(match)
-    hockey.timeline = update_timeline(sport, match, hockey.team_a_id, hockey.team_b_id)
+    update_squads(match, team_match)
+    team_match.score_details = update_score(match)
+    team_match.timeline = update_timeline(sport, match, team_match.team_a_id, team_match.team_b_id)
 
-    return hockey.to_json()
+    return team_match.to_json()

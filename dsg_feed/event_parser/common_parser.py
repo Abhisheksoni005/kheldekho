@@ -37,7 +37,7 @@ def update_squads(match, event_obj):
         event_obj.squad_a = squad_a
         event_obj.squad_b = squad_b
 
-    # Valid for team events - hockey, football
+    # Valid for team events - hockey, football, volleyball
     elif hasattr(match, "events"):
         squad_a, squad_b = get_lineup_squad(match.events.lineups.event, match.team_a_id, match.team_b_id)
         coach_a, coach_b = get_lineup_squad(match.events.coaches.event, match.team_a_id, match.team_b_id)
@@ -86,7 +86,7 @@ def get_single_squads(match):
         if area_id_map[contestant_a_nationality_id]["name"] != contestant_a_nationality:
             print("Mismatch in nationality id")
 
-    if contestant_b_nationality not in area_id_map:
+    if contestant_b_nationality_id not in area_id_map:
         print(contestant_b_nationality_id, contestant_b_nationality)
         raise Exception("New nationality found")
     else:
@@ -149,31 +149,31 @@ def get_doubles_squads(match):
     if contestant_a1_nationality_id != contestant_a2_nationality_id:
         print("Error in Doubles Type Match")
 
-    if contestant_a1_nationality not in area_id_map:
+    if contestant_a1_nationality_id not in area_id_map:
         print(contestant_a1_nationality_id, contestant_a1_nationality)
         raise Exception("New nationality found")
     else:
         if area_id_map[contestant_a1_nationality_id]["name"] != contestant_a1_nationality:
             print("Mismatch in nationality id")
 
-    if contestant_a2_nationality not in area_id_map:
+    if contestant_a2_nationality_id not in area_id_map:
         print(contestant_a2_nationality_id, contestant_a2_nationality)
         raise Exception("New nationality found")
     else:
-        if area_id_map[contestant_a2_nationality_id]["name"] != contestant_a2_nationality_id:
+        if area_id_map[contestant_a2_nationality_id]["name"] != contestant_a2_nationality:
             print("Mismatch in nationality id")
 
     if contestant_b1_nationality_id != contestant_b2_nationality_id:
         print("Error in Doubles Type Match")
 
-    if contestant_b1_nationality not in area_id_map:
+    if contestant_b1_nationality_id not in area_id_map:
         print(contestant_b1_nationality_id, contestant_b1_nationality)
         raise Exception("New nationality found")
     else:
         if area_id_map[contestant_b1_nationality_id]["name"] != contestant_b1_nationality:
             print("Mismatch in nationality id")
 
-    if contestant_b2_nationality not in area_id_map:
+    if contestant_b2_nationality_id not in area_id_map:
         print(contestant_b2_nationality_id, contestant_b2_nationality)
         raise Exception("New nationality found")
     else:

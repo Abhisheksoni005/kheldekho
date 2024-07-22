@@ -58,11 +58,11 @@ def update_score(match):
 
 
 def get_racquet_sport_details(sport, event):
-    badminton = get_event_details(sport, event)
+    sport_details = get_event_details(sport, event)
 
     match = event.gender.round.list.match
-    update_squads(match, badminton)
-    update_team_details(match, badminton)
-    badminton.score_details = update_score(match)
+    update_squads(match, sport_details)
+    update_team_details(match, sport_details)
+    sport_details.score_details = update_score(match)
 
-    return badminton.to_json()
+    return sport_details.to_json()

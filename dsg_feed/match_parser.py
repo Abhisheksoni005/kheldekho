@@ -1,7 +1,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 from utils.data_utils import dict_to_object
-from dsg_feed.event_parser.field_hockey import get_hockey_details
+from dsg_feed.event_parser.field_sports import get_team_match_details
 from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
 from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details
 
@@ -28,9 +28,9 @@ f_type = "json"
 # result_url = 'https://dsg-api.com/clients/samarth/badminton/get_matches?id=3337130&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes'
 
 url_dict = {
-# "volleyball_url" : "https://dsg-api.com/clients/samarth/volleyball/get_matches?id=1875029&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
+"volleyball_url" : "https://dsg-api.com/clients/samarth/volleyball/get_matches?id=1875029&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "beach_volleyball_url" : "https://dsg-api.com/clients/samarth/volleyball/get_matches?id=2531294&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
-"badminton_singles_url" : "https://dsg-api.com/clients/samarth/badminton/get_matches?id=2522582&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
+# "badminton_singles_url" : "https://dsg-api.com/clients/samarth/badminton/get_matches?id=2522582&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "tennis_doubles_url" : "https://dsg-api.com/clients/samarth/tennis/get_matches?id=2600874&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "tennis_doubles_url1" : "https://dsg-api.com/clients/samarth/tennis/get_matches?id=3397334&type=match&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth&detailed=yes",
 # "marathon_api" : "https://dsg-api.com/clients/samarth/athletics/get_results?id=54448&type=round&authkey=VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh&client=samarth",
@@ -56,6 +56,13 @@ racquet_sport_list = ["badminton",
                       "tennis",
                       "table_tennis"]
 
+racquet_event_list = ["Beach Volleyball"]
+
+team_sports = ["soccer",
+               "field_hockey",
+               "volleyball"]
+
+
 def parse_match(sport, event_name, event):
     details = None
     if sport == "athletics":
@@ -68,11 +75,13 @@ def parse_match(sport, event_name, event):
         if event_name == "4x400 Metres Relay":
             details = get_marathon_details(sport, event)
 
-    if sport == "field_hockey":
-        details = get_hockey_details(sport, event)
-
-    if sport in racquet_sport_list:
+    elif sport in racquet_sport_list or event_name in racquet_event_list:
         details = get_racquet_sport_details(sport, event)
+
+    elif sport in team_sports:
+        details = get_team_match_details(sport, event)
+
+
 
     return details
 
