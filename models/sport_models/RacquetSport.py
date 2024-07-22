@@ -52,7 +52,7 @@ class RacquetEvent(BaseModel):
             "event_id": self.event,
             "gender": self.gender,
             "stage": self.stage,
-            "season_id": self.season,
+            "season_id": self.season_id,
 
             "match_id": self.match_id,
             "group_name": self.group_name,
