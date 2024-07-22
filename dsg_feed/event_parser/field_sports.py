@@ -31,6 +31,20 @@ def update_score(match):
     return score_details
 
 
+def merge_timeline_objects(timeline_list):
+    merged_list = []
+    for timeline_obj in timeline_list:
+        events = []
+        events.extend(timeline_obj.goals)
+        events.extend(timeline_obj.cards)
+        events.extend(timeline_obj.shootouts)
+
+        events.sort(key=lambda x: (int(x.time.split('+')[0]), int(x.extra_time or 0)), reverse=True)
+        merged_list.append(events)
+
+    return merged_list
+
+
 def update_timeline(sport, match, team_a_id, team_b_id):
 
     if sport == "volleyball":
@@ -204,7 +218,9 @@ def update_timeline(sport, match, team_a_id, team_b_id):
                                 cards=[card])
             timeline_list.append(timeline)
 
-    return timeline_list
+    merged_timeline_list = merge_timeline_objects(timeline_list)
+
+    return merged_timeline_list
 
 
 def get_field_match_details(sport, event):
