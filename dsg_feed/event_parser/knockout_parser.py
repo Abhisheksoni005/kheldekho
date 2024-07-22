@@ -181,6 +181,11 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
                 elif hasattr(match, "team_a_name"):
                     squad_a, squad_b = get_team_squads(match)
 
+                score_a = match.score_a
+                score_b = match.score_b
+                score = Score(score_a=score_a,
+                              score_b=score_b)
+
                 match_single = MatchSingle(id=match_id,
                                            sport=sport_name,
                                            gender=gender,
@@ -195,6 +200,7 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
 
                                            team_a=squad_a,
                                            team_b=squad_b,
+                                           score=score,
                                            result_url=result_url
                                            )
 
