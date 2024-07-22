@@ -215,7 +215,7 @@ def get_team_squads(match):
     team_b_id = match.team_b_area_id
     team_b_name = match.team_b_area_name
     team_b_country_id = match.team_b_area_id
-    team_b_country_code = get_country_code(match.team_a_area_id)
+    team_b_country_code = get_country_code(match.team_b_area_id)
 
     if team_a_name not in area_id_map:
         area_id_map[team_a_name] = team_a_country_id
