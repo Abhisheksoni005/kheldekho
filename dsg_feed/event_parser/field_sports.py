@@ -47,71 +47,103 @@ def update_timeline(sport, match, team_a_id, team_b_id):
                             -1 : "Extra Time"}
 
     goal = match.events.scores
+    penalty = match.events.shootout
     card = match.events.bookings
 
     all_goals = []
     score_a = 0
     score_b = 0
-    for goal in goal.event:
-        goal_type = goal.type
-        time = goal.minute
-        extra_time = goal.minute_extra
-        athlete_name = goal.common_name
-        athlete_id = goal.people_id
-        period = extract_number_from_string(goal.period)
-        if not period:
-            period = -1
 
-        team = ""
-        if goal.team_id == team_a_id:
-            score_a += 1
-            team = "team_a"
-        elif goal.team_id == team_b_id:
-            score_b += 1
-            team = "team_b"
+    if hasattr(goal, "event"):
+        for goal in goal.event:
+            goal_type = goal.type
+            time = goal.minute
+            extra_time = goal.minute_extra
+            athlete_name = goal.common_name
+            athlete_id = goal.people_id
+            period = extract_number_from_string(goal.period)
+            if not period:
+                period = -1
 
-        new_goal = Goals(goal_type=goal_type,
-                         time=time,
-                         extra_time=extra_time,
-                         athlete_name=athlete_name,
-                         athlete_id=athlete_id,
-                         score_a=str(score_a),
-                         score_b=str(score_b),
-                         period=period,
-                         team=team)
+            team = ""
+            if goal.team_id == team_a_id:
+                score_a += 1
+                team = "team_a"
+            elif goal.team_id == team_b_id:
+                score_b += 1
+                team = "team_b"
 
-        all_goals.append(new_goal)
+            new_goal = Goals(goal_type=goal_type,
+                             time=time,
+                             extra_time=extra_time,
+                             athlete_name=athlete_name,
+                             athlete_id=athlete_id,
+                             score_a=str(score_a),
+                             score_b=str(score_b),
+                             period=period,
+                             team=team)
+
+            all_goals.append(new_goal)
+
+    shootouts = []
+    if hasattr(penalty, "event"):
+        for penalty in penalty.event:
+            goal_type = penalty.type
+            time = penalty.minute
+            extra_time = penalty.minute_extra
+            athlete_name = penalty.common_name
+            athlete_id = penalty.people_id
+            period = extract_number_from_string(penalty.period)
+            if not period:
+                period = -1
+
+            team = ""
+            if penalty.team_id == team_a_id:
+                team = "team_a"
+            elif penalty.team_id == team_b_id:
+                team = "team_b"
+
+            new_goal = Goals(goal_type=goal_type,
+                             time=time,
+                             extra_time=extra_time,
+                             athlete_name=athlete_name,
+                             athlete_id=athlete_id,
+                             period=period,
+                             team=team)
+
+            shootouts.append(new_goal)
 
     all_cards = []
-    for card in card.event:
-        card_type = card.type
-        time = card.minute
-        extra_time = card.minute_extra
-        athlete_name = card.common_name
-        athlete_id = card.people_id
-        country = card.nationality
-        country_id = card.team_id
-        period = extract_number_from_string(card.period)
-        if not period:
-            period = -1
+    if hasattr(card, "event"):
+        for card in card.event:
+            card_type = card.type
+            time = card.minute
+            extra_time = card.minute_extra
+            athlete_name = card.common_name
+            athlete_id = card.people_id
+            country = card.nationality
+            country_id = card.team_id
+            period = extract_number_from_string(card.period)
+            if not period:
+                period = -1
 
-        team = ""
-        if goal.team_id == team_a_id:
-            team = "team_a"
-        elif goal.team_id == team_b_id:
-            team = "team_b"
+            team = ""
+            if card.team_id == team_a_id:
+                team = "team_a"
+            elif card.team_id == team_b_id:
+                team = "team_b"
 
-        new_card = Cards(card_type=card_type,
-                         time=time,
-                         extra_time=extra_time,
-                         athlete_name=athlete_name,
-                         athlete_id=athlete_id,
-                         country=country,
-                         country_id=country_id,
-                         period=period,
-                         team=team)
+            new_card = Cards(card_type=card_type,
+                             time=time,
+                             extra_time=extra_time,
+                             athlete_name=athlete_name,
+                             athlete_id=athlete_id,
+                             country=country,
+                             country_id=country_id,
+                             period=period,
+                             team=team)
 
-        all_cards.append(new_card)
+            all_cards.append(new_card)
 
     # TODO : add empty period if no event in the period
     timeline_list = []
@@ -130,6 +162,25 @@ def update_timeline(sport, match, team_a_id, team_b_id):
         if not timeline_exists:
             timeline = Timeline(period_name=period_name,
                                 goals=[goal],
+                                shootouts=[],
+                                cards=[])
+            timeline_list.append(timeline)
+
+    reversed_pens = shootouts[::-1]
+    for goal in reversed_pens:
+        period_name = "Penalty Shootout"
+        timeline_exists = False
+
+        for timeline in timeline_list:
+            if timeline.period_name == period_name:
+                timeline.shootouts.append(goal)
+                timeline_exists = True
+                break
+
+        if not timeline_exists:
+            timeline = Timeline(period_name=period_name,
+                                goals=[],
+                                shootouts=[goal],
                                 cards=[])
             timeline_list.append(timeline)
 
@@ -147,6 +198,7 @@ def update_timeline(sport, match, team_a_id, team_b_id):
         if not timeline_exists:
             timeline = Timeline(period_name=period_name,
                                 goals=[],
+                                shootouts=[],
                                 cards=[card])
             timeline_list.append(timeline)
 

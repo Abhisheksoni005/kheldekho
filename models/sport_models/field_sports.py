@@ -61,12 +61,14 @@ class Timeline(BaseModel):
     period_name: str = None
     goals: List[Goals]
     cards: List[Cards]
+    shootouts: List[Goals]
 
     def to_json(self):
         return {
             "period_name": self.period_name,
             "goals": [goal.to_json() for goal in self.goals] if self.goals else None,
-            "cards": [card.to_json() for card in self.cards] if self.cards else None
+            "cards": [card.to_json() for card in self.cards] if self.cards else None,
+            "shootouts": [shootout.to_json() for shootout in self.shootouts] if self.shootouts else None
         }
 
 
