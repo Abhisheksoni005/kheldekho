@@ -76,7 +76,11 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
         date = None
         for day in season.day:
             matches_list = day
-            rounds += matches_list.rounds
+            list_rounds = matches_list.rounds
+            if not isinstance(list_rounds, list):
+                print("Rounds is not a list, casting it to list")
+                list_rounds = [list_rounds]
+            rounds += list_rounds
     else:
         matches_list = season.day
         date = matches_list.date
