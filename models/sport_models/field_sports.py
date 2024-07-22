@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import List, Union
 from pydantic import BaseModel
 
 from dsg_feed.event_parser.common_parser import SetScore
@@ -7,6 +7,7 @@ from models.squad import Squad
 
 
 class Goals(BaseModel):
+    type: str = "goal"
     goal_type: str = None
     time: str = None
     extra_time: str = None
@@ -19,6 +20,7 @@ class Goals(BaseModel):
 
     def to_json(self):
         return {
+            "type": self.type,
             "goal_type": self.goal_type,
             "time": self.time,
             "extra_time": self.extra_time,
@@ -32,6 +34,7 @@ class Goals(BaseModel):
 
 
 class Cards(BaseModel):
+    type: str = "card"
     card_type: str = None
     time: str = None
     extra_time: str = None
@@ -45,6 +48,7 @@ class Cards(BaseModel):
 
     def to_json(self):
         return {
+            "type": self.type,
             "card_type": self.card_type,
             "time": self.time,
             "extra_time": self.extra_time,
@@ -87,6 +91,17 @@ class ScoreDetails(BaseModel):
         }
 
 
+class MergedTimeline(BaseModel):
+    name: str = None
+    events: List[Union[Goals, Cards]] = None
+
+    def to_json(self):
+        return {
+            "name": self.name,
+            "events": [event.to_json() for event in self.events] if self.events else None
+        }
+
+
 class TeamEvent(BaseModel):
     sport: str = None
     event: str = None
@@ -118,7 +133,7 @@ class TeamEvent(BaseModel):
     substitute_b: Squad = None
 
     score_details: ScoreDetails = None
-    timeline: List[Timeline] = None
+    timeline: List[MergedTimeline] = None
 
     def to_json(self):
         return {

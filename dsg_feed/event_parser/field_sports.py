@@ -1,5 +1,5 @@
 from dsg_feed.event_parser.common_parser import update_squads
-from models.sport_models.field_sports import TeamEvent, SetScore, ScoreDetails, Goals, Cards, Timeline
+from models.sport_models.field_sports import TeamEvent, SetScore, ScoreDetails, Goals, Cards, Timeline, MergedTimeline
 from utils.data_utils import extract_number_from_string, get_datetime_str
 
 
@@ -34,13 +34,18 @@ def update_score(match):
 def merge_timeline_objects(timeline_list):
     merged_list = []
     for timeline_obj in timeline_list:
+        period_name = timeline_obj.period_name
         events = []
         events.extend(timeline_obj.goals)
         events.extend(timeline_obj.cards)
         events.extend(timeline_obj.shootouts)
 
         events.sort(key=lambda x: (int(x.time.split('+')[0]), int(x.extra_time or 0)), reverse=True)
-        merged_list.append(events)
+
+        timeline_dict = MergedTimeline(name=period_name,
+                                       events=events)
+
+        merged_list.append(timeline_dict)
 
     return merged_list
 
