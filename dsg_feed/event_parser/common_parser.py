@@ -39,9 +39,15 @@ def update_squads(match, event_obj):
 
     # Valid for team events - hockey, football, volleyball
     elif hasattr(match, "events"):
-        squad_a, squad_b = get_lineup_squad(match.events.lineups.event, match.team_a_id, match.team_b_id)
-        coach_a, coach_b = get_lineup_squad(match.events.coaches.event, match.team_a_id, match.team_b_id)
-        substitute_a, substitute_b = get_lineup_squad(match.events.subs_on_bench.event, match.team_a_id, match.team_b_id)
+        squad_a, squad_b, coach_a, coach_b, substitute_a, substitute_b = None, None, None, None, None, None
+
+        if hasattr(match.events, "lineups") and hasattr(match.events.lineups, "event"):
+            squad_a, squad_b = get_lineup_squad(match.events.lineups.event, match.team_a_id, match.team_b_id)
+        if hasattr(match.events, "coaches") and hasattr(match.events.coaches, "event"):
+            coach_a, coach_b = get_lineup_squad(match.events.coaches.event, match.team_a_id, match.team_b_id)
+        if hasattr(match.events, "subs_on_bench") and hasattr(match.events.subs_on_bench, "event"):
+            substitute_a, substitute_b = get_lineup_squad(match.events.subs_on_bench.event, match.team_a_id, match.team_b_id)
+
         event_obj.squad_a = squad_a
         event_obj.squad_b = squad_b
         event_obj.coach_a = coach_a
@@ -202,10 +208,12 @@ def get_team_squads(match):
     team_a_id = match.team_a_id
     team_a_name = match.team_a_area_name
     team_a_country_id = match.team_a_area_id
+    team_a_country_code = match.team_a_area_code
 
     team_b_id = match.team_b_area_id
     team_b_name = match.team_b_area_name
     team_b_country_id = match.team_b_area_id
+    team_b_country_code = match.team_b_area_code
 
     if team_a_name not in area_id_map:
         area_id_map[team_a_name] = team_a_country_id

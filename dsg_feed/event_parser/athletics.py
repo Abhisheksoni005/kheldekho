@@ -30,7 +30,7 @@ def get_athletics_team_event_details(sport, event):
     match_round = event.gender.round
     stage = match_round.name
     date = match_round.start_date_utc
-    time_utc = match_round.time_utc
+    time_utc = match_round.start_time_utc
 
     group_name = match_round.list.name
     event_id = event.discipline_id
@@ -146,7 +146,7 @@ def get_field_event_details(sport, event):
             contestant_obj.attempt_list = attempt_list
 
             event_details.contestant.append(contestant_obj)
-        return event_details.to_json()
+        return event_details
 
     except:
         print(traceback.print_exc())

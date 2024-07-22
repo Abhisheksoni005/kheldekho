@@ -44,6 +44,7 @@ class AthleticsEvent(BaseModel):
     group_name: str = None
     time_utc: datetime = None
     status: str = None
+    season_id: str = None
     contestant: List[Contestant] = None
 
     def to_json(self):
@@ -57,6 +58,7 @@ class AthleticsEvent(BaseModel):
             "group_name": self.group_name,
             "time_utc": str(self.time_utc),
             "status": self.status,
+            "season_id": self.season_id,
             "contestant": [contestant.to_json() for contestant in self.contestant]
         }
 
@@ -100,6 +102,7 @@ class AthleticsTeamEvent(BaseModel):
     group_name: str = None
     time_utc: datetime = None
     status: str = None
+    season_id: str = None
     teams: List[Team] = None
 
     def to_json(self):
@@ -113,6 +116,7 @@ class AthleticsTeamEvent(BaseModel):
             "group_name": self.group_name,
             "time_utc": str(self.time_utc),
             "status": self.status,
+            "season_id": self.season_id,
             "teams": [team.to_json() for team in self.teams]
         }
 

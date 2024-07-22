@@ -16,16 +16,18 @@ def update_score(match):
         game_time = ""
 
     sets = []
-    for set_number, game in enumerate(match.period_scores.period):
-        set_score = SetScore(set_num=set_number + 1,
-                             match_score_a=game.score_a,
-                             match_score_b=game.score_b)
-        sets.append(set_score)
+    score_details = None
+    if not hasattr(match, "period_scores") and not hasattr(match.period_scores, "period"):
+        for set_number, game in enumerate(match.period_scores.period):
+            set_score = SetScore(set_num=set_number + 1,
+                                 match_score_a=game.score_a,
+                                 match_score_b=game.score_b)
+            sets.append(set_score)
 
-    score_details = ScoreDetails(score_a=match.score_a,
-                                 score_b=match.score_b,
-                                 game_time=game_time,
-                                 sets=sets)
+        score_details = ScoreDetails(score_a=match.score_a,
+                                     score_b=match.score_b,
+                                     game_time=game_time,
+                                     sets=sets)
     return score_details
 
 
@@ -167,20 +169,20 @@ def update_timeline(sport, match, team_a_id, team_b_id):
             timeline_list.append(timeline)
 
     reversed_pens = shootouts[::-1]
-    for goal in reversed_pens:
+    for shootout in reversed_pens:
         period_name = "Penalty Shootout"
         timeline_exists = False
 
         for timeline in timeline_list:
             if timeline.period_name == period_name:
-                timeline.shootouts.append(goal)
+                timeline.shootouts.append(shootout)
                 timeline_exists = True
                 break
 
         if not timeline_exists:
             timeline = Timeline(period_name=period_name,
                                 goals=[],
-                                shootouts=[goal],
+                                shootouts=[shootout],
                                 cards=[])
             timeline_list.append(timeline)
 
@@ -263,4 +265,4 @@ def get_team_match_details(sport, event):
     team_match.score_details = update_score(match)
     team_match.timeline = update_timeline(sport, match, team_match.team_a_id, team_match.team_b_id)
 
-    return team_match.to_json()
+    return team_match

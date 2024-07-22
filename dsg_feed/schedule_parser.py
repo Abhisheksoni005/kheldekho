@@ -34,9 +34,6 @@ def get_event_name(gender, event):
         return event
 
 
-
-
-
 def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = TOKYO_ID):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
@@ -97,6 +94,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                             status = match.status
                             time_utc = match.time_utc
                             result_url = match.result
+                            winner = match.winner
 
                             squad_a = None
                             squad_b = None

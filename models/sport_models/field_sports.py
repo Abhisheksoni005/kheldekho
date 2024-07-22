@@ -93,6 +93,7 @@ class TeamEvent(BaseModel):
     event_id: str = None
     gender: str = None
     stage: str = None
+    season_id: str = None
 
     match_id: str = None
     group_name: str = None
@@ -127,6 +128,7 @@ class TeamEvent(BaseModel):
             "gender": self.gender,
             "stage": self.stage,
             "match_id": self.match_id,
+            "season_id": self.season_id,
 
             "group_name": self.group_name,
             "time_utc": str(self.time_utc),

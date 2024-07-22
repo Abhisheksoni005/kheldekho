@@ -24,6 +24,7 @@ class RacquetEvent(BaseModel):
     event_id: str = None
     gender: str = None
     stage: str = None
+    season_id: str = None
 
     match_id: str = None
     group_name: str = None
@@ -51,6 +52,7 @@ class RacquetEvent(BaseModel):
             "event_id": self.event,
             "gender": self.gender,
             "stage": self.stage,
+            "season_id": self.season,
 
             "match_id": self.match_id,
             "group_name": self.group_name,

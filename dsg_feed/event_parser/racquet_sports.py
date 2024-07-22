@@ -65,4 +65,4 @@ def get_racquet_sport_details(sport, event):
     update_team_details(match, sport_details)
     sport_details.score_details = update_score(match)
 
-    return sport_details.to_json()
+    return sport_details
