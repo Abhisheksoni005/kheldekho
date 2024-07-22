@@ -8,7 +8,7 @@ area_id_map = read_from_json("dataset/country_id_map.json")
 
 def get_country_code(winner_nationality_id):
     if winner_nationality_id in area_id_map:
-        return area_id_map[winner_nationality_id].code
+        return area_id_map[winner_nationality_id]["code"]
     return None
 
 
