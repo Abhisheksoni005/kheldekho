@@ -34,7 +34,22 @@ def get_event_name(gender, event):
         return event
 
 
-def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = TOKYO_ID):
+def filter_out_match_for_player(player_id, squad_a, squad_b):
+    if not player_id:
+        return False
+
+    for player in squad_a.athletes:
+        if player_id == player.id:
+            return False
+
+    for player in squad_b.athletes:
+        if player_id == player.id:
+            return False
+
+    return True
+
+
+def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = TOKYO_ID, player_id: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
     if day:
@@ -94,7 +109,9 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                             status = match.status
                             time_utc = match.time_utc
                             result_url = match.result
-                            winner = match.winner
+                            winner = ""
+                            if hasattr(match, "winner"):
+                                winner = match.winner
 
                             squad_a = None
                             squad_b = None
@@ -110,6 +127,9 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                             # Team A vs Team B Type match
                             elif hasattr(match, "team_a_name"):
                                 squad_a, squad_b = get_team_squads(match)
+
+                            if filter_out_match_for_player(player_id, squad_a, squad_b):
+                                continue
 
                             # Call match object
                             match_single = MatchSingle(id=match_id,
