@@ -72,26 +72,26 @@ def get_athletes_data(olympics_id, country_id):
             if not isinstance(discipline_gender, list):
                 discipline_gender = [discipline_gender]
 
-                for gender_event in discipline_gender:
-                    if not hasattr(gender_event, "contestant"):
-                        continue
-                    contestant_list = gender_event.contestant
-                    if not isinstance(contestant_list, list):
-                        contestant_list = [contestant_list]
-                    for athlete in contestant_list:
-                        athlete_id = athlete.people_id
-                        athlete_name = athlete.common_name
-                        country = athlete.nationality_area_name
-                        country_flag = athlete.nationality_area_code
+            for gender_event in discipline_gender:
+                if not hasattr(gender_event, "contestant"):
+                    continue
+                contestant_list = gender_event.contestant
+                if not isinstance(contestant_list, list):
+                    contestant_list = [contestant_list]
+                for athlete in contestant_list:
+                    athlete_id = athlete.people_id
+                    athlete_name = athlete.common_name
+                    country = athlete.nationality_area_name
+                    country_flag = athlete.nationality_area_code
 
-                        athlete = Athlete(id=athlete_id,
-                                          name=athlete_name,
-                                          country=country,
-                                          country_code=country_flag,
-                                          sport=sport_name,
-                                          event=event_name)
+                    athlete = Athlete(id=athlete_id,
+                                      name=athlete_name,
+                                      country=country,
+                                      country_code=country_flag,
+                                      sport=sport_name,
+                                      event=event_name)
 
-                        athlete_list.append(athlete.to_json())
+                    athlete_list.append(athlete.to_json())
 
     return athlete_list
 
