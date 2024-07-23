@@ -17,7 +17,7 @@ AUTH_KEY = "VoT5fdaqbsg6IyCSZPKYn3WUQ9FxzkD4LAh"
 
 # Get list of all sports with disciplines
 def get_all_sports_list():
-    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
+    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={TOKYO_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
     sport_response = requests.get(sport_api,
                                   auth=HTTPBasicAuth(username, password)
@@ -49,7 +49,7 @@ def get_all_sports_list():
 
 # TODO: check gender here - api is not returning gender for these disciplines
 def get_events_for_sport_list(sport_name):
-    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
+    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={TOKYO_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
     sport_response = requests.get(sport_api,
                                   auth=HTTPBasicAuth(username, password)
