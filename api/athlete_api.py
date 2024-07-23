@@ -18,7 +18,7 @@ def get_athlete_detail_path(id):
 
 
 @router.get("/athlete_detail")
-def get_athlete_detail(player_id: int):
+def get_athlete_detail(player_id: str):
     path = get_athlete_detail_path(player_id)
     try:
         story_json = read_from_json(path)
@@ -32,10 +32,10 @@ def get_athlete_detail(player_id: int):
     response = AthleteDetail(
         id=player_id,
         deeplink_to_share="",
-        country=athlete["flag"],
-        flag=athlete["flag"],
-        sport=athlete["sport"],
-        profile_image_url=athlete["profile_image_url"],
+        country=athlete["country"],
+        flag=athlete["country_code"],
+        sport=athlete["sports"],
+        profile_image_url=athlete["profile_image_url"] if athlete["profile_image_url"] in athlete else "",
         story=story,
         news=[]
     )
