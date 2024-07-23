@@ -4,9 +4,17 @@ from models.sport import Sport
 
 class Event(BaseModel):
     id: str = None
-    name: str
+    name: str = None
     type: str = None
-    parent_sport: str
+    parent_sport: str = None
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "type": self.type,
+            "parent_sport": self.parent_sport
+        }
 
 # Example usage:
 if __name__ == "__main__":

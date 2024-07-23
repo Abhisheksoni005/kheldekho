@@ -60,6 +60,7 @@ def get_events_for_sport_list(sport_name):
 
     sports_list = sports.datasportsgroup.sport
 
+    event_obj_list = []
     for sport_obj in sports_list:
         if sport_obj.sport != sport_name:
             continue
@@ -75,5 +76,37 @@ def get_events_for_sport_list(sport_name):
                               type=discipline.type,
                               parent_sport=sport_name)
 
-            return event_obj
+            event_obj_list.append(event_obj.to_json())
+
+    return event_obj_list
+
+
+def get_all_events_list():
+    sport_api = BASE_API_URL + f"{username}/multisport/get_disciplines?&id={PARIS_ID}&client={username}&authkey={AUTH_KEY}&ftype=json"
+
+    sport_response = requests.get(sport_api,
+                                  auth=HTTPBasicAuth(username, password)
+                                  )
+
+    response_json = sport_response.json()
+    sports = dict_to_object(response_json)
+
+    sports_list = sports.datasportsgroup.sport
+
+    event_obj_list = []
+    for sport_obj in sports_list:
+        obj_discipline = sport_obj.discipline
+        if not isinstance(obj_discipline, list):
+            print("Discipline is not a list, casting it to list")
+            obj_discipline = [obj_discipline]
+
+        for discipline in obj_discipline:
+            event_obj = Event(id=discipline.discipline_id,
+                              name=discipline.name,
+                              type=discipline.type,
+                              parent_sport=sport_obj.sport)
+
+            event_obj_list.append(event_obj.to_json())
+
+    return event_obj_list
 
