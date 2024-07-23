@@ -107,6 +107,8 @@ def update_timeline(sport, match, team_a_id, team_b_id):
             all_goals.append(new_goal)
 
     shootouts = []
+    pen_goal_a = 0
+    pen_goal_b = 0
     if hasattr(penalty, "event"):
         for penalty in penalty.event:
             goal_type = penalty.type
@@ -122,11 +124,11 @@ def update_timeline(sport, match, team_a_id, team_b_id):
             if penalty.team_id == team_a_id:
                 team = "team_a"
                 if goal_type == "penalty_shootout_goal":
-                    score_a += 1
+                    pen_goal_a += 1
             elif penalty.team_id == team_b_id:
                 team = "team_b"
                 if goal_type == "penalty_shootout_goal":
-                    score_b += 1
+                    pen_goal_b += 1
 
             new_goal = Goals(goal_type=goal_type,
                              time=time,
@@ -134,8 +136,8 @@ def update_timeline(sport, match, team_a_id, team_b_id):
                              athlete_name=athlete_name,
                              athlete_id=athlete_id,
                              period=period,
-                             score_a=str(score_a),
-                             score_b=str(score_b),
+                             score_a=str(pen_goal_a),
+                             score_b=str(pen_goal_b),
                              team=team)
 
             shootouts.append(new_goal)
