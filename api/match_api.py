@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.get("/match")
-def get_matches(date: str = None, sport: str = None, event_id: str = None, player_id: str = None, olympics_id: str = "1"):
+def get_matches(date: str = None, sport: str = None, event_id: str = None, player_id: str = None, olympics_id: str = "72"):
     match_schedule = get_schedule_matches(day=date, sport_name=sport, discipline_id=event_id, olympics_id=olympics_id, player_id=player_id)
     return JSONResponse(content=match_schedule)
 
