@@ -19,6 +19,6 @@ def get_match_results(sport: str, result_url: str):
 
 
 @router.get("/match/knockouts")
-def get_knockout_matches(sport: str, event: str, season_id: str):
-    return JSONResponse(content=get_knockout_details(sport, event, season_id))
+def get_knockout_matches(sport: str, event: str, season_id: str, gender: str):
+    return JSONResponse(content=get_knockout_details(sport, event, season_id, gender))
 

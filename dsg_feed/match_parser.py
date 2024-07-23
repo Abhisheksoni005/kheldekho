@@ -1,8 +1,8 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
-from dsg_feed.event_parser.knockout_parser import parse_knockouts
 from utils.data_utils import dict_to_object
+from dsg_feed.event_parser.knockout_parser import parse_knockouts
 from dsg_feed.event_parser.field_sports import get_team_match_details
 from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
 from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details, get_relay4x400_details
@@ -124,7 +124,7 @@ results_sports = ["athletics", "archery", "artistic_swimming", "breaking", "cano
                   "surfing", "swimming", "triathlon", "weightlifting"]
 
 
-def get_knockout_details(sport_name, event_name, season_id):
+def get_knockout_details(sport_name, event_name, season_id, gender):
     if sport_name in results_sports:
         api_name = "get_results"
     else:
@@ -143,9 +143,18 @@ def get_knockout_details(sport_name, event_name, season_id):
     result = dict_to_object(result_json)
 
     gender_obj = result.datasportsgroup.tour.tour_season.competition.season.discipline.gender
-    rounds = gender_obj.round
-    gender = gender_obj.value
+    if not isinstance(gender_obj, list):
+        gender_obj = [gender_obj]
+
+    rounds = None
+    for gender_type in gender_obj:
+        gender_val = gender_type.value
+        if gender_val == gender:
+            rounds = gender_type.round
+            break
+
+    if not rounds:
+        return []
 
     knockout_details = parse_knockouts(sport_name, event_name, rounds, gender)
-
     return knockout_details

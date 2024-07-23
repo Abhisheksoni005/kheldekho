@@ -57,6 +57,12 @@ def get_datetime_str(date_str, time_str):
         datetime_str = f"{current_date_str} {time_str}"
         return datetime_str
 
+    if not time_str:
+        # Use the current time when time_str is None
+        current_time_str = datetime.now().strftime("%H:%M:%S")
+        datetime_str = f"{date_str} {current_time_str}"
+        return datetime_str
+
     datetime_str = f"{date_str} {time_str}"
     datetime_format = "%Y-%m-%d %H:%M:%S"
     return datetime.strptime(datetime_str, datetime_format)
