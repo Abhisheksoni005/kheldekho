@@ -10,8 +10,8 @@ from models.athlete import Athlete, Gender
 
 
 class Score(BaseModel):
-    score_a: int
-    score_b: int
+    score_a: int = None
+    score_b: int = None
 
     def to_json(self):
         return {

@@ -43,25 +43,26 @@ def create_group_table(matches_list):
                 'points': 0
             }
 
-        teams[team_a]['matches_played'] += 1
-        teams[team_b]['matches_played'] += 1
+        if score_a:
+            teams[team_a]['matches_played'] += 1
+            teams[team_b]['matches_played'] += 1
 
-        teams[team_a]['goals_scored'] += score_a
-        teams[team_b]['goals_scored'] += score_b
+            teams[team_a]['goals_scored'] += score_a
+            teams[team_b]['goals_scored'] += score_b
 
-        teams[team_a]['goals_against'] += score_b
-        teams[team_b]['goals_against'] += score_a
+            teams[team_a]['goals_against'] += score_b
+            teams[team_b]['goals_against'] += score_a
 
-        teams[team_a]['GD'] += (score_a - score_b)
-        teams[team_b]['GD'] += (score_b - score_a)
+            teams[team_a]['GD'] += (score_a - score_b)
+            teams[team_b]['GD'] += (score_b - score_a)
 
-        if score_a > score_b:
-            teams[team_a]['points'] += 3
-        elif score_b > score_a:
-            teams[team_b]['points'] += 3
-        else:
-            teams[team_a]['points'] += 1
-            teams[team_b]['points'] += 1
+            if score_a > score_b:
+                teams[team_a]['points'] += 3
+            elif score_b > score_a:
+                teams[team_b]['points'] += 3
+            else:
+                teams[team_a]['points'] += 1
+                teams[team_b]['points'] += 1
 
     team_stats = list(teams.values())
     sorted_team_stats = sorted(team_stats, key=lambda x: x['points'], reverse=True)
@@ -122,8 +123,11 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
                     status = group_match.status
                     score_a = group_match.score_a
                     score_b = group_match.score_b
-                    score = Score(score_a=score_a,
-                                  score_b=score_b)
+                    if score_a == '':
+                        score = Score()
+                    else:
+                        score = Score(score_a=int(score_a),
+                                      score_b=int(score_b))
 
                     match_single = MatchSingle(id=group_match_id,
                                                sport=sport_name,
@@ -183,8 +187,8 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
 
                 score_a = match.score_a
                 score_b = match.score_b
-                score = Score(score_a=score_a,
-                              score_b=score_b)
+                score = Score(score_a=int(score_a) if score_a != '' else 0,
+                              score_b=int(score_b) if score_b != '' else 0)
 
                 match_single = MatchSingle(id=match_id,
                                            sport=sport_name,

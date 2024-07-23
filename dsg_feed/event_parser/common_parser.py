@@ -7,6 +7,8 @@ area_id_map = read_from_json("dataset/country_id_map.json")
 
 
 def get_country_code(winner_nationality_id):
+    if not winner_nationality_id:
+        return ""
     if winner_nationality_id in area_id_map:
         return area_id_map[winner_nationality_id]["code"]
     return None
@@ -102,13 +104,13 @@ def get_single_squads(match):
     athlete_a = Athlete(id=contestant_a_id, name=contestant_a_name)
     athlete_b = Athlete(id=contestant_b_id, name=contestant_b_name)
 
-    squad_a = Squad(id=contestant_a_nationality_id,
-                    name=contestant_a_nationality,
+    squad_a = Squad(id=contestant_a_nationality_id if contestant_a_nationality_id else "",
+                    name=contestant_a_nationality if contestant_b_nationality else "",
                     size=1,
                     athletes=[athlete_a])
 
-    squad_b = Squad(id=contestant_b_nationality_id,
-                    name=contestant_b_nationality,
+    squad_b = Squad(id=contestant_b_nationality_id if contestant_a_nationality_id else "",
+                    name=contestant_b_nationality if contestant_a_nationality else "",
                     size=1,
                     athletes=[athlete_b])
 
@@ -186,19 +188,23 @@ def get_doubles_squads(match):
         if area_id_map[contestant_b2_nationality_id]["name"] != contestant_b2_nationality:
             print("Mismatch in nationality id")
 
-    athlete_a1 = Athlete(id=contestant_a1_id, name=contestant_a1_name)
-    athlete_a2 = Athlete(id=contestant_a2_id, name=contestant_a2_name)
-    athlete_b1 = Athlete(id=contestant_b1_id, name=contestant_b1_name)
-    athlete_b2 = Athlete(id=contestant_b2_id, name=contestant_b2_name)
+    athlete_a1 = Athlete(id=contestant_a1_id if contestant_a1_id else "",
+                         name=contestant_a1_name if contestant_a1_name else "")
+    athlete_a2 = Athlete(id=contestant_a2_id if contestant_a2_id else "",
+                         name=contestant_a2_name if contestant_a2_name else "")
+    athlete_b1 = Athlete(id=contestant_b1_id if contestant_b1_id else "",
+                         name=contestant_b1_name if contestant_b1_name else "")
+    athlete_b2 = Athlete(id=contestant_b2_id if contestant_b2_id else "",
+                         name=contestant_b2_name if contestant_b2_name else "")
 
-    squad_a = Squad(id=contestant_a1_nationality_id,
-                    name=contestant_a1_nationality,
+    squad_a = Squad(id=contestant_a1_nationality_id if contestant_a1_nationality_id else "",
+                    name=contestant_a1_nationality if contestant_b1_nationality else "",
                     size=2,
                     flag=get_country_code(contestant_a1_nationality_id),
                     athletes=[athlete_a1, athlete_a2])
 
-    squad_b = Squad(id=contestant_b1_nationality_id,
-                    name=contestant_b1_nationality,
+    squad_b = Squad(id=contestant_b1_nationality_id if contestant_b1_nationality_id else "",
+                    name=contestant_b1_nationality if contestant_a1_nationality else "",
                     size=2,
                     flag=get_country_code(contestant_b1_nationality_id),
                     athletes=[athlete_b1, athlete_b2])
@@ -229,13 +235,13 @@ def get_team_squads(match):
         if area_id_map[team_b_name] != team_b_country_id:
             print("Mismatch in nationality id")
 
-    squad_a = Squad(id=team_a_country_id,
-                    name=team_a_name,
-                    flag=team_a_country_code)
+    squad_a = Squad(id=team_a_country_id if team_a_country_id else "",
+                    name=team_a_name if team_a_name else "",
+                    flag=team_a_country_code if team_a_country_code else "")
 
-    squad_b = Squad(id=team_b_country_id,
-                    name=team_b_name,
-                    flag=team_b_country_code)
+    squad_b = Squad(id=team_b_country_id if team_b_country_id else "",
+                    name=team_b_name if team_a_name else "",
+                    flag=team_b_country_code if team_b_country_code else "")
 
     return squad_a, squad_b
 
