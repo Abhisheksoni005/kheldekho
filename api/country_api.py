@@ -13,8 +13,8 @@ async def get_all_countries():
     return JSONResponse(content=get_countries())
 
 
-@router.get("/medals-tokyo")
-async def get_medals_tokyo():
+@router.get("/medals")
+async def get_medals_tokyo(olympics_id: int = "72"):
     medal_tally = read_from_json("dataset/medal_tokyo.json")
     return JSONResponse(content=medal_tally)
 
