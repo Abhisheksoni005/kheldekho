@@ -49,7 +49,7 @@ def filter_out_match_for_player(player_id, squad_a, squad_b):
     return True
 
 
-def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = TOKYO_ID, player_id: str = None):
+def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
     if day:
