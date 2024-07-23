@@ -76,6 +76,8 @@ def update_timeline(sport, match, team_a_id, team_b_id):
     score_b = 0
 
     if hasattr(goal, "event"):
+        if not isinstance(goal.event, list):
+            goal.event = [goal.event]
         for goal in goal.event:
             goal_type = goal.type
             time = goal.minute
@@ -110,6 +112,8 @@ def update_timeline(sport, match, team_a_id, team_b_id):
     pen_goal_a = 0
     pen_goal_b = 0
     if hasattr(penalty, "event"):
+        if not isinstance(penalty.event, list):
+            penalty.event = [penalty.event]
         for penalty in penalty.event:
             goal_type = penalty.type
             time = penalty.minute
@@ -144,6 +148,8 @@ def update_timeline(sport, match, team_a_id, team_b_id):
 
     all_cards = []
     if hasattr(card, "event"):
+        if not isinstance(card.event, list):
+            card.event = [card.event]
         for card in card.event:
             card_type = card.type
             time = card.minute
