@@ -88,7 +88,8 @@ def parse_match(sport, event_name, event, season_id):
     elif sport in team_sports:
         details = get_team_match_details(sport, event)
 
-    details.season_id = season_id
+    if details:
+        details.season_id = season_id
 
     return details.to_json()
 
