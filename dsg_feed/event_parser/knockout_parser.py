@@ -91,7 +91,7 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
         round_name = match_round.name
         matches = match_round.list
 
-        if round_name == "Group Stage":
+        if round_name in ["Group Stage", "Elimination Round"]:
             for group in matches:
                 group_name = group.name
                 group_matches = group.match

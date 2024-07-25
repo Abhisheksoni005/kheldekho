@@ -5,7 +5,8 @@ from utils.data_utils import dict_to_object
 from dsg_feed.event_parser.knockout_parser import parse_knockouts
 from dsg_feed.event_parser.field_sports import get_team_match_details
 from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
-from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details, get_relay4x400_details
+from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details, get_relay4x400_details, \
+    get_archery_recurve_details
 
 BASE_API_URL = "https://dsg-api.com/clients/"
 PARIS_ID = 72
@@ -61,18 +62,22 @@ track_event_list = ["100 Metres",
 
 racquet_sport_list = ["badminton",
                       "tennis",
-                      "table_tennis"]
+                      "table_tennis",
+                      "karate"]
 
-racquet_event_list = ["Beach Volleyball"]
+racquet_event_list = ["Beach Volleyball", "Archery Team", "Recurve Team"]
 
 team_sports = ["soccer",
                "field_hockey",
-               "volleyball"]
+               "volleyball",
+               "handball",
+               "rugby",
+               ]
 
 
 def parse_match(sport, event_name, event, season_id):
     details = None
-    if sport == "athletics":
+    if sport in ["athletics", "archery"]:
         if event_name in field_event_list:
             details = get_field_event_details(sport, event)
 
@@ -81,6 +86,9 @@ def parse_match(sport, event_name, event, season_id):
 
         if event_name == "4x400 Metres Relay":
             details = get_relay4x400_details(sport, event)
+
+        if event_name == "Recurve":
+            details = get_archery_recurve_details(sport, event)
 
     elif sport in racquet_sport_list or event_name in racquet_event_list:
         details = get_racquet_sport_details(sport, event)
@@ -142,18 +150,32 @@ def get_knockout_details(sport_name, event_name, season_id, gender):
     result_json = result_response.json()
     result = dict_to_object(result_json)
 
-    gender_obj = result.datasportsgroup.tour.tour_season.competition.season.discipline.gender
+    discipline = result.datasportsgroup.tour.tour_season.competition.season.discipline
+
+    if not isinstance(discipline, list):
+        discipline = [discipline]
+
+    gender_obj = None
+    for event in discipline:
+        if event.name == event_name:
+            gender_obj = event.gender
+            break
+
+    if not gender_obj:
+        print("Event not found")
+        return []
+
     if not isinstance(gender_obj, list):
         gender_obj = [gender_obj]
 
     rounds = None
     for gender_type in gender_obj:
-        gender_val = gender_type.value
-        if gender_val == gender:
+        if gender_type.value == gender:
             rounds = gender_type.round
             break
 
     if not rounds:
+        print("Gender not found")
         return []
 
     knockout_details = parse_knockouts(sport_name, event_name, rounds, gender)

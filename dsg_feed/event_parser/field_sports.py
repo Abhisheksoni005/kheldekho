@@ -54,21 +54,21 @@ def update_timeline(sport, match, team_a_id, team_b_id):
     if sport == "volleyball":
         return []
 
-    if sport == "field_hockey":
+    elif sport == "field_hockey":
         period_name_dict = {1 : "1st Quarter",
                             2 : "2nd Quarter",
                             3 : "3rd Quarter",
                             4 : "4th Quarter",
                             -1 : "Extra Time"}
 
-    if sport == "soccer":
+    elif sport in ["soccer", "handball", "rugby"]:
         period_name_dict = {1 : "1st Half",
                             2 : "2nd Half",
                             -1 : "Extra Time"}
 
-    goal = match.events.scores
-    penalty = match.events.shootout
-    card = match.events.bookings
+    goal = match.events.scores if hasattr(match.events, "scores") else []
+    penalty = match.events.shootout if hasattr(match.events, "shootout") else []
+    card = match.events.bookings if hasattr(match.events, "bookings") else []
 
     all_goals = []
     score_a = 0
@@ -80,7 +80,7 @@ def update_timeline(sport, match, team_a_id, team_b_id):
         for goal in goal.event:
             goal_type = goal.type
             time = goal.minute
-            extra_time = goal.minute_extra
+            extra_time = goal.minute_extra if hasattr(goal, "minute_extra") else ""
             athlete_name = goal.common_name
             athlete_id = goal.people_id
             period = extract_number_from_string(goal.period)
@@ -152,7 +152,7 @@ def update_timeline(sport, match, team_a_id, team_b_id):
         for card in card.event:
             card_type = card.type
             time = card.minute
-            extra_time = card.minute_extra
+            extra_time = card.minute_extra if hasattr(card, "minute_extra") else ""
             athlete_name = card.common_name
             athlete_id = card.people_id
             country = card.nationality
@@ -254,7 +254,7 @@ def get_field_match_details(sport, event):
     match_id = match.match_id
     time_utc = match.time_utc
     date = match.date_utc
-    venue = match.match_extra.venue.venue_name
+    venue = match.match_extra.venue.venue_name if hasattr(match, "match_extra") and hasattr(match.match_extra, "venue") else ""
 
     team_a_id = match.team_a_id
     team_a_area_code = match.team_a_area_code

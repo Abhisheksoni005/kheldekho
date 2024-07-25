@@ -14,7 +14,7 @@ def get_athletics_event_details(sport, event):
     gender = event.gender.value
     event_name = event.name
 
-    high_jump = AthleticsEvent(sport=sport,
+    athletic_event = AthleticsEvent(sport=sport,
                                event=event_name,
                                event_id=event_id,
                                stage=stage,
@@ -23,7 +23,7 @@ def get_athletics_event_details(sport, event):
                                time_utc=get_datetime_str(date, time_utc),
                                contestant=[])
 
-    return high_jump
+    return athletic_event
 
 
 def get_athletics_team_event_details(sport, event):
@@ -76,7 +76,8 @@ def get_athletics_contestant_details(contestant):
                                 time=time if time else "",
                                 position=position,
                                 record=record,
-                                attempt={})
+                                attempt_list=[],
+                                attempt_metadata={})
     return contestant_obj
 
 
@@ -156,7 +157,7 @@ def get_marathon_details(sport, event):
     marathon = get_athletics_event_details(sport, event)
     contestants_list = event.gender.round.list.contestants
 
-    for contestant in contestants_list:
+    for contestant in contestants_list.contestant:
         contestant_obj = get_athletics_contestant_details(contestant)
         attempt_keys = [key for key in dir(contestant) if key.startswith("split_")]
 
@@ -173,7 +174,7 @@ def get_marathon_details(sport, event):
 def get_hurdle_details(sport, event):
     hurdle = get_athletics_event_details(sport, event)
     contestants_list = event.gender.round.list.contestants
-    for contestant in contestants_list:
+    for contestant in contestants_list.contestant:
         contestant_obj = get_athletics_contestant_details(contestant)
 
         contestant_obj.attempt_metadata["fail_start"] = contestant.fail_start
@@ -202,6 +203,22 @@ def get_relay4x400_details(sport, event):
         relay4x400.teams.append(team_obj)
 
     return relay4x400
+
+
+def get_archery_recurve_details(sport, event):
+    archery = get_athletics_event_details(sport, event)
+    contestants_list = event.gender.round.list.contestants
+    for contestant in contestants_list.contestant:
+        contestant_obj = get_athletics_contestant_details(contestant)
+    
+        contestant_obj.attempt_metadata["bullseye"] = contestant.bullseye
+        contestant_obj.attempt_metadata["points"] = contestant.points
+        contestant_obj.attempt_metadata["number_xs"] = contestant.number_xs
+    
+        archery.contestant.append(contestant_obj)
+    
+    return archery
+    
 
 
 
