@@ -49,6 +49,10 @@ def filter_out_match_for_player(player_id, squad_a, squad_b):
     return True
 
 
+results_sports = ["athletics", "archery", "artistic_swimming", "breaking", "canoeing", "cycling", "diving", "equestrian",
+                  "golf",  "gymnastics", "modern_pentathlon", "rowing", "sailing", "shooting", "skateboarding",
+                  "surfing", "swimming", "triathlon", "weightlifting"]
+
 def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
@@ -106,7 +110,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
             try:
 
                 # Signifies MatchSingle
-                if calendar_type == "matches":
+                if sport_name not in results_sports:
 
                     # Decided matches
                     if hasattr(sport_round, "match"):
