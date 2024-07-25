@@ -2,7 +2,7 @@ import re
 import json
 from enum import Enum
 from typing import Any
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from models.squad import Squad
 from models.athlete import Athlete
@@ -65,7 +65,11 @@ def get_datetime_str(date_str, time_str):
 
     datetime_str = f"{date_str} {time_str}"
     datetime_format = "%Y-%m-%d %H:%M:%S"
-    return datetime.strptime(datetime_str, datetime_format)
+    dt = datetime.strptime(datetime_str, datetime_format)
+
+    dt += timedelta(hours=5, minutes=30)
+    return dt
+
 
 
 def extract_number_from_string(input_string):
