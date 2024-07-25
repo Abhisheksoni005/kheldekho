@@ -107,11 +107,13 @@ def get_single_squads(match):
     squad_a = Squad(id=contestant_a_nationality_id if contestant_a_nationality_id else "",
                     name=contestant_a_nationality if contestant_b_nationality else "",
                     size=1,
+                    flag=get_country_code(contestant_a_nationality_id),
                     athletes=[athlete_a])
 
     squad_b = Squad(id=contestant_b_nationality_id if contestant_a_nationality_id else "",
                     name=contestant_b_nationality if contestant_a_nationality else "",
                     size=1,
+                    flag=get_country_code(contestant_b_nationality_id),
                     athletes=[athlete_b])
 
     return squad_a, squad_b
