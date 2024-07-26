@@ -53,6 +53,14 @@ results_sports = ["athletics", "archery", "artistic_swimming", "breaking", "cano
                   "golf",  "gymnastics", "modern_pentathlon", "rowing", "sailing", "shooting", "skateboarding",
                   "surfing", "swimming", "triathlon", "weightlifting"]
 
+
+def has_india(match_obj):
+    if "team_a" in match_obj and match_obj["team_a"]["flag"] == "IND" or "team_b" in match_obj and match_obj["team_b"]["flag"] == "IND":
+        return True
+    elif "ranking_dict" in match_obj and match_obj.ranking_dict.get("1").get("winner_country_code") == "IND":
+        return True
+
+
 def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
@@ -223,10 +231,16 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                 print(sport_round_index, sport_name)
                 print("Error processing event")
 
-        return response
+        sorted_response = sorted(response,
+                                 key=lambda x: (0 if has_india(x) else 1,
+                                                0 if x["is_live"] else 1,
+                                                x["timestamp"])
+                                 )
+        return sorted_response
 
     except Exception as e:
         print(e)
+        print(traceback.format_exc())
         print("Error processing Round")
 
 
