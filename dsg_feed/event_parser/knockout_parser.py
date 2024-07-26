@@ -68,6 +68,8 @@ def create_group_table(matches_list):
     sorted_team_stats = sorted(team_stats, key=lambda x: x['points'], reverse=True)
     final_table = []
     for team in sorted_team_stats:
+        if team['country_name'] == '':
+            continue
         final_table.append({
             'country_name': team['country_name'],
             'country_flag': team['country_flag'],
@@ -90,6 +92,9 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
     for match_round in rounds:
         round_name = match_round.name
         matches = match_round.list
+
+        if sport_name in ["table_tennis"] and round_name in ["Preliminary Round"]:
+            continue
 
         if round_name in ["Group Stage", "Elimination Round"]:
             for group in matches:
