@@ -8,7 +8,7 @@ area_id_map = read_from_json("dataset/country_id_map.json")
 
 def get_country_code(winner_nationality_id):
     if not winner_nationality_id:
-        return ""
+        return "XXX"
     if winner_nationality_id in area_id_map:
         return area_id_map[winner_nationality_id]["code"]
     return None
@@ -105,13 +105,13 @@ def get_single_squads(match):
     athlete_b = Athlete(id=contestant_b_id, name=contestant_b_name)
 
     squad_a = Squad(id=contestant_a_nationality_id if contestant_a_nationality_id else "",
-                    name=contestant_a_nationality if contestant_b_nationality else "",
+                    name=contestant_a_nationality if contestant_a_nationality else "TBD",
                     size=1,
                     flag=get_country_code(contestant_a_nationality_id),
                     athletes=[athlete_a])
 
-    squad_b = Squad(id=contestant_b_nationality_id if contestant_a_nationality_id else "",
-                    name=contestant_b_nationality if contestant_a_nationality else "",
+    squad_b = Squad(id=contestant_b_nationality_id if contestant_b_nationality_id else "",
+                    name=contestant_b_nationality if contestant_b_nationality else "TBD",
                     size=1,
                     flag=get_country_code(contestant_b_nationality_id),
                     athletes=[athlete_b])
@@ -200,13 +200,13 @@ def get_doubles_squads(match):
                          name=contestant_b2_name if contestant_b2_name else "")
 
     squad_a = Squad(id=contestant_a1_nationality_id if contestant_a1_nationality_id else "",
-                    name=contestant_a1_nationality if contestant_b1_nationality else "",
+                    name=contestant_a1_nationality if contestant_a1_nationality else "TBD",
                     size=2,
                     flag=get_country_code(contestant_a1_nationality_id),
                     athletes=[athlete_a1, athlete_a2])
 
     squad_b = Squad(id=contestant_b1_nationality_id if contestant_b1_nationality_id else "",
-                    name=contestant_b1_nationality if contestant_a1_nationality else "",
+                    name=contestant_b1_nationality if contestant_b1_nationality else "TBD",
                     size=2,
                     flag=get_country_code(contestant_b1_nationality_id),
                     athletes=[athlete_b1, athlete_b2])
@@ -238,11 +238,11 @@ def get_team_squads(match):
             print("Mismatch in nationality id")
 
     squad_a = Squad(id=team_a_country_id if team_a_country_id else "",
-                    name=team_a_name if team_a_name else "",
+                    name=team_a_name if team_a_name else "TBD",
                     flag=team_a_country_code if team_a_country_code else "")
 
     squad_b = Squad(id=team_b_country_id if team_b_country_id else "",
-                    name=team_b_name if team_a_name else "",
+                    name=team_b_name if team_b_name else "TBD",
                     flag=team_b_country_code if team_b_country_code else "")
 
     return squad_a, squad_b

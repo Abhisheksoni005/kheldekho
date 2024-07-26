@@ -118,7 +118,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
             try:
 
                 # Signifies MatchSingle
-                if sport_name not in results_sports:
+                if calendar_type == "matches":
 
                     # Decided matches
                     if hasattr(sport_round, "match"):
