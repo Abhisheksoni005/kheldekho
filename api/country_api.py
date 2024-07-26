@@ -57,7 +57,7 @@ def get_paris_tally(olympics_id: int = "72"):
         for country in tally.table:
             medal_obj = {
                 "country_id": country.area_id,
-                "country_name": country.country,
+                "name": country.country,
                 "gold": country.gold,
                 "silver": country.silver,
                 "bronze": country.bronze,
