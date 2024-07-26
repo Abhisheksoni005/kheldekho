@@ -14,8 +14,8 @@ class Contestant(BaseModel):
     time: str = None
     position: str = None
     record: str = None
-    attempt_list: list = None
-    attempt_metadata: dict = None
+    attempt_list: list = []
+    attempt_metadata: dict = {}
 
     def to_json(self):
         return {

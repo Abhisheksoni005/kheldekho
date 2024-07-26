@@ -27,6 +27,15 @@
     "flag": "ROC"
   },
   {
+    "name": "India",
+    "gold": 1,
+    "silver": 2,
+    "bronze": 4,
+    "total": 7,
+    "rank": 36,
+    "flag": "IN"
+  },
+  {
     "name": "Great Britain",
     "gold": 22,
     "silver": 20,
@@ -313,15 +322,6 @@
     "total": 7,
     "rank": 35,
     "flag": "BY"
-  },
-  {
-    "name": "India",
-    "gold": 1,
-    "silver": 2,
-    "bronze": 4,
-    "total": 7,
-    "rank": 36,
-    "flag": "IN"
   },
   {
     "name": "Austria",

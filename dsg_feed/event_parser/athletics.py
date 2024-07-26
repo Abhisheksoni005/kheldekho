@@ -218,6 +218,24 @@ def get_archery_recurve_details(sport, event):
         archery.contestant.append(contestant_obj)
     
     return archery
+
+
+def get_archery_recurve_team_details(sport, event):
+    archery = get_athletics_team_event_details(sport, event)
+    teams_list = event.gender.round.list.teams.team
+
+    for team in teams_list:
+        team_obj = get_athletics_team_details(team)
+        attempt_keys = [key for key in dir(team) if key.startswith("split_")]
+
+        for key in attempt_keys:
+            attempt = getattr(team, key)
+            if attempt != '':
+                team_obj.attempt_metadata[key] = attempt
+
+        archery.teams.append(team_obj)
+
+    return archery
     
 
 
