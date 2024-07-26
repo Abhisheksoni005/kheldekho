@@ -78,7 +78,6 @@ def get_paris_tally(olympics_id: int = "72"):
         country["silver"] = 0
         country["bronze"] = 0
         country["total"] = 0
-        country["rank"] = "-"
     return response_list
 
 
