@@ -55,7 +55,8 @@ results_sports = ["athletics", "archery", "artistic_swimming", "breaking", "cano
 
 
 def has_india(match_obj):
-    if "team_a" in match_obj and match_obj["team_a"]["flag"] == "IND" or "team_b" in match_obj and match_obj["team_b"]["flag"] == "IND":
+    if ("team_a" in match_obj and match_obj["team_a"] and match_obj["team_a"]["flag"] == "IND" or
+            "team_b" in match_obj and match_obj["team_b"] and match_obj["team_b"]["flag"] == "IND"):
         return True
     elif "ranking_dict" in match_obj and match_obj.ranking_dict.get("1").get("winner_country_code") == "IND":
         return True
@@ -118,78 +119,79 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
             try:
 
                 # Signifies MatchSingle
-                if calendar_type == "matches":
+                # if calendar_type == "matches":
 
                     # Decided matches
-                    if hasattr(sport_round, "match"):
-                        if not isinstance(sport_round.match, list):
-                            print("Match is not a list, casting it to list")
-                            sport_round.match = [sport_round.match]
+                if hasattr(sport_round, "match"):
+                    if not isinstance(sport_round.match, list):
+                        print("Match is not a list, casting it to list")
+                        sport_round.match = [sport_round.match]
 
-                        for match in sport_round.match:
-                            match_id = match.match_id
-                            status = match.status
-                            time_utc = match.time_utc
-                            result_url = match.result
-                            winner = ""
-                            if hasattr(match, "winner"):
-                                winner = match.winner
+                    for match in sport_round.match:
+                        match_id = match.match_id
+                        status = match.status
+                        time_utc = match.time_utc
+                        result_url = match.result
+                        winner = ""
+                        if hasattr(match, "winner"):
+                            winner = match.winner
 
-                            squad_a = None
-                            squad_b = None
+                        squad_a = None
+                        squad_b = None
 
-                            # Doubles Type match
-                            if hasattr(match, "contestant_a1_common_name"):
-                                squad_a, squad_b = get_doubles_squads(match)
+                        # Doubles Type match
+                        if hasattr(match, "contestant_a1_common_name"):
+                            squad_a, squad_b = get_doubles_squads(match)
 
-                            # Singles Type match
-                            elif hasattr(match, "contestant_a_common_name"):
-                                squad_a, squad_b = get_single_squads(match)
+                        # Singles Type match
+                        elif hasattr(match, "contestant_a_common_name"):
+                            squad_a, squad_b = get_single_squads(match)
 
-                            # Team A vs Team B Type match
-                            elif hasattr(match, "team_a_name"):
-                                squad_a, squad_b = get_team_squads(match)
+                        # Team A vs Team B Type match
+                        elif hasattr(match, "team_a_name"):
+                            squad_a, squad_b = get_team_squads(match)
 
-                            if filter_out_match_for_player(player_id, squad_a, squad_b):
-                                continue
+                        if filter_out_match_for_player(player_id, squad_a, squad_b):
+                            continue
 
-                            # Call match object
-                            match_single = MatchSingle(id=match_id,
-                                                       sport=sport_name,
-                                                       gender=gender,
-                                                       event=get_event_name(gender, event),
-                                                       event_id=event_id,
-                                                       timestamp=get_datetime_str(date, time_utc),
-                                                       is_live=check_is_live(status),
-                                                       notification=False,
-                                                       match_done=check_match_done(status),
-                                                       stage=match_stage,
-                                                       medal_round=medal_round,
-                                                       team_a=squad_a,
-                                                       team_b=squad_b,
-                                                       result_url=result_url
-                                                       )
-
-                            response.append(match_single.to_json())
-
-                    # Scheduled matches (Players not decided)
-                    else:
-                        status = sport_round.status
-                        time_utc = sport_round.start_time_utc
-
-                        # Call Match Object
-                        match_single = MatchSingle(sport=sport_name,
+                        # Call match object
+                        match_single = MatchSingle(id=match_id,
+                                                   sport=sport_name,
                                                    gender=gender,
                                                    event=get_event_name(gender, event),
                                                    event_id=event_id,
                                                    timestamp=get_datetime_str(date, time_utc),
                                                    is_live=check_is_live(status),
-                                                   stage=match_stage,
                                                    notification=False,
                                                    match_done=check_match_done(status),
-                                                   medal_round=medal_round)
+                                                   stage=match_stage,
+                                                   medal_round=medal_round,
+                                                   team_a=squad_a,
+                                                   team_b=squad_b,
+                                                   result_url=result_url,
+                                                   winner=winner)
 
                         response.append(match_single.to_json())
+
+
+                        # # Scheduled matches (Players not decided)
+                        # else:
+                        #     status = sport_round.status
+                        #     time_utc = sport_round.start_time_utc
+                        #
+                        #     # Call Match Object
+                        #     match_single = MatchSingle(sport=sport_name,
+                        #                                gender=gender,
+                        #                                event=get_event_name(gender, event),
+                        #                                event_id=event_id,
+                        #                                timestamp=get_datetime_str(date, time_utc),
+                        #                                is_live=check_is_live(status),
+                        #                                stage=match_stage,
+                        #                                notification=False,
+                        #                                match_done=check_match_done(status),
+                        #                                medal_round=medal_round)
+                        #
+                        #     response.append(match_single.to_json())
 
                 # Signifies MatchMulti
                 else:
