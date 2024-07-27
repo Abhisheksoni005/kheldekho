@@ -54,6 +54,10 @@ def get_paris_tally(olympics_id: int = "72"):
     if hasattr(tally, "table"):
         medal_tally = []
         india_obj = {}
+        if not isinstance(tally.table, list):
+            tally.table = [tally.table]
+
+        india_present = False
         for country in tally.table:
             medal_obj = {
                 "country_id": country.area_id,
@@ -67,9 +71,26 @@ def get_paris_tally(olympics_id: int = "72"):
             }
             if country.area_code == "IND":
                 india_obj = medal_obj
+                india_present = True
                 continue
+
             medal_tally.append(medal_obj)
-        medal_tally.insert(3, india_obj)
+
+        if not india_present:
+            india_obj = {
+                "country_id": 0,
+                "name": "India",
+                "gold": 0,
+                "silver": 0,
+                "bronze": 0,
+                "total": 0,
+                "rank": len(medal_tally) + 1,
+                "flag": "IND"
+            }
+        if len(medal_tally)>3:
+            medal_tally.insert(3, india_obj)
+        else:
+            medal_tally.append(india_obj)
         return medal_tally
 
     response_list = read_from_json("dataset/medal_tokyo.json")
