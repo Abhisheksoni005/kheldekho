@@ -110,7 +110,7 @@ def get_team_details(team):
                     lane=lane if lane else "",
                     position=position,
                     record=record,
-                    time_utc=time if time else "",
+                    time=time if time else "",
                     attempt={},
                     contestants=[])
 

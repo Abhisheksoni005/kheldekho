@@ -72,7 +72,7 @@ class Team(BaseModel):
     lane: str = None
     position: str = None
     record: str = None
-    time_utc: str = None
+    time: str = None
     attempt: dict = None
     contestants: List[Contestant] = None
 
@@ -86,7 +86,7 @@ class Team(BaseModel):
             "lane": self.lane,
             "position": self.position,
             "record": self.record,
-            "time_utc": self.time_utc,
+            "time": self.time,
             "attempt": self.attempt,
             "contestants": [contestant.to_json() for contestant in self.contestants]
         }
