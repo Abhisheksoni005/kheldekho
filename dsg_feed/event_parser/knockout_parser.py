@@ -68,7 +68,7 @@ def create_group_table(matches_list):
     sorted_team_stats = sorted(team_stats, key=lambda x: x['points'], reverse=True)
     final_table = []
     for team in sorted_team_stats:
-        if team['country_name'] == '':
+        if team['country_name'] == 'TBD':
             continue
         final_table.append({
             'country_name': team['country_name'],
