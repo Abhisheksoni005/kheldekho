@@ -62,7 +62,8 @@ track_event_list = ["100 Metres",
                     "Marathon",
                     "10,000 Metres",
                     "1500 Metres",
-                    "200 Metres"]
+                    "200 Metres",
+                    "400 Metres"]
 
 racquet_sport_list = ["badminton",
                       "tennis",
