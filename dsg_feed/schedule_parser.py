@@ -234,8 +234,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                 print("Error processing event")
 
         sorted_response = sorted(response,
-                                 key=lambda x: (0 if has_india(x) else 1,
-                                                0 if x["is_live"] else 1,
+                                 key=lambda x: (0 if x["is_live"] else 1,
                                                 x["timestamp"])
                                  )
         return sorted_response
