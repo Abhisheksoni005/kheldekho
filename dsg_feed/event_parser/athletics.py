@@ -49,7 +49,7 @@ def get_athletics_team_event_details(sport, event):
     return team_obj
 
 
-def get_athletics_contestant_details(contestant):
+def get_contestant_details(contestant):
     name = contestant.common_name
     athlete_id = contestant.people_id
 
@@ -63,6 +63,8 @@ def get_athletics_contestant_details(contestant):
         length = contestant.length
     if hasattr(contestant, "time"):
         time = contestant.time
+    if hasattr(contestant, "points"):
+        time = contestant.points
 
     position = contestant.position
     record = contestant.record
@@ -81,15 +83,22 @@ def get_athletics_contestant_details(contestant):
     return contestant_obj
 
 
-def get_athletics_team_details(team):
+def get_team_details(team):
     name = team.team_name
     team_id = team.team_id
     country = team.team_area_name
     country_id = team.team_area_id
     country_code = team.team_area_code
 
-    time = team.time
-    lane = team.lane
+    lane = None
+    time = None
+    if hasattr(team, "length"):
+        lane = team.length
+    if hasattr(team, "time"):
+        time = team.time
+    if hasattr(team, "points"): # for shooting/archery kinda events
+        time = team.points
+
     position = team.position
     record = team.record
 
@@ -98,10 +107,10 @@ def get_athletics_team_details(team):
                     country=country,
                     country_id=country_id,
                     country_code=country_code,
-                    lane=lane,
+                    lane=lane if lane else "",
                     position=position,
                     record=record,
-                    time_utc=time,
+                    time_utc=time if time else "",
                     attempt={},
                     contestants=[])
 
@@ -140,7 +149,7 @@ def get_field_event_details(sport, event):
         contestants_list = event.gender.round.list.contestants
 
         for contestant in contestants_list.contestant:
-            contestant_obj = get_athletics_contestant_details(contestant)
+            contestant_obj = get_contestant_details(contestant)
             attempt_keys = [key for key in dir(contestant) if key.startswith("attempt_")]
 
             attempt_list = get_attempt_list(contestant, attempt_keys)
@@ -158,7 +167,7 @@ def get_marathon_details(sport, event):
     contestants_list = event.gender.round.list.contestants
 
     for contestant in contestants_list.contestant:
-        contestant_obj = get_athletics_contestant_details(contestant)
+        contestant_obj = get_contestant_details(contestant)
         attempt_keys = [key for key in dir(contestant) if key.startswith("split_")]
 
         for key in attempt_keys:
@@ -175,7 +184,7 @@ def get_hurdle_details(sport, event):
     hurdle = get_athletics_event_details(sport, event)
     contestants_list = event.gender.round.list.contestants
     for contestant in contestants_list.contestant:
-        contestant_obj = get_athletics_contestant_details(contestant)
+        contestant_obj = get_contestant_details(contestant)
 
         contestant_obj.attempt_metadata["fail_start"] = contestant.fail_start
         contestant_obj.attempt_metadata["lane"] = contestant.lane
@@ -192,7 +201,7 @@ def get_relay4x400_details(sport, event):
     teams_list = event.gender.round.list.teams.team
 
     for team in teams_list:
-        team_obj = get_athletics_team_details(team)
+        team_obj = get_team_details(team)
         attempt_keys = [key for key in dir(team) if key.startswith("split_")]
 
         for key in attempt_keys:
@@ -209,7 +218,7 @@ def get_archery_recurve_details(sport, event):
     archery = get_athletics_event_details(sport, event)
     contestants_list = event.gender.round.list.contestants
     for contestant in contestants_list.contestant:
-        contestant_obj = get_athletics_contestant_details(contestant)
+        contestant_obj = get_contestant_details(contestant)
     
         contestant_obj.attempt_metadata["bullseye"] = contestant.bullseye
         contestant_obj.attempt_metadata["points"] = contestant.points
@@ -225,7 +234,7 @@ def get_archery_recurve_team_details(sport, event):
     teams_list = event.gender.round.list.teams.team
 
     for team in teams_list:
-        team_obj = get_athletics_team_details(team)
+        team_obj = get_team_details(team)
         attempt_keys = [key for key in dir(team) if key.startswith("split_")]
 
         for key in attempt_keys:
@@ -237,6 +246,46 @@ def get_archery_recurve_team_details(sport, event):
 
     return archery
     
+    
+def get_shooting_details(sport, event):
+    shooting = get_athletics_event_details(sport, event)
+    contestants_list = event.gender.round.list
+    if hasattr(contestants_list, "contestants"):
+        contestants_list = contestants_list.contestants
+
+        for contestant in contestants_list:
+            contestant_obj = get_contestant_details(contestant)
+
+            attempt_keys = [key for key in dir(contestant_obj) if key.startswith("series_")]
+
+            for key in attempt_keys:
+                attempt = getattr(contestant_obj, key)
+                if attempt != '':
+                    contestant_obj.attempt_metadata[key] = attempt
+
+            shooting.contestant.append(contestant_obj)
+
+        return shooting
+
+    elif hasattr(contestants_list, "teams"):
+        shooting = get_athletics_team_event_details(sport, event)
+        teams_list = contestants_list.teams.team
+
+        for team in teams_list:
+            team_obj = get_team_details(team)
+            attempt_keys = [key for key in dir(team) if key.startswith("series_")]
+
+            for key in attempt_keys:
+                attempt = getattr(team, key)
+                if attempt != '':
+                    team_obj.attempt_metadata[key] = attempt
+
+            shooting.teams.append(team_obj)
+
+        return shooting
+
+
+
 
 
 

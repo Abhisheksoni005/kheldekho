@@ -6,7 +6,7 @@ from dsg_feed.event_parser.knockout_parser import parse_knockouts
 from dsg_feed.event_parser.field_sports import get_team_match_details
 from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
 from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details, get_relay4x400_details, \
-    get_archery_recurve_details, get_archery_recurve_team_details
+    get_archery_recurve_details, get_archery_recurve_team_details, get_shooting_details
 
 BASE_API_URL = "https://dsg-api.com/clients/"
 PARIS_ID = 72
@@ -53,12 +53,16 @@ field_event_list = ["High Jump",
                     "Javelin Throw",
                     "Discus Throw",
                     "Triple Jump",
-                    "Pole Vault"]
+                    "Pole Vault",
+                    "Shooting"]
 
 track_event_list = ["100 Metres",
                     "110 Metres Hurdles",
+                    "100 Metres Hurdles",
                     "Marathon",
-                    "10,000 Metres"]
+                    "10,000 Metres",
+                    "1500 Metres",
+                    "200 Metres"]
 
 racquet_sport_list = ["badminton",
                       "tennis",
@@ -93,6 +97,9 @@ def parse_match(sport, event_name, event, season_id):
 
         if event_name in ["Recurve Team", "Archery Team"]:
             details = get_archery_recurve_team_details(sport, event)
+
+    elif sport in ["shooting"]:
+        details = get_shooting_details(sport, event)
 
     elif sport in racquet_sport_list or event_name in racquet_event_list:
         details = get_racquet_sport_details(sport, event)
