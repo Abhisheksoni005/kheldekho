@@ -93,9 +93,6 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
         round_name = match_round.name
         matches = match_round.list
 
-        if sport_name in ["table_tennis"] and round_name in ["Preliminary Round"]:
-            continue
-
         if round_name in ["Group Stage", "Elimination Round"]:
             for group in matches:
                 group_name = group.name
