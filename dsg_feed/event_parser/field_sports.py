@@ -16,12 +16,14 @@ def update_score(match):
         game_time = ""
 
     sets = []
-    if hasattr(match, "period_scores") and hasattr(match.period_scores, "period"):
-        for set_number, game in enumerate(match.period_scores.period):
-            set_score = SetScore(set_num=set_number + 1,
-                                 match_score_a=game.score_a,
-                                 match_score_b=game.score_b)
-            sets.append(set_score)
+    period = match.period_scores.period if hasattr(match.period_scores, "period") else []
+    if not isinstance(period, list):
+        period = [period]
+    for set_number, game in enumerate(period):
+        set_score = SetScore(set_num=set_number + 1,
+                             match_score_a=game.score_a,
+                             match_score_b=game.score_b)
+        sets.append(set_score)
 
     score_details = ScoreDetails(score_a=match.score_a,
                                  score_b=match.score_b,
