@@ -251,9 +251,8 @@ def get_shooting_details(sport, event):
     shooting = get_athletics_event_details(sport, event)
     contestants_list = event.gender.round.list
     if hasattr(contestants_list, "contestants"):
-        contestants_list = contestants_list.contestants
-        if not isinstance(contestants_list, list):
-            contestants_list = [contestants_list]
+        contestants_list = contestants_list.contestants.contestant
+
         for contestant in contestants_list:
             contestant_obj = get_contestant_details(contestant)
 
