@@ -110,7 +110,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
             sport_name = sport_round.sport
             gender = sport_round.gender
 
-            if gender != gender_filter:
+            if gender_filter and gender != gender_filter:
                 continue
 
             match_stage = sport_round.name
