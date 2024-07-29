@@ -43,6 +43,7 @@ class MatchSingle(Match):
     team_a: Squad = None
     team_b: Squad = None
     winner: str = None
+    status: str = ""
     score: Score = Score.default_score()
 
 
@@ -61,6 +62,7 @@ class MatchSingle(Match):
             "match_done": self.match_done,
             "venue": self.venue,
             "result_url": self.result_url,
+            "status": self.status,
             "medal_round": self.medal_round,
             "team_a": self.team_a.to_json() if self.team_a else None,
             "team_b": self.team_b.to_json() if self.team_b else None,

@@ -23,6 +23,7 @@ class MatchMulti(Match):
     match_done: bool = False
     venue: str = ""
     result_url: str = ""
+    status: str = ""
     medal_round: str = "no"
     number_of_squads: int = 0
     squads: List[Squad] = []
@@ -46,6 +47,7 @@ class MatchMulti(Match):
             "match_done": self.match_done,
             "venue": self.venue,
             "result_url": self.result_url,
+            "status": self.status,
             "medal_round": self.medal_round,
             "number_of_squads": self.number_of_squads,
             "squads": [squad.to_json() for squad in self.squads],

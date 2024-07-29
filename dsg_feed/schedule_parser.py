@@ -62,7 +62,7 @@ def has_india(match_obj):
         return True
 
 
-def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None):
+def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None, gender_filter: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
     if day:
@@ -109,6 +109,10 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
         for sport_round_index, sport_round in enumerate(rounds):
             sport_name = sport_round.sport
             gender = sport_round.gender
+
+            if gender != gender_filter:
+                continue
+
             match_stage = sport_round.name
             event = sport_round.discipline_name
             event_id = sport_round.discipline_id
@@ -168,6 +172,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                                                    medal_round=medal_round,
                                                    team_a=squad_a,
                                                    team_b=squad_b,
+                                                   status=status,
                                                    result_url=result_url,
                                                    winner=winner)
 
@@ -222,6 +227,7 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                                              stage=match_stage,
                                              is_live=check_is_live(status),
                                              medal_round=medal_round,
+                                             status=status,
                                              result_url=result_url,
                                              ranking=ranking_dict)
 
