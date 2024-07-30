@@ -5,8 +5,8 @@ from utils.data_utils import dict_to_object
 from dsg_feed.event_parser.knockout_parser import parse_knockouts
 from dsg_feed.event_parser.field_sports import get_team_match_details
 from dsg_feed.event_parser.racquet_sports import get_racquet_sport_details
-from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details, get_relay4x400_details, \
-    get_archery_recurve_details, get_archery_recurve_team_details, get_shooting_details
+from dsg_feed.event_parser.athletics import get_field_event_details, get_marathon_details, get_archery_recurve_details,\
+    get_archery_recurve_team_details, get_shooting_details, get_relay4x400_details
 
 BASE_API_URL = "https://dsg-api.com/clients/"
 PARIS_ID = 72

@@ -207,7 +207,7 @@ def get_relay4x400_details(sport, event):
         for key in attempt_keys:
             attempt = getattr(team, key)
             if attempt != '':
-                team_obj.attempt_metadata[key] = attempt
+                team_obj.attempt[key] = attempt
 
         relay4x400.teams.append(team_obj)
 
@@ -240,7 +240,7 @@ def get_archery_recurve_team_details(sport, event):
         for key in attempt_keys:
             attempt = getattr(team, key)
             if attempt != '':
-                team_obj.attempt_metadata[key] = attempt
+                team_obj.attempt[key] = attempt
 
         archery.teams.append(team_obj)
 
@@ -278,7 +278,7 @@ def get_shooting_details(sport, event):
             for key in attempt_keys:
                 attempt = getattr(team, key)
                 if attempt != '':
-                    team_obj.attempt_metadata[key] = attempt
+                    team_obj.attempt[key] = attempt
 
             shooting.teams.append(team_obj)
 
