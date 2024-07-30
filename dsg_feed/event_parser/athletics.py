@@ -114,7 +114,10 @@ def get_team_details(team):
                     attempt={},
                     contestants=[])
 
-    for contestant in team.contestants.contestant:
+    contestants_list = team.contestants.contestant
+    if not isinstance(contestants_list, list):
+        contestants_list = [contestants_list]
+    for contestant in contestants_list:
         name = contestant.common_name
         people_id = contestant.people_id
         contestant_obj = Contestant(name=name,
@@ -273,7 +276,7 @@ def get_shooting_details(sport, event):
 
         for team in teams_list:
             team_obj = get_team_details(team)
-            attempt_keys = [key for key in dir(team) if key.startswith("series_")]
+            attempt_keys = [key for key in dir(team) if key.startswith("series_") or key.startswith("split_")]
 
             for key in attempt_keys:
                 attempt = getattr(team, key)

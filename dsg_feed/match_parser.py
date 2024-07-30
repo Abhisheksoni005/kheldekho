@@ -99,7 +99,7 @@ def parse_match(sport, event_name, event, season_id):
         if event_name in ["Recurve Team", "Archery Team"]:
             details = get_archery_recurve_team_details(sport, event)
 
-    elif sport in ["shooting"]:
+    elif sport in ["shooting", "rowing", "equestrian"]:
         details = get_shooting_details(sport, event)
 
     elif sport in racquet_sport_list or event_name in racquet_event_list:
