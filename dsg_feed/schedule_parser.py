@@ -62,6 +62,12 @@ def has_india(match_obj):
         return True
 
 
+def is_featured(match_obj):
+    if match_obj["id"] in ["96596", "96577", "100339", "99881"]:
+        return True
+    return False
+
+
 def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None, gender_filter: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
@@ -240,7 +246,8 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                 print("Error processing event")
 
         sorted_response = sorted(response,
-                                 key=lambda x: (0 if has_india(x) else 1,
+                                 key=lambda x: (0 if is_featured(x) else 1,
+                                                0 if has_india(x) else 1,
                                                 0 if x["is_live"] else 1,
                                                 x["timestamp"])
                                  )
