@@ -71,7 +71,7 @@ racquet_sport_list = ["badminton",
                       "karate",
                       "boxing"]
 
-racquet_event_list = ["Beach Volleyball", "Archery Team", "Recurve Team"]
+racquet_event_list = ["Beach Volleyball", "Archery Team", "Recurve Team", "Recurve"]
 
 team_sports = ["soccer",
                "field_hockey",
@@ -93,19 +93,19 @@ def parse_match(sport, event_name, event, season_id):
         if event_name == "4x400 Metres Relay":
             details = get_relay4x400_details(sport, event)
 
-        if event_name in ["Recurve", "Archery"]:
+        if event_name in ["Archery"]:
             details = get_archery_recurve_details(sport, event)
 
-        if event_name in ["Recurve Team", "Archery Team"]:
+        if event_name in ["Archery Team"]:
             details = get_archery_recurve_team_details(sport, event)
 
-    elif sport in ["shooting", "rowing", "equestrian"]:
+    if sport in ["shooting", "rowing", "equestrian"]:
         details = get_shooting_details(sport, event)
 
-    elif sport in racquet_sport_list or event_name in racquet_event_list:
+    if sport in racquet_sport_list or event_name in racquet_event_list:
         details = get_racquet_sport_details(sport, event)
 
-    elif sport in team_sports:
+    if sport in team_sports:
         details = get_team_match_details(sport, event)
 
     if details:
