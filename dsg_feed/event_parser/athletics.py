@@ -259,7 +259,7 @@ def get_shooting_details(sport, event):
         for contestant in contestants_list:
             contestant_obj = get_contestant_details(contestant)
 
-            attempt_keys = [key for key in dir(contestant_obj) if key.startswith("series_")]
+            attempt_keys = [key for key in dir(contestant_obj) if key.startswith("series_") or key.startswith("split_")]
 
             for key in attempt_keys:
                 attempt = getattr(contestant_obj, key)
