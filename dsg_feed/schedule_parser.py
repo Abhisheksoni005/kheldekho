@@ -63,7 +63,7 @@ def has_india(match_obj):
 
 
 def is_featured(match_obj):
-    if match_obj["id"] in ["96596", "96577", "100339", "99881"]:
+    if match_obj["id"] in ["96596", "96577", "100339", "99881", "94079", "94080", "84059", "96578"]:
         return True
     return False
 

@@ -85,58 +85,6 @@ def create_group_table(matches_list):
     return final_table
 
 
-def sort_matches_for_prev_round(round_of_64, round_of_32):
-    # Create a mapping from team id to their match in round of 64
-    team_to_match_map = {}
-    for match in round_of_64:
-        team_to_match_map[match["team_a"]['flag']] = match
-        team_to_match_map[match["team_b"]['flag']] = match
-
-    # Create the sorted list of round_of_64 matches based on round_of_32 results
-    sorted_round_of_64 = []
-    for match in round_of_32:
-        match1 = team_to_match_map[match["team_a"]['flag']]
-        match2 = team_to_match_map[match["team_b"]['flag']]
-        if match1 not in sorted_round_of_64:
-            sorted_round_of_64.append(match1)
-        if match2 not in sorted_round_of_64:
-            sorted_round_of_64.append(match2)
-
-    return sorted_round_of_64
-
-
-def process_rounds(rounds):
-    for i in range(len(rounds) - 1, 0, -1):
-        current_round = rounds[i]
-
-        # Skip sorting for "Bronze Medal" round
-        if current_round["name"] == "Bronze Medal":
-            continue
-
-        # Determine the index of the previous round
-        prev_round_index = i - 1
-
-        # If the current round is "Gold Medal", skip to the round before the previous one
-        if current_round["name"] == "Gold Medal":
-            prev_round_index = i - 2
-
-        # Check if the previous round index is valid
-        if prev_round_index < 0:
-            continue
-
-        prev_round = rounds[prev_round_index]
-
-        # Check if the previous round has twice the number of matches
-        if len(prev_round["matches"]) != len(current_round["matches"]) * 2:
-            continue
-
-        if current_round["matches"][0]["team_a"]["name"] == "TBD":
-            continue
-
-        # Sort the previous round matches
-        prev_round["matches"] = sort_matches_for_prev_round(prev_round["matches"], current_round["matches"])
-
-
 def parse_knockouts(sport_name, event_name, rounds, gender):
     groups = []
     knockouts = []
@@ -267,8 +215,6 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
             knockout_round = {"name": round_name,
                               "matches": knockout_matches_list}
             knockouts.append(knockout_round)
-
-    process_rounds(knockouts)
 
     return {"groups": groups, "knockouts": knockouts}
 
