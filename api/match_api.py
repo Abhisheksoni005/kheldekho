@@ -9,16 +9,27 @@ router = APIRouter()
 
 @router.get("/match")
 def get_matches(date: str = None, sport: str = None, event_id: str = None, player_id: str = None, olympics_id: str = "72", gender: str = None):
-    match_schedule = get_schedule_matches(day=date, sport_name=sport, discipline_id=event_id, olympics_id=olympics_id, player_id=player_id, gender_filter=gender)
+    try:
+        match_schedule = get_schedule_matches(day=date, sport_name=sport, discipline_id=event_id, olympics_id=olympics_id, player_id=player_id, gender_filter=gender)
+    except:
+        match_schedule = []
     return JSONResponse(content=match_schedule)
 
 
 @router.get("/match/detail")
 def get_match_results(sport: str, result_url: str):
-    return JSONResponse(content=get_match_details(sport, result_url))
+    try:
+        details = get_match_details(sport, result_url)
+    except:
+        details = {}
+    return JSONResponse(content=details)
 
 
 @router.get("/match/knockouts")
 def get_knockout_matches(sport: str, event: str, season_id: str, gender: str):
-    return JSONResponse(content=get_knockout_details(sport, event, season_id, gender))
+    try:
+        details = get_knockout_details(sport, event, season_id, gender)
+    except:
+        details = {}
+    return JSONResponse(content=details)
 

@@ -117,8 +117,9 @@ def parse_match(sport, event_name, event, season_id):
 
     if details:
         details.season_id = season_id
+        details = details.to_json()
 
-    return details.to_json()
+    return details
 
 
 def get_match_details(sport_name, result_url):
