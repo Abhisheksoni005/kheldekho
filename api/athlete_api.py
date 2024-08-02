@@ -19,25 +19,38 @@ def get_athlete_detail_path(id):
 
 @router.get("/athlete_detail")
 def get_athlete_detail(player_id: str):
-    path = get_athlete_detail_path(player_id)
     try:
-        story_json = read_from_json(path)
-        story = Story.dict_to_story(story_json)
+        path = get_athlete_detail_path(player_id)
+        try:
+            story_json = read_from_json(path)
+            story = Story.dict_to_story(story_json)
+        except Exception as e:
+            story = Story(social_media=SocialMedia())
+
+        athletes_json = read_from_json("dataset/athletes.json")
+        athlete = next((a for a in athletes_json if a["id"] == player_id), None)
+
+        response = AthleteDetail(
+            id=player_id,
+            deeplink_to_share="",
+            country=athlete["country"],
+            flag=athlete["country_code"],
+            sport=athlete["sports"],
+            profile_image_url=athlete["profile_image_url"] if athlete["profile_image_url"] in athlete else "",
+            story=story,
+            news=[]
+        )
+
     except Exception as e:
-        story = Story(social_media=SocialMedia())
-
-    athletes_json = read_from_json("dataset/athletes.json")
-    athlete = next((a for a in athletes_json if a["id"] == player_id), None)
-
-    response = AthleteDetail(
-        id=player_id,
-        deeplink_to_share="",
-        country=athlete["country"],
-        flag=athlete["country_code"],
-        sport=athlete["sports"],
-        profile_image_url=athlete["profile_image_url"] if athlete["profile_image_url"] in athlete else "",
-        story=story,
-        news=[]
-    )
+        response = AthleteDetail(
+            id=player_id,
+            deeplink_to_share="",
+            country="",
+            flag="",
+            sport="",
+            profile_image_url="",
+            story=Story(social_media=SocialMedia()),
+            news=[]
+        )
 
     return response.to_json()
