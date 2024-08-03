@@ -54,7 +54,8 @@ field_event_list = ["High Jump",
                     "Discus Throw",
                     "Triple Jump",
                     "Pole Vault",
-                    "Shooting"]
+                    "Shooting",
+                    "Shot Put"]
 
 track_event_list = ["100 Metres",
                     "110 Metres Hurdles",
