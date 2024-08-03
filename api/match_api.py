@@ -10,9 +10,9 @@ router = APIRouter()
 
 
 @router.get("/match")
-def get_matches(date: str = None, sport: str = None, event_id: str = None, player_id: str = None, olympics_id: str = "72", gender: str = None):
+def get_matches(date: str = None, sport: str = None, event_id: str = None, player_id: str = None, olympics_id: str = "72", gender: str = None, event_name: str = None):
     try:
-        match_schedule = get_schedule_matches(day=date, sport_name=sport, discipline_id=event_id, olympics_id=olympics_id, player_id=player_id, gender_filter=gender)
+        match_schedule = get_schedule_matches(day=date, sport_name=sport, discipline_id=event_id, olympics_id=olympics_id, player_id=player_id, gender_filter=gender, event_name=event_name)
     except:
         print(traceback.format_exc())
         match_schedule = []

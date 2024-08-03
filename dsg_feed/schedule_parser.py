@@ -69,7 +69,7 @@ def is_featured(match_obj):
     return False
 
 
-def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None, gender_filter: str = None):
+def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id: str = None, olympics_id: str = PARIS_ID, player_id: str = None, gender_filter: str = None, event_name: str = None):
     calendar_api = BASE_API_URL + f"{username}/multisport/get_calendar?id={olympics_id}&client={username}&authkey={AUTH_KEY}&ftype=json"
 
     if day:
@@ -122,6 +122,11 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
 
             match_stage = sport_round.name
             event = sport_round.discipline_name
+
+            # Filter out events if event_name is provided
+            if event_name and event_name != event:
+                continue
+
             event_id = sport_round.discipline_id
             medal_round = sport_round.medal_round
 
