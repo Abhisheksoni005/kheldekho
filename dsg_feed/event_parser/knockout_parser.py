@@ -293,7 +293,7 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
                               "matches": knockout_matches_list}
             knockouts.append(knockout_round)
 
-    sorted_knockouts = sort_knockouts(knockouts)
+    sorted_knockouts = sort_knockouts(knockouts)[::-1]
 
     return {"groups": groups, "knockouts": sorted_knockouts}
 
