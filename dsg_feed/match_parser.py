@@ -77,7 +77,8 @@ racquet_sport_list = ["badminton",
                       "tennis",
                       "table_tennis",
                       "karate",
-                      "boxing"]
+                      "boxing",
+                      "judo"]
 
 racquet_event_list = ["Beach Volleyball", "Archery Team", "Recurve Team", "Recurve"]
 
@@ -90,7 +91,7 @@ team_sports = ["soccer",
 
 
 def parse_match(sport, event_name, event, season_id):
-    details = None
+    details = {}
     if sport in ["athletics", "archery"]:
         if event_name in field_event_list:
             details = get_field_event_details(sport, event)
