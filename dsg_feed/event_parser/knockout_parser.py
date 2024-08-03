@@ -103,11 +103,10 @@ def map_previous_round(current_round_matches, previous_round_matches):
 
 def sort_knockout_rounds(matches, prev_round_matches):
     prev_round_match_map = {}
-    added_matches = []
 
     # sort matches so matches with team_a and team_b with non empty id are first
-    prev_round_matches.sort(key=lambda x:( 0 if ('id' in x['team_a'] and x['team_a']['id']!="") else 1,
-                                           0 if ('id' in x['team_b'] and x['team_b']['id']!="") else 1)
+    prev_round_matches.sort(key=lambda x:( 0 if ('id' in x['team_a'] and x['team_a']['id'] != "") else 1,
+                                           0 if ('id' in x['team_b'] and x['team_b']['id'] != "") else 1)
                             )
 
     for match in prev_round_matches:
@@ -123,13 +122,13 @@ def sort_knockout_rounds(matches, prev_round_matches):
     for i, match in enumerate(matches):
         if 'id' in match['team_a']:
             team_a = match['team_a']['id']
-            sorted_matches[2*i] = prev_round_match_map[team_a]
-            added_matches.append(team_a)
+            if team_a != "":
+                sorted_matches[2*i] = prev_round_match_map[team_a]
 
         if 'id' in match['team_b']:
             team_b = match['team_b']['id']
-            sorted_matches[2*i + 1] = prev_round_match_map[team_b]
-            added_matches.append(team_b)
+            if team_b != "":
+                sorted_matches[2*i + 1] = prev_round_match_map[team_b]
 
     return sorted_matches
 
