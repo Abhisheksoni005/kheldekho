@@ -15,6 +15,7 @@ class Squad(BaseModel):
 
     def to_json(self):
         return {
+            "id": self.id,
             "name": self.name,
             "flag": self.flag,
             "size": self.size,

@@ -1,3 +1,5 @@
+import traceback
+
 from fastapi import APIRouter
 from starlette.responses import JSONResponse
 
@@ -12,6 +14,7 @@ def get_matches(date: str = None, sport: str = None, event_id: str = None, playe
     try:
         match_schedule = get_schedule_matches(day=date, sport_name=sport, discipline_id=event_id, olympics_id=olympics_id, player_id=player_id, gender_filter=gender)
     except:
+        print(traceback.format_exc())
         match_schedule = []
     return JSONResponse(content=match_schedule)
 
@@ -21,6 +24,7 @@ def get_match_results(sport: str, result_url: str):
     try:
         details = get_match_details(sport, result_url)
     except:
+        print(traceback.format_exc())
         details = {}
     return JSONResponse(content=details)
 
@@ -30,6 +34,7 @@ def get_knockout_matches(sport: str, event: str, season_id: str, gender: str):
     try:
         details = get_knockout_details(sport, event, season_id, gender)
     except:
+        print(traceback.format_exc())
         details = {}
     return JSONResponse(content=details)
 

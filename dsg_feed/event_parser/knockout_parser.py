@@ -1,7 +1,7 @@
-from dsg_feed.event_parser.common_parser import get_doubles_squads, get_single_squads, get_team_squads
-from dsg_feed.schedule_parser import check_is_live, check_match_done
-from models.match_single import MatchSingle, Score
 from utils.data_utils import get_datetime_str
+from models.match_single import MatchSingle, Score
+from dsg_feed.schedule_parser import check_is_live, check_match_done
+from dsg_feed.event_parser.common_parser import get_doubles_squads, get_single_squads, get_team_squads
 
 BASE_API_URL = "https://dsg-api.com/clients/"
 PARIS_ID = 72
@@ -83,6 +83,83 @@ def create_group_table(matches_list):
         })
 
     return final_table
+
+
+def map_previous_round(current_round_matches, previous_round_matches):
+    next_round_matches = []
+    for i in range(0, len(current_round_matches), 2):
+        next_match_1 = current_round_matches[i]
+        next_match_2 = current_round_matches[i + 1]
+        next_round_matches.append({
+            "team_a": next_match_1['team_a'],
+            "team_b": next_match_1['team_b']
+        })
+        next_round_matches.append({
+            "team_a": next_match_2['team_a'],
+            "team_b": next_match_2['team_b']
+        })
+    return next_round_matches
+
+
+def sort_knockout_rounds(matches, prev_round_matches):
+    prev_round_match_map = {}
+    added_matches = []
+
+    # sort matches so matches with team_a and team_b with non empty id are first
+    prev_round_matches.sort(key=lambda x:( 0 if ('id' in x['team_a'] and x['team_a']['id']!="") else 1,
+                                           0 if ('id' in x['team_b'] and x['team_b']['id']!="") else 1)
+                            )
+
+    for match in prev_round_matches:
+        if 'id' in match['team_a']:
+            id_1 = match['team_a']['id']
+            prev_round_match_map[id_1] = match
+
+        if 'id' in match['team_b']:
+            id_2 = match['team_b']['id']
+            prev_round_match_map[id_2] = match
+
+    sorted_matches = prev_round_matches.copy()
+    for i, match in enumerate(matches):
+        if 'id' in match['team_a']:
+            team_a = match['team_a']['id']
+            sorted_matches[2*i] = prev_round_match_map[team_a]
+            added_matches.append(team_a)
+
+        if 'id' in match['team_b']:
+            team_b = match['team_b']['id']
+            sorted_matches[2*i + 1] = prev_round_match_map[team_b]
+            added_matches.append(team_b)
+
+    return sorted_matches
+
+
+def sort_knockouts(knockouts):
+    sorted_knockouts = []
+    i = len(knockouts) - 1
+    while i > 0:
+        knockout_round = knockouts[i]
+        round_name = knockout_round["name"]
+
+        if i == 0 or round_name in ["Gold Medal", "Bronze Medal"]:
+            sorted_knockouts.append(knockout_round)
+            i -= 1
+            continue
+
+        if round_name == "Semi-finals":
+            sorted_knockouts.append(knockout_round)
+
+        matches = knockout_round["matches"]
+        prev_round_matches = knockouts[i - 1]["matches"]
+        sorted_prev_round = sort_knockout_rounds(matches, prev_round_matches)
+
+        sorted_knockouts.append({
+            "name": knockouts[i-1]["name"],
+            "matches": sorted_prev_round
+        })
+        i -= 1
+
+    return sorted_knockouts
 
 
 def parse_knockouts(sport_name, event_name, rounds, gender):
@@ -216,7 +293,9 @@ def parse_knockouts(sport_name, event_name, rounds, gender):
                               "matches": knockout_matches_list}
             knockouts.append(knockout_round)
 
-    return {"groups": groups, "knockouts": knockouts}
+    sorted_knockouts = sort_knockouts(knockouts)
+
+    return {"groups": groups, "knockouts": sorted_knockouts}
 
 
 

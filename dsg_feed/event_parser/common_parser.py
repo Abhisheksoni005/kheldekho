@@ -220,7 +220,7 @@ def get_team_squads(match):
     team_a_country_id = match.team_a_area_id
     team_a_country_code = get_country_code(match.team_a_area_id)
 
-    team_b_id = match.team_b_area_id
+    team_b_id = match.team_b_id
     team_b_name = match.team_b_area_name
     team_b_country_id = match.team_b_area_id
     team_b_country_code = get_country_code(match.team_b_area_id)
@@ -237,11 +237,11 @@ def get_team_squads(match):
         if team_b_name != "" and area_id_map[team_b_name] != team_b_country_id:
             print("Mismatch in nationality id")
 
-    squad_a = Squad(id=team_a_country_id if team_a_country_id else "",
+    squad_a = Squad(id=team_a_id if team_a_id else "",
                     name=team_a_name if team_a_name else "TBD",
                     flag=team_a_country_code if team_a_country_code else "")
 
-    squad_b = Squad(id=team_b_country_id if team_b_country_id else "",
+    squad_b = Squad(id=team_b_id if team_b_id else "",
                     name=team_b_name if team_b_name else "TBD",
                     flag=team_b_country_code if team_b_country_code else "")
 
