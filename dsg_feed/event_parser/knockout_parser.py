@@ -102,6 +102,9 @@ def map_previous_round(current_round_matches, previous_round_matches):
 
 
 def sort_knockout_rounds(matches, prev_round_matches):
+    if len(prev_round_matches) != 2*len(matches):
+        return prev_round_matches
+
     prev_round_match_map = {}
 
     # sort matches so matches with team_a and team_b with non empty id are first
