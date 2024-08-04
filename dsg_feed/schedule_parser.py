@@ -257,6 +257,11 @@ def get_schedule_matches(day: str = None, sport_name: str = None, discipline_id:
                                                 0 if x["is_live"] else 1,
                                                 x["timestamp"])
                                  )
+
+        for match in sorted_response:
+            if is_featured(match):
+                match["stage"] += " 🇮🇳"
+
         return sorted_response
 
     except Exception as e:
