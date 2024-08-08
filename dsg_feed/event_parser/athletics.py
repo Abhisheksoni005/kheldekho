@@ -147,22 +147,22 @@ def get_attempt_list(contestant, attempt_keys):
 
 
 def get_field_event_details(sport, event):
-    try:
-        event_details = get_athletics_event_details(sport, event)
-        contestants_list = event.gender.round.list.contestants
+    event_details = get_athletics_event_details(sport, event)
+    contestants_list = event.gender.round.list.contestants
 
-        for contestant in contestants_list.contestant:
-            contestant_obj = get_contestant_details(contestant)
-            attempt_keys = [key for key in dir(contestant) if key.startswith("attempt_")]
-
-            attempt_list = get_attempt_list(contestant, attempt_keys)
-            contestant_obj.attempt_list = attempt_list
-
-            event_details.contestant.append(contestant_obj)
+    if not hasattr(contestants_list, "contestant"):
         return event_details
 
-    except:
-        print(traceback.print_exc())
+    for contestant in contestants_list.contestant:
+        contestant_obj = get_contestant_details(contestant)
+        attempt_keys = [key for key in dir(contestant) if key.startswith("attempt_")]
+
+        attempt_list = get_attempt_list(contestant, attempt_keys)
+        contestant_obj.attempt_list = attempt_list
+
+        event_details.contestant.append(contestant_obj)
+    return event_details
+
 
 
 def get_marathon_details(sport, event):
