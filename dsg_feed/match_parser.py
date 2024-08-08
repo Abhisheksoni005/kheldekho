@@ -78,7 +78,8 @@ racquet_sport_list = ["badminton",
                       "table_tennis",
                       "karate",
                       "boxing",
-                      "judo"]
+                      "judo",
+                      "wrestling"]
 
 racquet_event_list = ["Beach Volleyball", "Archery Team", "Recurve Team", "Recurve"]
 
