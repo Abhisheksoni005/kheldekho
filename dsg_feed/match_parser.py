@@ -89,7 +89,8 @@ team_sports = ["soccer",
                "handball",
                "rugby",
                "basketball",
-               "taekwondo"
+               "taekwondo",
+               "water_polo",
                ]
 
 
